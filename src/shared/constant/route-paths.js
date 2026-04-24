@@ -1,0 +1,16 @@
+export const Routes = {
+  Login: '/login',
+  Dashboard: '/dashboard',
+  Wallet: '/wallet',
+  Earnings: '/earnings',
+  Quests: '/quests',
+  OrderVerify: (id) => `/order/${id}/verify`,
+  OrderRate: (id) => `/order/${id}/rate`,
+  Support: '/support',
+  OnboardingVehicle: '/onboarding/vehicle',
+  OnboardingDocuments: '/onboarding/documents',
+  OnboardingTraining: '/onboarding/training',
+  OnboardingPending: '/onboarding/pending',
+  Admin: '/admin',
+  Unauthorized: '/unauthorized',
+}
