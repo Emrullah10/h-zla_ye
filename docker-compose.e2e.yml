@@ -1,0 +1,130 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: hizla_test
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./hızla-mono-repo/db-schemas/combined-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+  service-auth:
+    build:
+      context: .
+      dockerfile: hızla-mono-repo/Dockerfile.e2e
+    command: ["node", "services/service-auth/main.js"]
+    working_dir: /app/services/service-auth
+    environment:
+      NODE_ENV: test
+      CORE_APP_DB_CONNECTION_STRING: postgres://postgres:postgres@postgres:5432/hizla_test
+      CORE_REDIS_URL: redis://redis:6379
+      CORE_DISCOVERY_REDIS_URL: redis://redis:6379
+      SERVICE_AUTH_PORT: 3001
+      SERVICE_AUTH_REST_URL: http://service-auth:3001
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  service-courier:
+    build:
+      context: .
+      dockerfile: hızla-mono-repo/Dockerfile.e2e
+    command: ["node", "services/service-courier/main.js"]
+    working_dir: /app/services/service-courier
+    environment:
+      NODE_ENV: test
+      CORE_APP_DB_CONNECTION_STRING: postgres://postgres:postgres@postgres:5432/hizla_test
+      CORE_REDIS_URL: redis://redis:6379
+      CORE_DISCOVERY_REDIS_URL: redis://redis:6379
+      SERVICE_COURIER_PORT: 3002
+      SERVICE_COURIER_REST_URL: http://service-courier:3002
+    ports:
+      - "3002:3002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  service-onboarding:
+    build:
+      context: .
+      dockerfile: hızla-mono-repo/Dockerfile.e2e
+    command: ["node", "services/service-onboarding/main.js"]
+    working_dir: /app/services/service-onboarding
+    environment:
+      NODE_ENV: test
+      CORE_APP_DB_CONNECTION_STRING: postgres://postgres:postgres@postgres:5432/hizla_test
+      CORE_REDIS_URL: redis://redis:6379
+      CORE_DISCOVERY_REDIS_URL: redis://redis:6379
+      SERVICE_ONBOARDING_PORT: 3003
+      SERVICE_ONBOARDING_REST_URL: http://service-onboarding:3003
+    ports:
+      - "3003:3003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  service-admin:
+    build:
+      context: .
+      dockerfile: hızla-mono-repo/Dockerfile.e2e
+    command: ["node", "services/service-admin/main.js"]
+    working_dir: /app/services/service-admin
+    environment:
+      NODE_ENV: test
+      CORE_APP_DB_CONNECTION_STRING: postgres://postgres:postgres@postgres:5432/hizla_test
+      CORE_REDIS_URL: redis://redis:6379
+      CORE_DISCOVERY_REDIS_URL: redis://redis:6379
+      SERVICE_ADMIN_PORT: 3004
+      SERVICE_ADMIN_REST_URL: http://service-admin:3004
+    ports:
+      - "3004:3004"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  hizla-gateway:
+    build:
+      context: ./hızla-gateway
+      dockerfile: Dockerfile.e2e
+    environment:
+      NODE_ENV: test
+      GATEWAY_PORT: 4000
+      SERVICE_AUTH_REST_URL: http://service-auth:3001
+      SERVICE_COURIER_REST_URL: http://service-courier:3002
+      SERVICE_ONBOARDING_REST_URL: http://service-onboarding:3003
+      SERVICE_ADMIN_REST_URL: http://service-admin:3004
+      CORE_REDIS_URL: redis://redis:6379
+    ports:
+      - "4000:4000"
+    depends_on:
+      - service-auth
+      - service-courier
+      - service-onboarding
+      - service-admin

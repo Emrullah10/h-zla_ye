@@ -1,0 +1,62 @@
+{
+  "name": "hizla-mono-repo",
+  "version": "0.0.1",
+  "description": "hızla food delivery courier management — monorepo root",
+  "author": "Emrullah Ahmetbeyoglu",
+  "license": "ISC",
+  "type": "module",
+  "workspaces": [
+    "core/*",
+    "services/*",
+    "packages/modules/*"
+  ],
+  "scripts": {
+    "start:auth": "cd services/service-auth && node main.js",
+    "start:courier": "cd services/service-courier && node main.js",
+    "start:onboarding": "cd services/service-onboarding && node main.js",
+    "start:admin": "cd services/service-admin && node main.js",
+    "test:auth": "node --test --test-reporter spec $(find services/service-auth/test/unit -name '*.test.js' | sort)",
+    "test:auth:int": "node --env-file=.env.test --test --test-reporter spec $(find services/service-auth/test/integration -name '*.test.js' | sort)",
+    "test:auth:all": "node --test --test-reporter spec $(find services/service-auth/test -name '*.test.js' | sort)",
+    "test:courier": "node --test --test-reporter spec $(find services/service-courier/test/unit -name '*.test.js' | sort)",
+    "test:courier:int": "node --env-file=.env.test --test --test-reporter spec $(find services/service-courier/test/integration -name '*.test.js' | sort)",
+    "test:courier:all": "node --test --test-reporter spec $(find services/service-courier/test -name '*.test.js' | sort)",
+    "test:onboarding": "node --test --test-reporter spec $(find services/service-onboarding/test/unit -name '*.test.js' | sort)",
+    "test:onboarding:all": "node --test --test-reporter spec $(find services/service-onboarding/test -name '*.test.js' | sort)",
+    "test:admin": "node --test --test-reporter spec $(find services/service-admin/test/unit -name '*.test.js' | sort)",
+    "test:admin:all": "node --test --test-reporter spec $(find services/service-admin/test -name '*.test.js' | sort)",
+    "test:all": "node --test --test-reporter spec $(find services/*/test/unit -name '*.test.js' | sort)",
+    "db:migrate": "psql $CORE_APP_DB_CONNECTION_STRING -f db-schemas/combined-schema.sql",
+    "lint": "eslint .",
+    "format": "prettier --write \"./**/*.{js,json,md}\""
+  },
+  "dependencies": {
+    "12factor-config": "^2.0.0",
+    "axios": "^1.9.0",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^2.2.2",
+    "compression": "^1.8.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "http-proxy-middleware": "^3.0.3",
+    "ioredis": "^5.10.1",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.23",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.20.0",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^11.0.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.1.0",
+    "globals": "^17.0.0",
+    "prettier": "^3.8.1",
+    "supertest": "^7.2.2"
+  },
+  "prettier": {
+    "singleQuote": true
+  }
+}

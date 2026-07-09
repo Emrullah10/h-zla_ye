@@ -1,0 +1,8 @@
+{
+  "name": "@hizla/core-service-onboarding",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./src/*": "./src/*"
+  }
+}

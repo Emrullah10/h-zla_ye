@@ -1,0 +1,14 @@
+FROM node:24-slim
+
+WORKDIR /app
+
+COPY hızla-mono-repo/package.json hızla-mono-repo/package-lock.json* ./
+COPY hızla-mono-repo/core ./core
+COPY hızla-mono-repo/services ./services
+COPY hızla-mono-repo/packages ./packages
+
+RUN npm install --workspaces --if-present
+
+COPY hızla-mono-repo/db-schemas ./db-schemas
+
+CMD ["node", "main.js"]

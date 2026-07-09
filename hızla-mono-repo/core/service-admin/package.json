@@ -1,0 +1,8 @@
+{
+  "name": "@hizla/core-service-admin",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./src/*": "./src/*"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "service-admin",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "main.js",
+  "imports": {
+    "#core/*": "@hizla/core-service-admin/src/*"
+  },
+  "dependencies": {
+    "@hizla/config": "*",
+    "@hizla/core-service-admin": "*",
+    "@hizla/datasource": "*",
+    "@hizla/errors": "*",
+    "@hizla/helper": "*",
+    "@hizla/service-discovery": "*",
+    "@hizla/service-registry": "*"
+  },
+  "scripts": {
+    "start": "node main.js",
+    "dev": "node --watch main.js",
+    "test": "node --test test/**/*.test.js test/**/**/*.test.js"
+  }
+}
