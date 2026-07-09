@@ -1,0 +1,14 @@
+FROM node:24-slim
+
+WORKDIR /app
+
+COPY package.json package-lock.json* ./
+COPY core ./core
+COPY services ./services
+COPY packages ./packages
+
+RUN npm install --workspaces --if-present
+
+COPY db-schemas ./db-schemas
+
+CMD ["node", "main.js"]

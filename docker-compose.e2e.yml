@@ -8,7 +8,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - ./hızla-mono-repo/db-schemas/combined-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./db-schemas/combined-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 3s
@@ -28,7 +28,7 @@ services:
   service-auth:
     build:
       context: .
-      dockerfile: hızla-mono-repo/Dockerfile.e2e
+      dockerfile: Dockerfile.e2e
     command: ["node", "services/service-auth/main.js"]
     working_dir: /app/services/service-auth
     environment:
@@ -49,7 +49,7 @@ services:
   service-courier:
     build:
       context: .
-      dockerfile: hızla-mono-repo/Dockerfile.e2e
+      dockerfile: Dockerfile.e2e
     command: ["node", "services/service-courier/main.js"]
     working_dir: /app/services/service-courier
     environment:
@@ -70,7 +70,7 @@ services:
   service-onboarding:
     build:
       context: .
-      dockerfile: hızla-mono-repo/Dockerfile.e2e
+      dockerfile: Dockerfile.e2e
     command: ["node", "services/service-onboarding/main.js"]
     working_dir: /app/services/service-onboarding
     environment:
@@ -91,7 +91,7 @@ services:
   service-admin:
     build:
       context: .
-      dockerfile: hızla-mono-repo/Dockerfile.e2e
+      dockerfile: Dockerfile.e2e
     command: ["node", "services/service-admin/main.js"]
     working_dir: /app/services/service-admin
     environment:
@@ -109,9 +109,9 @@ services:
       redis:
         condition: service_healthy
 
-  hizla-gateway:
+  service-gateway:
     build:
-      context: ./hızla-gateway
+      context: ./services/service-gateway
       dockerfile: Dockerfile.e2e
     environment:
       NODE_ENV: test

@@ -1,20 +1,23 @@
 {
-  "name": "hizla-mono-repo",
+  "name": "hizla",
   "version": "0.0.1",
-  "description": "hızla food delivery courier management — monorepo root",
+  "description": "hızla food delivery courier management — tek monorepo (core/services/packages + web-app)",
   "author": "Emrullah Ahmetbeyoglu",
   "license": "ISC",
   "type": "module",
   "workspaces": [
     "core/*",
     "services/*",
-    "packages/modules/*"
+    "packages/modules/*",
+    "hızla-web-app"
   ],
   "scripts": {
     "start:auth": "cd services/service-auth && node main.js",
     "start:courier": "cd services/service-courier && node main.js",
     "start:onboarding": "cd services/service-onboarding && node main.js",
     "start:admin": "cd services/service-admin && node main.js",
+    "start:gateway": "cd services/service-gateway && node main.js",
+    "start:web": "cd hızla-web-app && npm run dev",
     "test:auth": "node --test --test-reporter spec $(find services/service-auth/test/unit -name '*.test.js' | sort)",
     "test:auth:int": "node --env-file=.env.test --test --test-reporter spec $(find services/service-auth/test/integration -name '*.test.js' | sort)",
     "test:auth:all": "node --test --test-reporter spec $(find services/service-auth/test -name '*.test.js' | sort)",

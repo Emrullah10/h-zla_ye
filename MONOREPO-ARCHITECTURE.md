@@ -4,41 +4,43 @@
 
 ## 1. Genel Bakış
 
-hızla_ye, kurye/yemek teslimat yönetimi için üç bağımsız proje içerir:
+hızla_ye, **tek git reposu, tek kök `package.json`** altında birleşik gerçek bir monorepo'dur (kurye/yemek teslimat yönetimi):
 
-- **`hızla-mono-repo/`** — 4 mikroservis (`service-auth`, `service-courier`, `service-onboarding`, `service-admin`), hexagonal/clean architecture ile `core/` + `services/` ayrımına sahip.
-- **`hızla-gateway/`** — tüm servislerin önünde tek giriş kapısı: auth (RSA-256 cookie), CSRF, rate limiting, reverse proxy.
-- **`hızla-web-app/`** — React 19 + Vite SPA (kurye/onboarding/admin arayüzleri).
+- **`core/` + `services/`** — 5 servis (`service-auth`, `service-courier`, `service-onboarding`, `service-admin`, `service-gateway`), hexagonal/clean architecture ile `core/` + `services/` ayrımına sahip (gateway framework'e tam bağımlı olduğu için core/ karşılığı yok, bkz. §6).
+- **`packages/modules/`** — tüm servislerin paylaştığı npm paketleri (`@hizla/*`, npm workspaces ile bağlı).
+- **`hızla-web-app/`** — React 19 + Vite SPA, aynı workspace'in bir üyesi.
 
 ## 2. Üst Seviye Klasör Haritası
 
 ```
-hızla_ye/
-├── hızla-mono-repo/
-│   ├── core/                  # Framework-bağımsız iş mantığı (domain + application + infrastructure)
-│   │   ├── service-auth/
-│   │   ├── service-courier/
-│   │   ├── service-onboarding/
-│   │   └── service-admin/
-│   ├── services/               # Çalıştırılabilir servis kabukları (main.js, container.js, configs)
-│   │   ├── service-auth/       # port 3001
-│   │   ├── service-courier/    # port 3002
-│   │   ├── service-onboarding/ # port 3003
-│   │   └── service-admin/      # port 3004
-│   ├── packages/modules/       # Paylaşılan npm paketleri (@hizla/*)
-│   │   ├── config/
-│   │   ├── datasource/
-│   │   ├── errors/
-│   │   ├── helper/
-│   │   ├── service-discovery/
-│   │   └── service-registry/
-│   ├── db-schemas/             # PostgreSQL şema tanımları (numaralı SQL dosyaları)
-│   ├── package.json            # workspaces: core/*, services/*, packages/modules/*
-│   └── Dockerfile.e2e
-├── hızla-gateway/               # API gateway, port 4000
-├── hızla-web-app/                # React 19 SPA
-└── docker-compose.e2e.yml        # Postgres + Redis + 4 servis + gateway, tek komutla
+hızla_ye/                        # TEK git reposu, TEK kök package.json
+├── core/                        # Framework-bağımsız iş mantığı (domain + application + infrastructure)
+│   ├── service-auth/
+│   ├── service-courier/
+│   ├── service-onboarding/
+│   └── service-admin/
+├── services/                    # Çalıştırılabilir servis kabukları (main.js, container.js, configs)
+│   ├── service-auth/            # port 3001
+│   ├── service-courier/         # port 3002
+│   ├── service-onboarding/      # port 3003
+│   ├── service-admin/           # port 3004
+│   └── service-gateway/         # port 4000 — core/ karşılığı yok, bkz. §6
+├── packages/modules/            # Paylaşılan npm paketleri (@hizla/*)
+│   ├── config/
+│   ├── datasource/
+│   ├── errors/
+│   ├── helper/
+│   ├── service-discovery/
+│   └── service-registry/
+├── db-schemas/                  # PostgreSQL şema tanımları (numaralı SQL dosyaları)
+├── hızla-web-app/                # React 19 SPA — aynı workspace'in üyesi
+├── docs/                          # Tarihsel/ikincil dokümanlar (git'e commit'lenmiyor, .gitignore'da)
+├── package.json                   # workspaces: core/*, services/*, packages/modules/*, hızla-web-app
+├── Dockerfile.e2e
+└── docker-compose.e2e.yml         # Postgres + Redis + 4 servis + gateway, tek komutla
 ```
+
+**Not (2026-07-09):** Önceki bir iterasyonda `hızla-mono-repo/` ve `hızla-gateway/` ayrı klasörlerdi; bu klasörler kaldırılıp içerikleri köke taşındı, tek `package.json` + tek git reposu haline getirildi.
 
 ## 3. core/ vs services/ Ayrımı
 
@@ -93,9 +95,9 @@ export const buildContainer = (appConfig) => {
 hızla projesinde import çözümleme **iki mekanizma** ile yapılır (Tropiq'in relative-path yaklaşımından farklı olarak, Node.js'in workspace desteğinden yararlanılmıştır):
 
 1. **`packages/modules/*` erişimi → bare specifier (`@hizla/*`)**
-   Kök `hızla-mono-repo/package.json`:
+   Kök `package.json`:
    ```json
-   "workspaces": ["core/*", "services/*", "packages/modules/*"]
+   "workspaces": ["core/*", "services/*", "packages/modules/*", "hızla-web-app"]
    ```
    npm install, her paketi `node_modules/@hizla/*` altına symlink'ler. Servisler artık `../../packages/modules/x` yerine `@hizla/x/index.js` yazar — dosya taşınsa da kırılmaz.
 
@@ -118,9 +120,11 @@ hızla projesinde import çözümleme **iki mekanizma** ile yapılır (Tropiq'in
 | `@hizla/service-discovery` | Redis tabanlı servis kayıt/keşif |
 | `@hizla/service-registry` | Gateway'e servis kaydı (`registerWithGateway`) |
 
-## 6. hızla-gateway — Sınır Katmanı
+## 6. services/service-gateway — Sınır Katmanı
 
 Port **4000**. Auth (RSA-256 cookie imzalama), session/refresh, CSRF, rate limiting sadece gateway'de toplanmıştır — arkadaki servisler JWT doğrulamaz, gateway'in enjekte ettiği `X-User-Id` / `X-User-Role` header'larını okur. Servisler `service-discovery` ile Redis üzerinden kendilerini gateway'e kaydeder (`registerWithGateway`).
+
+`service-gateway`'in `core/` karşılığı **yoktur** — tüm kodu (`auth/`, `middlewares/csrf-middleware.js`, `security-middleware.js`, `route.js`) doğrudan Express'e bağımlıdır, saf/framework-bağımsız bir iş mantığı katmanı barındırmaz. Kendi içinde bağımsız bir `packages/modules/` kopyasına sahiptir (kök `packages/modules/` ile karıştırılmamalı — gateway'in `datasource`/`config` implementasyonu farklıdır, örn. `pg` paketi yoktur, lazy import kullanır).
 
 ## 7. db-schemas/ — Şema Yapısı
 
@@ -140,10 +144,15 @@ Prod'da her servis kendi `node main.js` process'i olarak (PM2 veya benzeri ile) 
 
 Her servis `test/{unit,integration}/` altında testlerini barındırır. Unit testler `#core/*` subpath import ile `core/`'daki saf iş mantığını DB/Redis olmadan test eder; integration testler gerçek Postgres/Redis'e karşı çalışır (`.env.test`). Kök `package.json`'daki `test:<servis>`, `test:<servis>:int`, `test:<servis>:all`, `test:all` script'leri bu ayrımı yansıtır.
 
-## 10. Bu mimariyi başka bir projeye taşırken
+## 10. docs/ — Tarihsel Dokümanlar
+
+`docs/` klasörü, güncelliğini yitirmiş ama referans değeri olan eski dokümanları barındırır (`MONOREPO_STRUCTURE.md`, `MONOREPO_STRUCTURE_EN.md`, `gateaway-ARCHITECTURE.md`, `HIZLA-WEB-APP-PLAN.md`, `WEB-APPARCHITECTURE.md`). Bu klasör `.gitignore`'da — **git'e commit'lenmez**, sadece lokal geliştirme ortamında durur. Güncel/aktif mimari referansı her zaman kök `MONOREPO-ARCHITECTURE.md`'dir.
+
+## 11. Bu mimariyi başka bir projeye taşırken
 
 1. Her servisin `core/service-X/` + `services/service-X/` ayrımını kur, her ikisini de workspace üyesi yap.
 2. `core/service-X/package.json`'a `exports: { "./src/*": "./src/*" }` ekle — subpath imports için zorunlu.
 3. `services/service-X/package.json`'a `imports: { "#core/*": "@scope/core-service-X/src/*" }` ekle.
 4. `services/service-X/src/container.js`'de composition root'u kur — `core/`'daki use-case'leri datasource ile "wire" et, controller'ı ince adaptöre indir.
-5. Her adımda `npm install` (workspace symlink'lerini yenilemek için) + test + `node main.js` ile doğrula — asla toplu dosya taşıma + toplu import replace aynı anda yapma.
+5. Framework'e tam bağımlı servisleri (gateway gibi) `core/` ayrımına zorlama — sadece `services/` altında tut.
+6. Her adımda `npm install` (workspace symlink'lerini yenilemek için) + test + `node main.js` ile doğrula — asla toplu dosya taşıma + toplu import replace aynı anda yapma.
