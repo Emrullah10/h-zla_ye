@@ -4,7 +4,7 @@ export const getOnboardingStatus = () => axios.get('/onboarding/status')
 export const selectVehicle       = (vehicleType) => axios.post('/onboarding/vehicle', { vehicleType })
 export const uploadDocument      = (type, file) => {
   const fd = new FormData()
-  fd.append('type', type)
+  fd.append('docType', type)
   fd.append('file', file)
   return axios.post('/onboarding/document', fd, { headers: { 'Content-Type': 'multipart/form-data' } })
 }

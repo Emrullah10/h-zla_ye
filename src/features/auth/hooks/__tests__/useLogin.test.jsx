@@ -12,14 +12,22 @@ const wrapper = ({ children }) => (
   <MemoryRouter><QueryProvider>{children}</QueryProvider></MemoryRouter>
 )
 
-test('başarılı login sonrası token store a yazılır', async () => {
+test('başarılı login sonrası isAuthenticated true olur', async () => {
   const { login } = await import('@api/auth')
-  login.mockResolvedValue({ data: { token: 'tok', expiresIn: 3600, refreshToken: 'ref', driver: null, onboardingStatus: 'APPROVED' } })
+  login.mockResolvedValue({
+    data: {
+      driver: { id: '1', phone: '+905550000001' },
+      role: 'courier',
+      onboardingStatus: 'APPROVED',
+      userPermissionList: ['courier:*'],
+    },
+  })
 
   useAuthStore.getState().logout()
 
   const { useLogin } = await import('../useLogin')
   const { result } = renderHook(() => useLogin(), { wrapper })
-  await act(() => result.current.mutateAsync({ email: 'a@a.com', password: '123' }))
-  expect(useAuthStore.getState().token).toBe('tok')
+  await act(() => result.current.mutateAsync({ phone: '+905550000001', password: '123' }))
+  expect(useAuthStore.getState().isAuthenticated).toBe(true)
+  expect(useAuthStore.getState().role).toBe('courier')
 })

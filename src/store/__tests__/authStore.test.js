@@ -2,19 +2,25 @@ import { useAuthStore } from '../authStore'
 
 beforeEach(() => useAuthStore.getState().logout())
 
-test('başlangıçta token null', () => {
-  expect(useAuthStore.getState().token).toBeNull()
+test('başlangıçta isAuthenticated false', () => {
+  expect(useAuthStore.getState().isAuthenticated).toBe(false)
 })
 
-test('setToken token ve expiry set eder', () => {
-  useAuthStore.getState().setToken('abc', 3600)
-  const { token, tokenExpiry } = useAuthStore.getState()
-  expect(token).toBe('abc')
-  expect(tokenExpiry).toBeGreaterThan(Date.now() / 1000)
+test('setUser state günceller', () => {
+  useAuthStore.getState().setUser({
+    driver: { id: '1', phone: '+905550000001' },
+    role: 'courier',
+    onboardingStatus: 'APPROVED',
+    userPermissionList: ['courier:*'],
+  })
+  const state = useAuthStore.getState()
+  expect(state.isAuthenticated).toBe(true)
+  expect(state.role).toBe('courier')
+  expect(state.driver.phone).toBe('+905550000001')
 })
 
-test('logout sonrası token null', () => {
-  useAuthStore.getState().setToken('abc', 3600)
+test('logout sonrası isAuthenticated false', () => {
+  useAuthStore.getState().setUser({ driver: null, role: 'courier', onboardingStatus: null, userPermissionList: [] })
   useAuthStore.getState().logout()
-  expect(useAuthStore.getState().token).toBeNull()
+  expect(useAuthStore.getState().isAuthenticated).toBe(false)
 })

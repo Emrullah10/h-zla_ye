@@ -11,5 +11,7 @@ export const App = () => (
       {protectedRoutes}
       {errorRoutes}
     </Routes>
+
+
   </BrowserRouter>
 )

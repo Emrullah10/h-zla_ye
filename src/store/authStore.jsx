@@ -4,16 +4,16 @@ import { persist } from 'zustand/middleware'
 export const useAuthStore = create(
   persist(
     (set) => ({
-      token: null,
-      tokenExpiry: null,
-      refreshToken: null,
       driver: null,
+      role: null,
       onboardingStatus: null,
-      setToken: (token, expiresIn, refreshToken) =>
-        set({ token, tokenExpiry: Date.now() / 1000 + expiresIn, refreshToken }),
-      setDriver: (driver) => set({ driver }),
+      userPermissionList: [],
+      isAuthenticated: false,
+      setUser: ({ driver, role, onboardingStatus, userPermissionList }) =>
+        set({ driver, role, onboardingStatus, userPermissionList, isAuthenticated: true }),
       setOnboardingStatus: (status) => set({ onboardingStatus: status }),
-      logout: () => set({ token: null, tokenExpiry: null, refreshToken: null, driver: null }),
+      logout: () =>
+        set({ driver: null, role: null, onboardingStatus: null, userPermissionList: [], isAuthenticated: false }),
     }),
     { name: 'hizla-auth' }
   )

@@ -5,22 +5,25 @@ import { useNavigate } from 'react-router-dom'
 import { Routes } from '@shared/constant/route-paths'
 
 export const useLogin = () => {
-  const setToken = useAuthStore((s) => s.setToken)
-  const setDriver = useAuthStore((s) => s.setDriver)
-  const setOnboardingStatus = useAuthStore((s) => s.setOnboardingStatus)
+  const setUser = useAuthStore((s) => s.setUser)
   const navigate = useNavigate()
 
   return useMutation({
     mutationFn: login,
     onSuccess: ({ data }) => {
-      setToken(data.token, data.expiresIn, data.refreshToken)
-      setDriver(data.driver)
-      setOnboardingStatus(data.onboardingStatus)
-      if (data.onboardingStatus !== 'APPROVED') {
+      setUser({
+        driver: data.driver,
+        role: data.role,
+        onboardingStatus: data.onboardingStatus,
+        userPermissionList: data.userPermissionList ?? [],
+      })
+      if (data.role === 'admin') {
+        navigate(Routes.Admin)
+      } else if (data.onboardingStatus?.toLowerCase() !== 'approved') {
         navigate(Routes.OnboardingVehicle)
       } else {
         navigate(Routes.Dashboard)
       }
-    }
+    },
   })
 }

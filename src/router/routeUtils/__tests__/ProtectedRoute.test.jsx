@@ -2,11 +2,45 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { ProtectedRoute } from '../ProtectedRoute'
 import { useAuthStore } from '@store/authStore'
+import { QueryProvider } from '@shared/providers/QueryProvider'
+import { vi } from 'vitest'
 
-beforeEach(() => useAuthStore.getState().logout())
+vi.mock('@shared/hooks/useMe', () => ({
+  useMe: vi.fn(),
+}))
 
-test('token yoksa /login e yönlendirir', () => {
-  render(
+beforeEach(() => {
+  useAuthStore.getState().logout()
+  vi.clearAllMocks()
+})
+
+function renderWithProviders(ui) {
+  return render(<QueryProvider>{ui}</QueryProvider>)
+}
+
+test('useMe yüklenirken loading gösterir', async () => {
+  const { useMe } = await import('@shared/hooks/useMe')
+  useMe.mockReturnValue({ isLoading: true, isError: false })
+
+  renderWithProviders(
+    <MemoryRouter initialEntries={['/dashboard']}>
+      <Routes>
+        <Route path="/login" element={<div>Login</div>} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<div>Dashboard</div>} />
+        </Route>
+      </Routes>
+    </MemoryRouter>
+  )
+  // Loading component'i render edilmeli, login'e yönlenmemeli
+  expect(screen.queryByText('Login')).not.toBeInTheDocument()
+})
+
+test('useMe hata dönerse /login e yönlendirir', async () => {
+  const { useMe } = await import('@shared/hooks/useMe')
+  useMe.mockReturnValue({ isLoading: false, isError: true })
+
+  renderWithProviders(
     <MemoryRouter initialEntries={['/dashboard']}>
       <Routes>
         <Route path="/login" element={<div>Login</div>} />
@@ -19,9 +53,11 @@ test('token yoksa /login e yönlendirir', () => {
   expect(screen.getByText('Login')).toBeInTheDocument()
 })
 
-test('token varsa içeriği render eder', () => {
-  useAuthStore.getState().setToken('valid-token', 3600)
-  render(
+test('useMe başarılıysa içeriği render eder', async () => {
+  const { useMe } = await import('@shared/hooks/useMe')
+  useMe.mockReturnValue({ isLoading: false, isError: false })
+
+  renderWithProviders(
     <MemoryRouter initialEntries={['/dashboard']}>
       <Routes>
         <Route path="/login" element={<div>Login</div>} />
