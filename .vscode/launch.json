@@ -8,7 +8,7 @@
         "service-courier (3002)",
         "service-onboarding (3003)",
         "service-admin (3004)",
-        "hızla-gateway (4000)"
+        "service-gateway (4000)"
       ],
       "stopAll": true
     }
@@ -18,9 +18,9 @@
       "name": "service-auth (3001)",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/hızla-mono-repo/services/service-auth/main.js",
-      "cwd": "${workspaceFolder}/hızla-mono-repo/services/service-auth",
-      "envFile": "${workspaceFolder}/hızla-mono-repo/.env",
+      "program": "${workspaceFolder}/services/service-auth/main.js",
+      "cwd": "${workspaceFolder}/services/service-auth",
+      "envFile": "${workspaceFolder}/.env",
       "runtimeArgs": ["--experimental-vm-modules"],
       "console": "internalConsole",
       "internalConsoleOptions": "neverOpen"
@@ -29,9 +29,9 @@
       "name": "service-courier (3002)",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/hızla-mono-repo/services/service-courier/main.js",
-      "cwd": "${workspaceFolder}/hızla-mono-repo/services/service-courier",
-      "envFile": "${workspaceFolder}/hızla-mono-repo/.env",
+      "program": "${workspaceFolder}/services/service-courier/main.js",
+      "cwd": "${workspaceFolder}/services/service-courier",
+      "envFile": "${workspaceFolder}/.env",
       "console": "internalConsole",
       "internalConsoleOptions": "neverOpen"
     },
@@ -39,9 +39,9 @@
       "name": "service-onboarding (3003)",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/hızla-mono-repo/services/service-onboarding/main.js",
-      "cwd": "${workspaceFolder}/hızla-mono-repo/services/service-onboarding",
-      "envFile": "${workspaceFolder}/hızla-mono-repo/.env",
+      "program": "${workspaceFolder}/services/service-onboarding/main.js",
+      "cwd": "${workspaceFolder}/services/service-onboarding",
+      "envFile": "${workspaceFolder}/.env",
       "console": "internalConsole",
       "internalConsoleOptions": "neverOpen"
     },
@@ -49,19 +49,19 @@
       "name": "service-admin (3004)",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/hızla-mono-repo/services/service-admin/main.js",
-      "cwd": "${workspaceFolder}/hızla-mono-repo/services/service-admin",
-      "envFile": "${workspaceFolder}/hızla-mono-repo/.env",
+      "program": "${workspaceFolder}/services/service-admin/main.js",
+      "cwd": "${workspaceFolder}/services/service-admin",
+      "envFile": "${workspaceFolder}/.env",
       "console": "internalConsole",
       "internalConsoleOptions": "neverOpen"
     },
     {
-      "name": "hızla-gateway (4000)",
+      "name": "service-gateway (4000)",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/hızla-gateway/main.js",
-      "cwd": "${workspaceFolder}/hızla-gateway",
-      "envFile": "${workspaceFolder}/hızla-gateway/.env",
+      "program": "${workspaceFolder}/services/service-gateway/main.js",
+      "cwd": "${workspaceFolder}/services/service-gateway",
+      "envFile": "${workspaceFolder}/services/service-gateway/.env",
       "console": "internalConsole",
       "internalConsoleOptions": "neverOpen"
     },

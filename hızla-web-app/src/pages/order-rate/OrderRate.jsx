@@ -21,7 +21,7 @@ const OrderRate = () => {
           style={{
             width: '100%', maxWidth: '20rem', padding: '0.75rem',
             background: 'linear-gradient(135deg, #FF4B2B, #ff5637)',
-            color: '#fff', border: 'none', borderRadius: '8px',
+            color: '#e2e2e2', border: 'none', borderRadius: '16px',
             fontWeight: 600, fontSize: '1rem', cursor: isPending ? 'not-allowed' : 'pointer',
             opacity: isPending ? 0.5 : 1,
           }}

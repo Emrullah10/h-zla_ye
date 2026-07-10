@@ -39,7 +39,7 @@ export const VehicleSelector = () => {
         disabled={!selected || isPending}
         style={{
           background: 'linear-gradient(135deg, #FF4B2B, #ff5637)',
-          color: '#fff', padding: '0.75rem', borderRadius: '8px', border: 'none',
+          color: '#e2e2e2', padding: '0.75rem', borderRadius: '16px', border: 'none',
           fontWeight: 600, fontSize: '1rem', cursor: (!selected || isPending) ? 'not-allowed' : 'pointer',
           opacity: (!selected || isPending) ? 0.5 : 1, marginTop: '0.5rem',
         }}

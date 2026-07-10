@@ -12,7 +12,7 @@ export const theme = createTheme({
   typography: {
     fontFamily: '"Inter", sans-serif',
   },
-  shape: { borderRadius: 8 },
+  shape: { borderRadius: 16 },
   components: {
     MuiCard: {
       styleOverrides: {
@@ -43,12 +43,12 @@ export const theme = createTheme({
     },
     MuiBottomNavigation: {
       styleOverrides: {
-        root: { background: '#131313', borderTop: '1px solid rgba(92,64,58,0.15)' }
+        root: { background: '#131313' }
       }
     },
     MuiAppBar: {
       styleOverrides: {
-        root: { background: '#131313', boxShadow: 'none', borderBottom: '1px solid rgba(92,64,58,0.15)' }
+        root: { background: '#131313', boxShadow: 'none' }
       }
     },
   }

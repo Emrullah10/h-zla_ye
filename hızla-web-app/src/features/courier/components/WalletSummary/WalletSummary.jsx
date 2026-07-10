@@ -37,7 +37,7 @@ export const WalletSummary = () => {
         {(data?.transactions ?? []).map((tx) => (
           <div key={tx.id} style={{
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            padding: '0.5rem 0', borderBottom: '1px solid rgba(255,255,255,0.05)',
+            padding: '0.5rem 0',
           }}>
             <div>
               <p style={{ fontSize: '0.875rem', color: '#e2e2e2' }}>{tx.description}</p>

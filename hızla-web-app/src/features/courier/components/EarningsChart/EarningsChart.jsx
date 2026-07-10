@@ -27,8 +27,8 @@ export const EarningsChart = () => {
             style={{
               padding: '0.375rem 1rem', borderRadius: '9999px', fontSize: '0.875rem', border: 'none',
               cursor: 'pointer', transition: 'all 0.2s',
-              background: period === value ? '#FF4B2B' : '#2a2a2a',
-              color: period === value ? '#fff' : '#9e9e9e',
+              background: period === value ? 'linear-gradient(135deg, #FF4B2B, #ff5637)' : '#2a2a2a',
+              color: period === value ? '#e2e2e2' : '#9e9e9e',
             }}
           >
             {label}

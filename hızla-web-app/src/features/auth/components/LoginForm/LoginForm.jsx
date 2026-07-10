@@ -22,7 +22,7 @@ export const LoginForm = () => {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           style={{
-            background: '#2a2a2a', borderRadius: '8px', padding: '0.75rem 1rem',
+            background: '#2a2a2a', borderRadius: '16px', padding: '0.75rem 1rem',
             color: '#e2e2e2', outline: 'none', border: 'none', fontSize: '1rem',
           }}
           placeholder="+905550000002"
@@ -38,7 +38,7 @@ export const LoginForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           style={{
-            background: '#2a2a2a', borderRadius: '8px', padding: '0.75rem 1rem',
+            background: '#2a2a2a', borderRadius: '16px', padding: '0.75rem 1rem',
             color: '#e2e2e2', outline: 'none', border: 'none', fontSize: '1rem',
           }}
           placeholder="••••••••"
@@ -51,10 +51,10 @@ export const LoginForm = () => {
         disabled={isPending}
         style={{
           background: 'linear-gradient(135deg, #FF4B2B, #ff5637)',
-          color: '#fff',
+          color: '#e2e2e2',
           fontWeight: 600,
           padding: '0.75rem',
-          borderRadius: '8px',
+          borderRadius: '16px',
           border: 'none',
           cursor: isPending ? 'not-allowed' : 'pointer',
           opacity: isPending ? 0.5 : 1,

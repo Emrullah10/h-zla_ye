@@ -24,8 +24,8 @@ export const SupportTicketForm = () => {
                 style={{
                   padding: '0.375rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem', border: 'none',
                   cursor: 'pointer', transition: 'all 0.2s',
-                  background: category === c ? '#FF4B2B' : '#353535',
-                  color: category === c ? '#fff' : '#9e9e9e',
+                  background: category === c ? 'linear-gradient(135deg, #FF4B2B, #ff5637)' : '#353535',
+                  color: category === c ? '#e2e2e2' : '#9e9e9e',
                 }}
               >
                 {c}
@@ -42,7 +42,7 @@ export const SupportTicketForm = () => {
             onChange={(e) => setMessage(e.target.value)}
             rows={4}
             style={{
-              width: '100%', background: '#2a2a2a', borderRadius: '8px', padding: '0.75rem 1rem',
+              width: '100%', background: '#2a2a2a', borderRadius: '16px', padding: '0.75rem 1rem',
               color: '#e2e2e2', outline: 'none', border: 'none', fontSize: '0.875rem', resize: 'none',
               boxSizing: 'border-box',
             }}
@@ -54,7 +54,7 @@ export const SupportTicketForm = () => {
           disabled={!category || !message || isPending}
           style={{
             background: 'linear-gradient(135deg, #FF4B2B, #ff5637)',
-            color: '#fff', padding: '0.75rem', borderRadius: '8px', border: 'none',
+            color: '#e2e2e2', padding: '0.75rem', borderRadius: '16px', border: 'none',
             fontWeight: 600, fontSize: '1rem', cursor: (!category || !message || isPending) ? 'not-allowed' : 'pointer',
             opacity: (!category || !message || isPending) ? 0.5 : 1,
           }}

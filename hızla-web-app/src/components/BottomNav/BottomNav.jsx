@@ -11,11 +11,7 @@ const COURIER_NAV = [
 ]
 
 const ADMIN_NAV = [
-  { to: Routes.Dashboard, label: 'Ana Sayfa', icon: '🏠' },
-  { to: Routes.Wallet,    label: 'Cüzdan',    icon: '💰' },
-  { to: Routes.Earnings,  label: 'Kazanç',    icon: '📊' },
-  { to: Routes.Quests,    label: 'Görevler',  icon: '🎯' },
-  { to: Routes.Admin,     label: 'Yönetim',   icon: '⚙️' },
+  { to: Routes.Admin, label: 'Yönetim', icon: '⚙️' },
 ]
 
 export const BottomNav = () => {
@@ -23,7 +19,7 @@ export const BottomNav = () => {
   const items = role === 'admin' ? ADMIN_NAV : COURIER_NAV
 
   return (
-    <nav style={{ display: 'flex', background: '#131313', borderTop: '1px solid rgba(92,64,58,0.15)' }}>
+    <nav style={{ display: 'flex', background: '#131313' }}>
       {items.map(({ to, label, icon }) => (
         <NavLink
           key={to}

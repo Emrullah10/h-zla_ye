@@ -48,8 +48,6 @@ export const ProfileSheet = ({ onClose }) => {
           </div>
         </div>
 
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', margin: '0 0 1.25rem' }} />
-
         <button
           onClick={() => logout()}
           disabled={isPending}

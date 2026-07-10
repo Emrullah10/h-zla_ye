@@ -4,7 +4,7 @@ export const GlassCard = ({ children, className = '', style = {} }) => (
     style={{
       background: 'rgba(42,42,42,0.6)',
       backdropFilter: 'blur(20px)',
-      borderRadius: '12px',
+      borderRadius: '16px',
       padding: '1.5rem',
       ...style,
     }}

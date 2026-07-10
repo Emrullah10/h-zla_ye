@@ -3,7 +3,7 @@ import { DriverList } from '@features/admin/components/DriverList/DriverList'
 
 const Admin = () => (
   <div style={{ minHeight: '100%', background: '#0e0e0e', overflowY: 'auto' }}>
-    <div style={{ padding: '1rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+    <div style={{ padding: '1rem' }}>
       <h1 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#e2e2e2' }}>Yönetici Paneli</h1>
     </div>
     <AdminStats />

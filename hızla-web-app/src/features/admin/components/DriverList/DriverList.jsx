@@ -50,8 +50,8 @@ export const DriverList = () => {
               onClick={() => approve.mutate(d.appId)}
               disabled={isBusy}
               style={{
-                flex: 1, padding: '0.5rem', borderRadius: '8px', border: 'none',
-                background: '#FF4B2B', color: '#fff', fontWeight: 600, fontSize: '0.85rem',
+                flex: 1, padding: '0.5rem', borderRadius: '16px', border: 'none',
+                background: 'linear-gradient(135deg, #FF4B2B, #ff5637)', color: '#e2e2e2', fontWeight: 600, fontSize: '0.85rem',
                 cursor: isBusy ? 'not-allowed' : 'pointer', opacity: isBusy ? 0.5 : 1,
               }}
             >
@@ -61,8 +61,8 @@ export const DriverList = () => {
               onClick={() => reject.mutate(d.appId)}
               disabled={isBusy}
               style={{
-                flex: 1, padding: '0.5rem', borderRadius: '8px',
-                border: '1px solid rgba(255,255,255,0.15)', background: 'transparent',
+                flex: 1, padding: '0.5rem', borderRadius: '16px',
+                background: '#353535',
                 color: '#9e9e9e', fontWeight: 500, fontSize: '0.85rem',
                 cursor: isBusy ? 'not-allowed' : 'pointer', opacity: isBusy ? 0.5 : 1,
               }}

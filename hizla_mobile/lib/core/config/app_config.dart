@@ -1,0 +1,10 @@
+/// Ortam bazlı yapılandırma. Çalıştırırken geçilir:
+/// flutter run --dart-define=API_BASE_URL=http://10.0.2.2:4000/api
+class AppConfig {
+  AppConfig._();
+
+  static const String apiBaseUrl = String.fromEnvironment(
+    'API_BASE_URL',
+    defaultValue: 'http://localhost:4000/api',
+  );
+}

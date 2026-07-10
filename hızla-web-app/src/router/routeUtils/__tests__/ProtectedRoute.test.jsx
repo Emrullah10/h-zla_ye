@@ -21,6 +21,7 @@ function renderWithProviders(ui) {
 test('useMe yüklenirken loading gösterir', async () => {
   const { useMe } = await import('@shared/hooks/useMe')
   useMe.mockReturnValue({ isLoading: true, isError: false })
+  useAuthStore.setState({ isAuthenticated: true })
 
   renderWithProviders(
     <MemoryRouter initialEntries={['/dashboard']}>
@@ -56,6 +57,7 @@ test('useMe hata dönerse /login e yönlendirir', async () => {
 test('useMe başarılıysa içeriği render eder', async () => {
   const { useMe } = await import('@shared/hooks/useMe')
   useMe.mockReturnValue({ isLoading: false, isError: false })
+  useAuthStore.setState({ isAuthenticated: true })
 
   renderWithProviders(
     <MemoryRouter initialEntries={['/dashboard']}>

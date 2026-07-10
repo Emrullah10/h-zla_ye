@@ -15,7 +15,6 @@ export const TopBar = () => {
         justifyContent: 'space-between',
         padding: '0.75rem 1rem',
         background: '#131313',
-        borderBottom: '1px solid rgba(92,64,58,0.15)',
       }}>
         <span style={{ fontSize: '0.75rem', color: '#9e9e9e', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
           Hızla Ye
