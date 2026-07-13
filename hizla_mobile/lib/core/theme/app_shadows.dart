@@ -2,12 +2,21 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 /// Neon glow ve derin gölge tanımları.
+///
+/// `cyanGlow`/`brandGlow` marka renklerini kullanır (temadan bağımsız);
+/// yalnızca cyan'ın tam tonu tema-bağımlı olduğundan opsiyonel [scheme]
+/// parametresiyle geçirilebilir.
 class AppShadows {
   AppShadows._();
 
-  static List<BoxShadow> cyanGlow({double blur = 24, double opacity = 0.4}) => [
+  static List<BoxShadow> cyanGlow({
+    double blur = 24,
+    double opacity = 0.4,
+    AppColorScheme? scheme,
+  }) =>
+      [
         BoxShadow(
-          color: AppColors.neonCyan.withValues(alpha: opacity),
+          color: (scheme?.neonCyan ?? AppColors.neonCyan).withValues(alpha: opacity),
           blurRadius: blur,
           spreadRadius: 2,
         ),

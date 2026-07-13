@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
 import '../theme/app_gradients.dart';
 import '../theme/app_shadows.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_typography.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Ana CTA butonu — 135° turuncu gradyan + glow.
 class GradientButton extends StatelessWidget {
@@ -32,7 +32,7 @@ class GradientButton extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: disabled ? null : gradient,
-          color: disabled ? AppColors.surfaceContainerHighest : null,
+          color: disabled ? context.colors.surfaceContainerHighest : null,
           borderRadius: BorderRadius.circular(AppSpacing.radiusButton),
           boxShadow: disabled ? null : AppShadows.brandGlow(),
         ),
@@ -43,12 +43,12 @@ class GradientButton extends StatelessWidget {
             onTap: disabled ? null : onPressed,
             child: Center(
               child: isLoading
-                  ? const SizedBox(
+                  ? SizedBox(
                       width: 22,
                       height: 22,
                       child: CircularProgressIndicator(
                         strokeWidth: 2.4,
-                        color: AppColors.onPrimary,
+                        color: context.colors.onPrimary,
                       ),
                     )
                   : Row(
@@ -58,8 +58,8 @@ class GradientButton extends StatelessWidget {
                           label,
                           style: AppTypography.title.copyWith(
                             color: disabled
-                                ? AppColors.onSurfaceVariant
-                                : AppColors.onPrimary,
+                                ? context.colors.onSurfaceVariant
+                                : context.colors.onPrimary,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -68,8 +68,8 @@ class GradientButton extends StatelessWidget {
                           Icon(icon,
                               size: 20,
                               color: disabled
-                                  ? AppColors.onSurfaceVariant
-                                  : AppColors.onPrimary),
+                                  ? context.colors.onSurfaceVariant
+                                  : context.colors.onPrimary),
                         ],
                       ],
                     ),

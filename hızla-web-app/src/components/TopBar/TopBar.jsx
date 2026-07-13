@@ -14,9 +14,9 @@ export const TopBar = () => {
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '0.75rem 1rem',
-        background: '#131313',
+        background: 'var(--surface)',
       }}>
-        <span style={{ fontSize: '0.75rem', color: '#9e9e9e', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
           Hızla Ye
         </span>
         <div
@@ -25,8 +25,8 @@ export const TopBar = () => {
           onClick={() => setOpen(true)}
           style={{
             width: '2rem', height: '2rem', borderRadius: '50%',
-            background: '#2a2a2a', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '0.75rem', color: '#e2e2e2', cursor: 'pointer',
+            background: 'var(--surface-container-high)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '0.75rem', color: 'var(--text)', cursor: 'pointer',
           }}
         >
           {driver?.name?.[0] ?? (role === 'admin' ? 'Y' : '?')}

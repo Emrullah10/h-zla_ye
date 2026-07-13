@@ -6,6 +6,9 @@ import 'app_colors.dart';
 /// - Inter: başlık/body (anlatı)
 /// - Space Grotesk: label/uppercase (meta veri)
 /// - JetBrains Mono: TÜM sayısal değerler (telemetri)
+///
+/// Renkler tema-bağımlıdır — [forScheme] ile aktif [AppColorScheme]'e göre
+/// üretilir. `context.typography` kısayolu bunu otomatik sağlar.
 class AppTypography {
   AppTypography._();
 
@@ -79,4 +82,17 @@ class AppTypography {
     letterSpacing: -1,
     color: AppColors.brand,
   );
+
+  /// Aktif [AppColorScheme]'e göre renklendirilmiş TextTheme parçaları —
+  /// `AppTheme._base` içinde ThemeData.textTheme'e uygulanır.
+  static TextTheme themedTextTheme(TextTheme base, AppColorScheme c) {
+    return base.copyWith(
+      displayLarge: displayLarge.copyWith(color: c.onSurface),
+      headlineMedium: headline.copyWith(color: c.onSurface),
+      titleMedium: title.copyWith(color: c.onSurface),
+      bodyMedium: body.copyWith(color: c.onSurface),
+      bodySmall: bodyMuted.copyWith(color: c.onSurfaceVariant),
+      labelSmall: labelSmall.copyWith(color: c.onSecondaryFixedVariant),
+    );
+  }
 }

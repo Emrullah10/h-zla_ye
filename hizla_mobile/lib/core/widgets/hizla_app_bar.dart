@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Standart sayfa üst çubuğu — şeffaf, "Hızla Ye" markası veya başlık.
 class HizlaAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -26,7 +26,7 @@ class HizlaAppBar extends StatelessWidget implements PreferredSizeWidget {
           : (title != null ? Text(title!, style: AppTypography.title) : null),
       centerTitle: !showBrand,
       actions: actions,
-      iconTheme: const IconThemeData(color: AppColors.onSurface),
+      iconTheme: IconThemeData(color: context.colors.onSurface),
     );
   }
 

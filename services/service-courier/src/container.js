@@ -13,12 +13,15 @@ import createAcceptOrderUseCase from '#core/application/use-cases/order/accept-o
 import createRejectOrderUseCase from '#core/application/use-cases/order/reject-order.use-case.js';
 import createVerifyPackageUseCase from '#core/application/use-cases/order/verify-package.use-case.js';
 import createRateRestaurantUseCase from '#core/application/use-cases/order/rate-restaurant.use-case.js';
+import createCreateOrderUseCase from '#core/application/use-cases/order/create-order.use-case.js';
 import createGetWalletUseCase from '#core/application/use-cases/wallet/get-wallet.use-case.js';
 import createGetEarningsUseCase from '#core/application/use-cases/wallet/get-earnings.use-case.js';
 import createGetQuestsUseCase from '#core/application/use-cases/quest/get-quests.use-case.js';
 import createCreateSupportTicketUseCase from '#core/application/use-cases/support/create-support-ticket.use-case.js';
+import createUpdateLocationUseCase from '#core/application/use-cases/courier/update-location.use-case.js';
+import createGetLatestLocationsUseCase from '#core/application/use-cases/courier/get-latest-locations.use-case.js';
 
-export const buildContainer = () => {
+export const buildContainer = ({ broadcast } = {}) => {
   const db = datasources.coreAppDb;
 
   const courierRepository = new CourierRepositoryImpl(db);
@@ -35,9 +38,12 @@ export const buildContainer = () => {
     rejectOrder: createRejectOrderUseCase({ courierRepository, orderRepository }),
     verifyPackage: createVerifyPackageUseCase({ courierRepository, orderRepository }),
     rateRestaurant: createRateRestaurantUseCase({ courierRepository, orderRepository, ratingRepository }),
+    createOrder: createCreateOrderUseCase({ courierRepository, orderRepository }),
     getWallet: createGetWalletUseCase({ courierRepository, walletRepository }),
     getEarnings: createGetEarningsUseCase({ courierRepository, earningsRepository }),
     getQuests: createGetQuestsUseCase({ courierRepository, questRepository }),
     createSupportTicket: createCreateSupportTicketUseCase({ courierRepository, supportRepository }),
+    updateLocation: createUpdateLocationUseCase({ courierRepository, broadcast }),
+    getLatestLocations: createGetLatestLocationsUseCase({ courierRepository }),
   };
 };

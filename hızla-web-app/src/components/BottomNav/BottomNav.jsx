@@ -19,7 +19,7 @@ export const BottomNav = () => {
   const items = role === 'admin' ? ADMIN_NAV : COURIER_NAV
 
   return (
-    <nav style={{ display: 'flex', background: '#131313' }}>
+    <nav style={{ display: 'flex', background: 'var(--surface)' }}>
       {items.map(({ to, label, icon }) => (
         <NavLink
           key={to}
@@ -33,7 +33,7 @@ export const BottomNav = () => {
             fontSize: '0.75rem',
             gap: '2px',
             textDecoration: 'none',
-            color: isActive ? '#FF4B2B' : '#9e9e9e',
+            color: isActive ? 'var(--brand)' : 'var(--text-secondary)',
             transition: 'color 0.2s',
           })}
         >

@@ -12,6 +12,7 @@ import '../model/chat_message.dart';
 import '../model/support_ticket.dart';
 import '../viewmodel/chat_viewmodel.dart';
 import '../viewmodel/support_viewmodel.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Stitch destek.html ("Courier Support Hub") uyarlaması — Chat + Ticket
 /// Oluştur sekmeli tek ekran.
@@ -41,7 +42,7 @@ class _SupportHubScreenState extends State<SupportHubScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffold,
+      backgroundColor: context.colors.scaffold,
       appBar: HizlaAppBar(
         title: 'Destek Merkezi',
         actions: [
@@ -56,7 +57,7 @@ class _SupportHubScreenState extends State<SupportHubScreen>
             margin: const EdgeInsets.symmetric(
                 horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
             decoration: BoxDecoration(
-              color: AppColors.surfaceContainer,
+              color: context.colors.surfaceContainer,
               borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
             ),
             child: TabBar(
@@ -67,8 +68,8 @@ class _SupportHubScreenState extends State<SupportHubScreen>
               ),
               indicatorSize: TabBarIndicatorSize.tab,
               dividerColor: Colors.transparent,
-              labelColor: AppColors.onPrimary,
-              unselectedLabelColor: AppColors.onSurfaceVariant,
+              labelColor: context.colors.onPrimary,
+              unselectedLabelColor: context.colors.onSurfaceVariant,
               labelStyle: AppTypography.title.copyWith(fontSize: 14),
               tabs: const [
                 Tab(text: 'Chat'),
@@ -153,7 +154,7 @@ class _ChatTabState extends ConsumerState<_ChatTab> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: AppSpacing.md, vertical: 4),
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceContainerHighest
+                        color: context.colors.surfaceContainerHighest
                             .withValues(alpha: 0.7),
                         borderRadius:
                             BorderRadius.circular(AppSpacing.radiusFull),
@@ -199,7 +200,7 @@ class _OrderContextCard extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: AppColors.surfaceContainerHighest,
+              color: context.colors.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(AppSpacing.radiusChip),
             ),
             child: const Icon(Icons.fastfood_rounded, color: AppColors.gradientStart),
@@ -235,7 +236,7 @@ class _ChatBubble extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.md),
       constraints: const BoxConstraints(maxWidth: 280),
       decoration: BoxDecoration(
-        color: isCourier ? AppColors.gradientEnd : AppColors.surfaceContainerHigh.withValues(alpha: 0.85),
+        color: isCourier ? AppColors.gradientEnd : context.colors.surfaceContainerHigh.withValues(alpha: 0.85),
         borderRadius: BorderRadius.only(
           topLeft: const Radius.circular(18),
           topRight: const Radius.circular(18),
@@ -249,7 +250,7 @@ class _ChatBubble extends StatelessWidget {
           Text(
             message.text,
             style: AppTypography.body.copyWith(
-              color: isCourier ? AppColors.onPrimary : AppColors.onSurface,
+              color: isCourier ? context.colors.onPrimary : context.colors.onSurface,
             ),
           ),
           const SizedBox(height: 4),
@@ -260,14 +261,14 @@ class _ChatBubble extends StatelessWidget {
                 time,
                 style: AppTypography.labelSmall.copyWith(
                   color: isCourier
-                      ? AppColors.onPrimary.withValues(alpha: 0.7)
-                      : AppColors.onSurfaceVariant,
+                      ? context.colors.onPrimary.withValues(alpha: 0.7)
+                      : context.colors.onSurfaceVariant,
                 ),
               ),
               if (isCourier) ...[
                 const SizedBox(width: 4),
                 Icon(Icons.done_all_rounded,
-                    size: 12, color: AppColors.onPrimary.withValues(alpha: 0.7)),
+                    size: 12, color: context.colors.onPrimary.withValues(alpha: 0.7)),
               ],
             ],
           ),
@@ -287,11 +288,11 @@ class _ChatBubble extends StatelessWidget {
           width: 32,
           height: 32,
           margin: const EdgeInsets.only(right: AppSpacing.sm, top: 2),
-          decoration: const BoxDecoration(
-            color: AppColors.neonCyanContainer,
+          decoration: BoxDecoration(
+            color: context.colors.neonCyanContainer,
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.support_agent_rounded, size: 16, color: AppColors.onSurface),
+          child: Icon(Icons.support_agent_rounded, size: 16, color: context.colors.onSurface),
         ),
         Flexible(child: bubble),
       ],
@@ -323,7 +324,7 @@ class _QuickResponses extends StatelessWidget {
         itemBuilder: (context, index) {
           final label = quickResponses[index];
           return Material(
-            color: AppColors.surfaceContainerHigh.withValues(alpha: 0.6),
+            color: context.colors.surfaceContainerHigh.withValues(alpha: 0.6),
             borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
             child: InkWell(
               borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
@@ -334,7 +335,7 @@ class _QuickResponses extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
                   border: Border.all(
-                      color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+                      color: context.colors.outlineVariant.withValues(alpha: 0.3)),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -370,16 +371,16 @@ class _ChatInputBar extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.add_photo_alternate_outlined,
-                color: AppColors.onSurfaceVariant),
+            icon: Icon(Icons.add_photo_alternate_outlined,
+                color: context.colors.onSurfaceVariant),
           ),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.surfaceContainerHigh,
+                color: context.colors.surfaceContainerHigh,
                 borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
                 border: Border.all(
-                    color: AppColors.outlineVariant.withValues(alpha: 0.2)),
+                    color: context.colors.outlineVariant.withValues(alpha: 0.2)),
               ),
               child: TextField(
                 controller: controller,
@@ -403,7 +404,7 @@ class _ChatInputBar extends StatelessWidget {
             ),
             child: IconButton(
               onPressed: onSend,
-              icon: const Icon(Icons.send_rounded, size: 18, color: AppColors.onPrimary),
+              icon: Icon(Icons.send_rounded, size: 18, color: context.colors.onPrimary),
             ),
           ),
         ],
@@ -480,11 +481,11 @@ class _TicketFormTabState extends ConsumerState<_TicketFormTab> {
                     labelStyle: AppTypography.title.copyWith(
                       fontSize: 12,
                       color: _category == category
-                          ? AppColors.onPrimary
-                          : AppColors.onSurfaceVariant,
+                          ? context.colors.onPrimary
+                          : context.colors.onSurfaceVariant,
                     ),
                     selectedColor: AppColors.brand,
-                    backgroundColor: AppColors.surfaceContainerHigh,
+                    backgroundColor: context.colors.surfaceContainerHigh,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
                       side: BorderSide.none,
@@ -504,7 +505,7 @@ class _TicketFormTabState extends ConsumerState<_TicketFormTab> {
                 hintText: 'Sorununuzu açıklayın…',
                 hintStyle: AppTypography.bodyMuted,
                 filled: true,
-                fillColor: AppColors.surfaceContainerHigh,
+                fillColor: context.colors.surfaceContainerHigh,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppSpacing.radiusChip),
                   borderSide: BorderSide.none,

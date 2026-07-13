@@ -13,7 +13,8 @@
     "@hizla/errors": "*",
     "@hizla/helper": "*",
     "@hizla/service-discovery": "*",
-    "@hizla/service-registry": "*"
+    "@hizla/service-registry": "*",
+    "ws": "^8.18.0"
   },
   "scripts": {
     "start": "node main.js",

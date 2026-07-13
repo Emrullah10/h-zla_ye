@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_gradients.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/glass_panel.dart';
 import '../viewmodel/onboarding_viewmodel.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Onboarding Adım 4b — Başvuru inceleme ekranı. Backend onayı 15 saniyede
 /// bir Timer.periodic ile poll edilir; router redirect'i onay geldiğinde
@@ -45,7 +45,7 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffold,
+      backgroundColor: context.colors.scaffold,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
@@ -64,10 +64,10 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen>
                   ),
                   child: RotationTransition(
                     turns: _rotationController,
-                    child: const Icon(
+                    child: Icon(
                       Icons.hourglass_top_rounded,
                       size: 56,
-                      color: AppColors.onPrimary,
+                      color: context.colors.onPrimary,
                     ),
                   ),
                 ),
@@ -94,7 +94,7 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen>
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.sync_rounded, size: 16, color: AppColors.neonCyan),
+                      Icon(Icons.sync_rounded, size: 16, color: context.colors.neonCyan),
                       const SizedBox(width: AppSpacing.sm),
                       Text(
                         'Durum her 15 saniyede bir kontrol ediliyor',

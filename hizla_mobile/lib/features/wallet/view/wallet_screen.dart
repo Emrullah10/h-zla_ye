@@ -15,6 +15,7 @@ import '../../../core/widgets/glass_panel.dart';
 import '../../../core/widgets/hizla_app_bar.dart';
 import '../model/wallet.dart';
 import '../viewmodel/wallet_viewmodel.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 class WalletScreen extends ConsumerWidget {
   const WalletScreen({super.key});
@@ -25,7 +26,7 @@ class WalletScreen extends ConsumerWidget {
     final viewModel = ref.watch(walletViewModelProvider.notifier);
 
     return Scaffold(
-      backgroundColor: AppColors.scaffold,
+      backgroundColor: context.colors.scaffold,
       appBar: const HizlaAppBar(title: 'Cüzdan'),
       body: SafeArea(
         child: AsyncValueView<Wallet>(
@@ -33,7 +34,7 @@ class WalletScreen extends ConsumerWidget {
           onRetry: viewModel.refresh,
           data: (wallet) => RefreshIndicator(
             color: AppColors.gradientStart,
-            backgroundColor: AppColors.surfaceContainerHigh,
+            backgroundColor: context.colors.surfaceContainerHigh,
             onRefresh: viewModel.refresh,
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -109,7 +110,7 @@ class _ReceiptCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('CURRENT BALANCE',
-                      style: AppTypography.label.copyWith(color: AppColors.neonCyan)),
+                      style: AppTypography.label.copyWith(color: context.colors.neonCyan)),
                   const SizedBox(height: 4),
                   ShaderMask(
                     shaderCallback: (bounds) => AppGradients.primary.createShader(bounds),
@@ -134,13 +135,13 @@ class _ReceiptCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.lg),
-          Divider(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+          Divider(color: context.colors.outlineVariant.withValues(alpha: 0.3)),
           const SizedBox(height: AppSpacing.md),
           _BreakdownRow(label: 'Total Earnings', value: totalEarnings, isDeduction: false),
           _BreakdownRow(label: 'System Fee (5%)', value: -systemFee, isDeduction: true),
           _BreakdownRow(label: 'Tax Deduction', value: -tax, isDeduction: true),
           const SizedBox(height: AppSpacing.sm),
-          Divider(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+          Divider(color: context.colors.outlineVariant.withValues(alpha: 0.3)),
           const SizedBox(height: AppSpacing.sm),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -151,7 +152,7 @@ class _ReceiptCard extends StatelessWidget {
                 style: AppTypography.mono(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.neonCyan,
+                  color: context.colors.neonCyan,
                 ),
               ),
             ],
@@ -181,7 +182,7 @@ class _BreakdownRow extends StatelessWidget {
             '$sign₺${value.abs().toStringAsFixed(2)}',
             style: AppTypography.mono(
               fontSize: 16,
-              color: isDeduction ? AppColors.error : AppColors.onSurface,
+              color: isDeduction ? context.colors.error : context.colors.onSurface,
             ),
           ),
         ],
@@ -229,9 +230,9 @@ class _PayoutCountdownState extends State<_PayoutCountdown> {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerHigh,
+        color: context.colors.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
-        border: Border.all(color: AppColors.glassBorder()),
+        border: Border.all(color: context.colors.glassBorder()),
         boxShadow: AppShadows.cyanGlow(blur: 15, opacity: 0.15),
       ),
       child: Row(
@@ -241,8 +242,8 @@ class _PayoutCountdownState extends State<_PayoutCountdown> {
             children: [
               CircleAvatar(
                 radius: 24,
-                backgroundColor: AppColors.neonCyan.withValues(alpha: 0.1),
-                child: const Icon(Icons.schedule_rounded, color: AppColors.neonCyan),
+                backgroundColor: context.colors.neonCyan.withValues(alpha: 0.1),
+                child: Icon(Icons.schedule_rounded, color: context.colors.neonCyan),
               ),
               const SizedBox(width: AppSpacing.md),
               Column(
@@ -318,8 +319,8 @@ class _TransactionsGrid extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.account_balance_rounded,
-                        size: 32, color: AppColors.onSurfaceVariant),
+                    Icon(Icons.account_balance_rounded,
+                        size: 32, color: context.colors.onSurfaceVariant),
                     const SizedBox(height: AppSpacing.xs),
                     Text(
                       'Banka Hesaplarını Yönet',
@@ -355,7 +356,7 @@ class _TransactionsGrid extends StatelessWidget {
                           '${tx.amount >= 0 ? '+' : ''}₺${tx.amount.toStringAsFixed(2)}',
                           style: AppTypography.mono(
                             fontSize: 13,
-                            color: tx.amount >= 0 ? AppColors.gradientStart : AppColors.error,
+                            color: tx.amount >= 0 ? AppColors.gradientStart : context.colors.error,
                           ),
                         ),
                       ],

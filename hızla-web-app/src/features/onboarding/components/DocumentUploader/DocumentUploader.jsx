@@ -30,14 +30,14 @@ export const DocumentUploader = () => {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
-              <p style={{ fontSize: '0.875rem', fontWeight: 600, color: '#e2e2e2' }}>{doc.label}</p>
+              <p style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text)' }}>{doc.label}</p>
               {uploaded[doc.type] && (
-                <p style={{ fontSize: '0.75rem', color: '#FF4B2B', marginTop: '2px' }}>✓ {uploaded[doc.type]}</p>
+                <p style={{ fontSize: '0.75rem', color: 'var(--brand)', marginTop: '2px' }}>✓ {uploaded[doc.type]}</p>
               )}
             </div>
             <label style={{ cursor: 'pointer' }}>
               <span style={{
-                padding: '0.375rem 0.75rem', background: '#353535', color: '#9e9e9e',
+                padding: '0.375rem 0.75rem', background: 'var(--surface-container-highest)', color: 'var(--text-secondary)',
                 fontSize: '0.75rem', borderRadius: '9999px', display: 'inline-block',
               }}>
                 {uploaded[doc.type] ? 'Değiştir' : 'Yükle'}
@@ -56,8 +56,8 @@ export const DocumentUploader = () => {
         onClick={() => current && mutate(current)}
         disabled={!allDone || isPending}
         style={{
-          background: 'linear-gradient(135deg, #FF4B2B, #ff5637)',
-          color: '#e2e2e2', padding: '0.75rem', borderRadius: '16px', border: 'none',
+          background: 'linear-gradient(135deg, var(--brand), var(--brand-dark))',
+          color: 'var(--text)', padding: '0.75rem', borderRadius: '16px', border: 'none',
           fontWeight: 600, fontSize: '1rem', cursor: (!allDone || isPending) ? 'not-allowed' : 'pointer',
           opacity: (!allDone || isPending) ? 0.5 : 1, marginTop: '0.5rem',
         }}

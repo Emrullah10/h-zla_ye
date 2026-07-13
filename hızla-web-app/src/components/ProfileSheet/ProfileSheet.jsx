@@ -1,11 +1,19 @@
+import { ToggleButtonGroup, ToggleButton } from '@mui/material'
 import { useAuthStore } from '@store/authStore'
+import { useUIStore } from '@store/uiStore'
 import { useLogout } from '@features/auth/hooks/useLogout'
 
 const ROLE_LABELS = { courier: 'Kurye', admin: 'Yönetici' }
+const THEME_MODE_LABELS = { system: 'Sistem', light: 'Açık', dark: 'Koyu' }
+const MAP_MODE_LABELS = { auto: 'Otomatik', light: 'Açık', dark: 'Koyu' }
 
 export const ProfileSheet = ({ onClose }) => {
   const driver = useAuthStore((s) => s.driver)
   const role = useAuthStore((s) => s.role)
+  const themeMode = useUIStore((s) => s.themeMode)
+  const setThemeMode = useUIStore((s) => s.setThemeMode)
+  const mapMode = useUIStore((s) => s.mapMode)
+  const setMapMode = useUIStore((s) => s.setMapMode)
   const { mutate: logout, isPending } = useLogout()
 
   return (
@@ -21,7 +29,7 @@ export const ProfileSheet = ({ onClose }) => {
         onClick={(e) => e.stopPropagation()}
         style={{
           position: 'fixed', bottom: 0, left: 0, right: 0,
-          background: '#1a1a1a', borderRadius: '16px 16px 0 0',
+          background: 'var(--surface-container-high)', borderRadius: '16px 16px 0 0',
           padding: '1.25rem 1.5rem 2rem', zIndex: 101,
         }}
       >
@@ -33,19 +41,49 @@ export const ProfileSheet = ({ onClose }) => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem' }}>
           <div style={{
             width: '3rem', height: '3rem', borderRadius: '50%',
-            background: '#2a2a2a', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '1.25rem', color: '#e2e2e2', fontWeight: 600, flexShrink: 0,
+            background: 'var(--surface-container-high)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '1.25rem', color: 'var(--text)', fontWeight: 600, flexShrink: 0,
           }}>
             {driver?.name?.[0] ?? ROLE_LABELS[role]?.[0] ?? '?'}
           </div>
           <div>
-            <p style={{ fontSize: '1.1rem', fontWeight: 600, color: '#e2e2e2' }}>
+            <p style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text)' }}>
               {driver?.name ?? ROLE_LABELS[role] ?? '—'}
             </p>
-            <p style={{ fontSize: '0.8rem', color: '#9e9e9e', marginTop: '2px' }}>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
               {ROLE_LABELS[role] ?? role}
             </p>
           </div>
+        </div>
+
+        <div style={{ marginBottom: '1.25rem' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Tema</p>
+          <ToggleButtonGroup
+            value={themeMode}
+            exclusive
+            size="small"
+            onChange={(_, value) => value && setThemeMode(value)}
+            fullWidth
+          >
+            {Object.entries(THEME_MODE_LABELS).map(([value, label]) => (
+              <ToggleButton key={value} value={value}>{label}</ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+        </div>
+
+        <div style={{ marginBottom: '1.25rem' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Harita</p>
+          <ToggleButtonGroup
+            value={mapMode}
+            exclusive
+            size="small"
+            onChange={(_, value) => value && setMapMode(value)}
+            fullWidth
+          >
+            {Object.entries(MAP_MODE_LABELS).map(([value, label]) => (
+              <ToggleButton key={value} value={value}>{label}</ToggleButton>
+            ))}
+          </ToggleButtonGroup>
         </div>
 
         <button
@@ -54,7 +92,7 @@ export const ProfileSheet = ({ onClose }) => {
           style={{
             width: '100%', padding: '0.75rem', borderRadius: '10px',
             background: 'rgba(255,75,43,0.12)', border: '1px solid rgba(255,75,43,0.25)',
-            color: '#FF4B2B', fontWeight: 500, fontSize: '0.9rem',
+            color: 'var(--brand)', fontWeight: 500, fontSize: '0.9rem',
             cursor: isPending ? 'not-allowed' : 'pointer', opacity: isPending ? 0.5 : 1,
           }}
         >

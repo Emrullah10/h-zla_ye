@@ -12,7 +12,7 @@ const OnboardingLayout = () => {
   const currentStep = STEPS.indexOf(pathname)
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0e0e0e', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', flexDirection: 'column' }}>
       <div style={{ display: 'flex', gap: '4px', padding: '1rem' }}>
         {STEPS.map((_, i) => (
           <div
@@ -21,7 +21,7 @@ const OnboardingLayout = () => {
               height: '4px',
               flex: 1,
               borderRadius: '2px',
-              background: i <= currentStep ? '#FF4B2B' : '#353535',
+              background: i <= currentStep ? 'var(--brand)' : 'var(--surface-container-highest)',
               transition: 'background 0.3s',
             }}
           />

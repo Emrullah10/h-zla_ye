@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_gradients.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../model/earnings.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Stitch "Daily Performance" jumping bar chart — fl_chart BarChart ile.
 /// En yüksek değere sahip bar gradyan renkli + tooltip, diğerleri surfaceVariant.
@@ -41,7 +42,7 @@ class EarningsBarChart extends StatelessWidget {
             show: true,
             border: Border(
               bottom: BorderSide(
-                color: AppColors.outlineVariant.withValues(alpha: 0.2),
+                color: context.colors.outlineVariant.withValues(alpha: 0.2),
               ),
             ),
           ),
@@ -64,7 +65,7 @@ class EarningsBarChart extends StatelessWidget {
                       style: AppTypography.labelSmall.copyWith(
                         color: isHighlight
                             ? AppColors.gradientStart
-                            : AppColors.onSecondaryFixedVariant,
+                            : context.colors.onSecondaryFixedVariant,
                         fontWeight: isHighlight ? FontWeight.w800 : FontWeight.w700,
                       ),
                     ),
@@ -78,7 +79,7 @@ class EarningsBarChart extends StatelessWidget {
               getTooltipColor: (_) => AppColors.gradientStart,
               getTooltipItem: (group, groupIndex, rod, rodIndex) => BarTooltipItem(
                 '₺${bars[groupIndex].amount.toStringAsFixed(0)}',
-                AppTypography.mono(fontSize: 11, color: AppColors.onPrimary),
+                AppTypography.mono(fontSize: 11, color: context.colors.onPrimary),
               ),
             ),
           ),
@@ -92,7 +93,7 @@ class EarningsBarChart extends StatelessWidget {
                     width: 18,
                     borderRadius: const BorderRadius.vertical(top: Radius.circular(3)),
                     gradient: i == highlightIndex ? AppGradients.primary : null,
-                    color: i == highlightIndex ? null : AppColors.surfaceContainerHighest,
+                    color: i == highlightIndex ? null : context.colors.surfaceContainerHighest,
                   ),
                 ],
               ),

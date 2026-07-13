@@ -11,13 +11,13 @@ const PendingApproval = () => {
     }}>
       <span style={{ fontSize: '4.5rem' }}>⏳</span>
       <div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#e2e2e2' }}>Onay Bekleniyor</h1>
-        <p style={{ color: '#9e9e9e', marginTop: '0.5rem', fontSize: '0.875rem' }}>
+        <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text)' }}>Onay Bekleniyor</h1>
+        <p style={{ color: 'var(--text-secondary)', marginTop: '0.5rem', fontSize: '0.875rem' }}>
           Belgeleriniz inceleniyor. Genellikle 24 saat içinde sonuçlanır.
         </p>
       </div>
       {data?.submittedAt && (
-        <p style={{ fontSize: '0.75rem', color: '#9e9e9e' }}>
+        <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
           Başvuru tarihi: {new Date(data.submittedAt).toLocaleDateString('tr-TR')}
         </p>
       )}

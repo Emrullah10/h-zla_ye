@@ -1,3 +1,5 @@
+import '../../../shared/utils/json_parse.dart';
+
 /// GET /courier/wallet yanıtı — get-wallet.use-case.js + courier.repository-impl.js ile birebir.
 class WalletTransaction {
   const WalletTransaction({
@@ -19,7 +21,7 @@ class WalletTransaction {
   factory WalletTransaction.fromJson(Map<String, dynamic> json) => WalletTransaction(
         txId: json['txId']?.toString() ?? '',
         orderId: json['orderId']?.toString(),
-        amount: (json['amount'] as num?)?.toDouble() ?? 0,
+        amount: toDoubleSafe(json['amount']),
         type: json['type']?.toString() ?? 'credit',
         description: json['description']?.toString() ?? '',
         createdAt: json['createdAt'] != null
@@ -43,8 +45,8 @@ class Wallet {
 
   factory Wallet.fromJson(Map<String, dynamic> json) => Wallet(
         walletId: json['walletId']?.toString() ?? '',
-        balance: (json['balance'] as num?)?.toDouble() ?? 0,
-        pending: (json['pending'] as num?)?.toDouble() ?? 0,
+        balance: toDoubleSafe(json['balance']),
+        pending: toDoubleSafe(json['pending']),
         transactions: (json['transactions'] as List<dynamic>?)
                 ?.map((e) => WalletTransaction.fromJson(e as Map<String, dynamic>))
                 .toList() ??

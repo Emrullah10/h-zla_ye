@@ -9,6 +9,7 @@ import '../model/daily_summary.dart';
 /// analitiğiyle ÇAKIŞMAZ, sadece header'daki "Bugün ₺X" widget'ı için.
 abstract class DashboardRepository {
   Future<DailySummary> fetchDailySummary();
+  Future<void> sendLocation(double lat, double lng);
 }
 
 class DashboardRepositoryImpl implements DashboardRepository {
@@ -29,6 +30,18 @@ class DashboardRepositoryImpl implements DashboardRepository {
     } on DioException catch (e) {
       if (e.response?.statusCode == 404) return DailySummary.zero;
       throw ApiException.fromDioException(e);
+    }
+  }
+
+  @override
+  Future<void> sendLocation(double lat, double lng) async {
+    try {
+      await _dio.post(
+        ApiEndpoints.courierLocation,
+        data: {'lat': lat, 'lng': lng},
+      );
+    } on DioException catch (_) {
+      // Konum gönderimi arka plan işi — sessizce yut, dashboard'u bozmasın.
     }
   }
 }

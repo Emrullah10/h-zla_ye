@@ -12,6 +12,7 @@ import '../../../core/widgets/glass_bottom_nav.dart';
 import '../../../core/widgets/glass_panel.dart';
 import '../model/quest.dart';
 import '../viewmodel/quests_viewmodel.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 class _Perk {
   const _Perk({
@@ -69,14 +70,14 @@ class QuestsScreen extends ConsumerWidget {
     final viewModel = ref.watch(questsViewModelProvider.notifier);
 
     return Scaffold(
-      backgroundColor: AppColors.scaffold,
+      backgroundColor: context.colors.scaffold,
       body: SafeArea(
         child: AsyncValueView<List<Quest>>(
           value: questsAsync,
           onRetry: viewModel.refresh,
           data: (quests) => RefreshIndicator(
             color: AppColors.gradientStart,
-            backgroundColor: AppColors.surfaceContainerHigh,
+            backgroundColor: context.colors.surfaceContainerHigh,
             onRefresh: viewModel.refresh,
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -159,10 +160,10 @@ class _RankCard extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.surfaceContainerHigh, AppColors.surfaceContainer],
+          colors: [context.colors.surfaceContainerHigh, context.colors.surfaceContainer],
         ),
         borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
-        border: Border.all(color: AppColors.glassBorder()),
+        border: Border.all(color: context.colors.glassBorder()),
         boxShadow: AppShadows.deep,
       ),
       child: Column(
@@ -229,7 +230,7 @@ class _RankCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Puan İlerlemesi', style: AppTypography.label.copyWith(color: AppColors.onSurface)),
+              Text('Puan İlerlemesi', style: AppTypography.label.copyWith(color: context.colors.onSurface)),
               Text('$currentPoints / $targetPoints',
                   style: AppTypography.mono(fontSize: 13, color: AppColors.gradientStart)),
             ],
@@ -240,7 +241,7 @@ class _RankCard extends StatelessWidget {
             child: LinearProgressIndicator(
               value: progress,
               minHeight: 8,
-              backgroundColor: AppColors.surfaceContainerHighest,
+              backgroundColor: context.colors.surfaceContainerHighest,
               valueColor: const AlwaysStoppedAnimation(AppColors.gradientStart),
             ),
           ),
@@ -254,14 +255,14 @@ class _QuestCard extends StatelessWidget {
   const _QuestCard({required this.quest});
   final Quest quest;
 
-  Color get _rarityColor {
+  Color _rarityColor(BuildContext context) {
     switch (quest.rarity) {
       case 'rare':
-        return AppColors.neonCyan;
+        return context.colors.neonCyan;
       case 'epic':
         return AppColors.brand;
       default:
-        return AppColors.onSurface;
+        return context.colors.onSurface;
     }
   }
 
@@ -284,10 +285,10 @@ class _QuestCard extends StatelessWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: _rarityColor.withValues(alpha: 0.1),
+                        color: _rarityColor(context).withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.two_wheeler_rounded, color: _rarityColor, size: 20),
+                      child: Icon(Icons.two_wheeler_rounded, color: _rarityColor(context), size: 20),
                     ),
                     const SizedBox(width: AppSpacing.sm),
                     Expanded(
@@ -304,7 +305,7 @@ class _QuestCard extends StatelessWidget {
                 ),
               ),
               Text('${quest.progress}/${quest.targetCount}',
-                  style: AppTypography.mono(fontSize: 18, fontWeight: FontWeight.w700, color: _rarityColor)),
+                  style: AppTypography.mono(fontSize: 18, fontWeight: FontWeight.w700, color: _rarityColor(context))),
             ],
           ),
           const SizedBox(height: AppSpacing.md),
@@ -313,8 +314,8 @@ class _QuestCard extends StatelessWidget {
             child: LinearProgressIndicator(
               value: quest.progressRatio,
               minHeight: 6,
-              backgroundColor: AppColors.surfaceContainerHighest,
-              valueColor: AlwaysStoppedAnimation(_rarityColor),
+              backgroundColor: context.colors.surfaceContainerHighest,
+              valueColor: AlwaysStoppedAnimation(_rarityColor(context)),
             ),
           ),
           if (quest.isCompleted) ...[
@@ -325,7 +326,7 @@ class _QuestCard extends StatelessWidget {
                 onPressed: () {},
                 style: TextButton.styleFrom(
                   backgroundColor: AppColors.gradientStart,
-                  foregroundColor: AppColors.onPrimary,
+                  foregroundColor: context.colors.onPrimary,
                   padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 6),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
@@ -349,9 +350,9 @@ class _PerkCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+        color: context.colors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppSpacing.radiusChip),
-        border: Border.all(color: AppColors.glassBorder(opacity: 0.15)),
+        border: Border.all(color: context.colors.glassBorder(opacity: 0.15)),
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -360,11 +361,11 @@ class _PerkCard extends StatelessWidget {
           Container(
             height: 80,
             width: double.infinity,
-            color: AppColors.surfaceContainerHigh,
+            color: context.colors.surfaceContainerHigh,
             child: Stack(
               children: [
                 Center(
-                  child: Icon(perk.icon, size: 32, color: AppColors.onSurfaceVariant),
+                  child: Icon(perk.icon, size: 32, color: context.colors.onSurfaceVariant),
                 ),
                 Positioned(
                   top: 6,
@@ -409,8 +410,8 @@ class _PerkCard extends StatelessWidget {
                     onPressed: () {},
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.gradientStart,
-                      backgroundColor: AppColors.surfaceContainerHigh,
-                      side: BorderSide(color: AppColors.glassBorder()),
+                      backgroundColor: context.colors.surfaceContainerHigh,
+                      side: BorderSide(color: context.colors.glassBorder()),
                       padding: const EdgeInsets.symmetric(vertical: 6),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppSpacing.radiusButton),

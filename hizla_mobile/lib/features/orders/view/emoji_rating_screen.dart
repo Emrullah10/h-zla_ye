@@ -6,6 +6,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../viewmodel/active_order_viewmodel.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Stitch emoji-rating.html birebir uyarlaması (Restoran Puanlama).
 /// great=5, okay=3, bad=1 mapping — rate-restaurant.use-case.js sadece
@@ -45,7 +46,7 @@ class _EmojiRatingScreenState extends ConsumerState<EmojiRatingScreen> {
   Widget build(BuildContext context) {
     final order = ref.watch(activeOrderViewModelProvider).valueOrNull;
     return Scaffold(
-      backgroundColor: AppColors.scaffold,
+      backgroundColor: context.colors.scaffold,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -57,11 +58,11 @@ class _EmojiRatingScreenState extends ConsumerState<EmojiRatingScreen> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: AppSpacing.md, vertical: 6),
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceContainerHigh,
+                    color: context.colors.surfaceContainerHigh,
                     borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
                   ),
                   child: Text('TESLİMAT TAMAMLANDI',
-                      style: AppTypography.label.copyWith(color: AppColors.neonCyan)),
+                      style: AppTypography.label.copyWith(color: context.colors.neonCyan)),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Text(
@@ -103,7 +104,7 @@ class _EmojiRatingScreenState extends ConsumerState<EmojiRatingScreen> {
                   emoji: '😡',
                   title: 'Bad',
                   subtitle: 'Yavaş ve İlgisiz',
-                  titleColor: AppColors.error,
+                  titleColor: context.colors.error,
                   onTap: _submitting ? null : () => _rate(1),
                 ),
                 const SizedBox(height: AppSpacing.xl),
@@ -130,19 +131,19 @@ class _EmojiOption extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.onTap,
-    this.titleColor = AppColors.onSurface,
+    this.titleColor,
   });
 
   final String emoji;
   final String title;
   final String subtitle;
-  final Color titleColor;
+  final Color? titleColor;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.surface,
+      color: context.colors.surface,
       borderRadius: BorderRadius.circular(AppSpacing.radiusButton),
       child: InkWell(
         borderRadius: BorderRadius.circular(AppSpacing.radiusButton),
@@ -152,7 +153,7 @@ class _EmojiOption extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.lg),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppSpacing.radiusButton),
-            border: Border.all(color: AppColors.glassBorder(opacity: 0.1)),
+            border: Border.all(color: context.colors.glassBorder(opacity: 0.1)),
           ),
           child: Row(
             children: [
@@ -162,7 +163,8 @@ class _EmojiOption extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(title,
-                      style: AppTypography.title.copyWith(color: titleColor)),
+                      style: AppTypography.title.copyWith(
+                          color: titleColor ?? context.colors.onSurface)),
                   Text(subtitle, style: AppTypography.bodyMuted),
                 ],
               ),

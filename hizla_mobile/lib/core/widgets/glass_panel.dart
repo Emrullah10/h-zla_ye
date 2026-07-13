@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Stitch `.glass-panel`: rgba(42,42,42,0.6) + backdrop-blur(20-24px).
 class GlassPanel extends StatelessWidget {
@@ -31,7 +31,7 @@ class GlassPanel extends StatelessWidget {
         child: Container(
           padding: padding,
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainerHigh.withValues(alpha: fillOpacity),
+            color: context.colors.surfaceContainerHigh.withValues(alpha: fillOpacity),
             borderRadius: BorderRadius.circular(borderRadius),
             border: Border.all(
               color: Colors.white.withValues(alpha: borderOpacity),

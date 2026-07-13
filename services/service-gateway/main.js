@@ -6,6 +6,7 @@ import rawAppConfig from './configs/app-config.js';
 import rawDatasourceConfig from './configs/datasource-config.js';
 import middlewareFactory from './src/middlewares/index.js';
 import boot from './src/boot.js';
+import { setupWsProxy } from './src/middlewares/ws-proxy.js';
 
 async function initialize() {
   const app = express();
@@ -29,9 +30,11 @@ async function initialize() {
     helper.application.exitOnError(error);
   });
 
-  app.listen(appConfig.port, () => {
+  const server = app.listen(appConfig.port, () => {
     console.log(`HIZLA_GATEWAY_READY on Port: ${appConfig.port}`);
   });
+
+  setupWsProxy(server, app);
 }
 
 initialize();

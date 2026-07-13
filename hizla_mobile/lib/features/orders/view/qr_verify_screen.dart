@@ -10,6 +10,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/gradient_button.dart';
 import '../viewmodel/active_order_viewmodel.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Stitch qr-verify.html birebir uyarlaması (QR Doğrulama).
 /// mobile_scanner ile gerçek kamera taraması; okunan kod verifyOrder'a
@@ -63,7 +64,7 @@ class _QrVerifyScreenState extends ConsumerState<QrVerifyScreen> {
     final code = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: AppColors.surfaceContainerHigh,
+        backgroundColor: context.colors.surfaceContainerHigh,
         title: Text('Kodu Gir', style: AppTypography.title),
         content: TextField(
           controller: controller,
@@ -91,7 +92,7 @@ class _QrVerifyScreenState extends ConsumerState<QrVerifyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffold,
+      backgroundColor: context.colors.scaffold,
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -115,7 +116,7 @@ class _QrVerifyScreenState extends ConsumerState<QrVerifyScreen> {
                     children: [
                       IconButton(
                         onPressed: () => Navigator.of(context).maybePop(),
-                        icon: const Icon(Icons.close_rounded, color: AppColors.onSurface),
+                        icon: Icon(Icons.close_rounded, color: context.colors.onSurface),
                       ),
                       const Spacer(),
                       Text('Hızla Ye',
@@ -143,9 +144,9 @@ class _QrVerifyScreenState extends ConsumerState<QrVerifyScreen> {
                   Container(
                     padding: const EdgeInsets.all(AppSpacing.lg),
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceContainerHigh.withValues(alpha: 0.85),
+                      color: context.colors.surfaceContainerHigh.withValues(alpha: 0.85),
                       borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
-                      border: Border.all(color: AppColors.glassBorder(opacity: 0.15)),
+                      border: Border.all(color: context.colors.glassBorder(opacity: 0.15)),
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -160,7 +161,7 @@ class _QrVerifyScreenState extends ConsumerState<QrVerifyScreen> {
                         if (_error != null) ...[
                           const SizedBox(height: AppSpacing.sm),
                           Text(_error!,
-                              style: AppTypography.bodyMuted.copyWith(color: AppColors.error)),
+                              style: AppTypography.bodyMuted.copyWith(color: context.colors.error)),
                         ],
                         const SizedBox(height: AppSpacing.md),
                         Row(
@@ -173,8 +174,8 @@ class _QrVerifyScreenState extends ConsumerState<QrVerifyScreen> {
                                 style: OutlinedButton.styleFrom(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: AppSpacing.md),
-                                  foregroundColor: AppColors.onSurface,
-                                  side: BorderSide(color: AppColors.glassBorder(opacity: 0.2)),
+                                  foregroundColor: context.colors.onSurface,
+                                  side: BorderSide(color: context.colors.glassBorder(opacity: 0.2)),
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(AppSpacing.radiusButton)),
@@ -239,9 +240,9 @@ class _WatermarkBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerHigh.withValues(alpha: 0.6),
+        color: context.colors.surfaceContainerHigh.withValues(alpha: 0.6),
         borderRadius: BorderRadius.circular(AppSpacing.radiusChip),
-        border: Border.all(color: AppColors.glassBorder(opacity: 0.15)),
+        border: Border.all(color: context.colors.glassBorder(opacity: 0.15)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -249,7 +250,7 @@ class _WatermarkBar extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.location_on_rounded, color: AppColors.neonCyan, size: 16),
+              Icon(Icons.location_on_rounded, color: context.colors.neonCyan, size: 16),
               const SizedBox(width: 4),
               Text('Beşiktaş', style: AppTypography.label.copyWith(fontSize: 12)),
             ],

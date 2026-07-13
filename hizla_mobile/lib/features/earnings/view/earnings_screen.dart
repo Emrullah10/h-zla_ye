@@ -12,6 +12,7 @@ import '../../../core/widgets/glass_panel.dart';
 import '../model/earnings.dart';
 import '../viewmodel/earnings_viewmodel.dart';
 import 'widgets/earnings_bar_chart.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 class EarningsScreen extends ConsumerWidget {
   const EarningsScreen({super.key});
@@ -22,14 +23,14 @@ class EarningsScreen extends ConsumerWidget {
     final viewModel = ref.watch(earningsViewModelProvider.notifier);
 
     return Scaffold(
-      backgroundColor: AppColors.scaffold,
+      backgroundColor: context.colors.scaffold,
       body: SafeArea(
         child: AsyncValueView<Earnings>(
           value: earningsAsync,
           onRetry: viewModel.refresh,
           data: (earnings) => RefreshIndicator(
             color: AppColors.gradientStart,
-            backgroundColor: AppColors.surfaceContainerHigh,
+            backgroundColor: context.colors.surfaceContainerHigh,
             onRefresh: viewModel.refresh,
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -91,8 +92,8 @@ class _Header extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 20,
-          backgroundColor: AppColors.surfaceContainerHigh,
-          child: const Icon(Icons.person_rounded, color: AppColors.onSurfaceVariant),
+          backgroundColor: context.colors.surfaceContainerHigh,
+          child: Icon(Icons.person_rounded, color: context.colors.onSurfaceVariant),
         ),
         Text('Hızla Ye', style: AppTypography.brandLogo.copyWith(fontSize: 20)),
         const Icon(Icons.qr_code_scanner_rounded, color: AppColors.gradientStart),
@@ -120,7 +121,7 @@ class _BalanceHeader extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 6, right: 2),
-              child: Text('₺', style: AppTypography.mono(fontSize: 20, color: AppColors.onSurface)),
+              child: Text('₺', style: AppTypography.mono(fontSize: 20, color: context.colors.onSurface)),
             ),
             ShaderMask(
               shaderCallback: (bounds) => AppGradients.primary.createShader(bounds),
@@ -135,18 +136,18 @@ class _BalanceHeader extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 6),
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainerHigh,
+            color: context.colors.surfaceContainerHigh,
             borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
-            border: Border.all(color: AppColors.glassBorder()),
+            border: Border.all(color: context.colors.glassBorder()),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.trending_up_rounded, color: AppColors.neonCyan, size: 14),
+              Icon(Icons.trending_up_rounded, color: context.colors.neonCyan, size: 14),
               const SizedBox(width: 4),
               Text(
                 '+12.4% geçen haftaya göre',
-                style: AppTypography.mono(fontSize: 11, color: AppColors.neonCyan),
+                style: AppTypography.mono(fontSize: 11, color: context.colors.neonCyan),
               ),
             ],
           ),
@@ -191,13 +192,13 @@ class _PeriodChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
         decoration: BoxDecoration(
           gradient: selected ? AppGradients.primary : null,
-          color: selected ? null : AppColors.surfaceContainerHigh,
+          color: selected ? null : context.colors.surfaceContainerHigh,
           borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
         ),
         child: Text(
           period.label,
           style: AppTypography.body.copyWith(
-            color: selected ? AppColors.onPrimary : AppColors.onSurfaceVariant,
+            color: selected ? context.colors.onPrimary : context.colors.onSurfaceVariant,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -230,7 +231,7 @@ class _WidgetsRow extends StatelessWidget {
           const SizedBox(width: AppSpacing.md),
           _StatWidgetCard(
             icon: Icons.volunteer_activism_rounded,
-            iconColor: AppColors.neonCyan,
+            iconColor: context.colors.neonCyan,
             label: 'Bahşişler',
             value: '₺${earnings.avgOrderFee.toStringAsFixed(0)}',
           ),
@@ -304,13 +305,13 @@ class _WeeklyGoalCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(AppSpacing.sm),
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceContainerHighest,
+                    color: context.colors.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(AppSpacing.radiusChip),
                   ),
-                  child: const Icon(Icons.flag_rounded, color: AppColors.onSurface, size: 20),
+                  child: Icon(Icons.flag_rounded, color: context.colors.onSurface, size: 20),
                 ),
                 Text('${(progress * 100).toStringAsFixed(0)}%',
-                    style: AppTypography.mono(fontSize: 11, color: AppColors.onSurfaceVariant)),
+                    style: AppTypography.mono(fontSize: 11, color: context.colors.onSurfaceVariant)),
               ],
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -326,7 +327,7 @@ class _WeeklyGoalCard extends StatelessWidget {
               child: LinearProgressIndicator(
                 value: progress,
                 minHeight: 6,
-                backgroundColor: AppColors.scaffold,
+                backgroundColor: context.colors.scaffold,
                 valueColor: const AlwaysStoppedAnimation(AppColors.gradientStart),
               ),
             ),
@@ -357,7 +358,7 @@ class _PerformanceMetrics extends StatelessWidget {
         Expanded(
           child: _MetricCard(
             icon: Icons.task_alt_rounded,
-            iconColor: AppColors.neonCyan,
+            iconColor: context.colors.neonCyan,
             value: '98%',
             label: 'ACCEPTANCE',
           ),
@@ -388,7 +389,7 @@ class _MetricCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundColor: AppColors.scaffold,
+            backgroundColor: context.colors.scaffold,
             child: Icon(icon, color: iconColor, size: 20),
           ),
           const SizedBox(width: AppSpacing.sm),
@@ -420,7 +421,7 @@ class _DailyPerformanceCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Daily Performance', style: AppTypography.title),
-              const Icon(Icons.more_horiz_rounded, color: AppColors.onSurfaceVariant),
+              Icon(Icons.more_horiz_rounded, color: context.colors.onSurfaceVariant),
             ],
           ),
           const SizedBox(height: AppSpacing.lg),

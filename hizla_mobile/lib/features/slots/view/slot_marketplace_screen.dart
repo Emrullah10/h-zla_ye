@@ -14,6 +14,7 @@ import '../../../core/widgets/hizla_app_bar.dart';
 import '../../../core/widgets/neon_badge.dart';
 import '../model/slot.dart';
 import '../viewmodel/slot_viewmodel.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 class SlotMarketplaceScreen extends ConsumerWidget {
   const SlotMarketplaceScreen({super.key});
@@ -24,7 +25,7 @@ class SlotMarketplaceScreen extends ConsumerWidget {
     final viewModel = ref.watch(slotViewModelProvider.notifier);
 
     return Scaffold(
-      backgroundColor: AppColors.scaffold,
+      backgroundColor: context.colors.scaffold,
       appBar: const HizlaAppBar(title: 'Slot Marketplace'),
       body: SafeArea(
         child: AsyncValueView<List<Slot>>(
@@ -32,7 +33,7 @@ class SlotMarketplaceScreen extends ConsumerWidget {
           onRetry: () => ref.invalidate(slotViewModelProvider),
           data: (slots) => RefreshIndicator(
             color: AppColors.gradientStart,
-            backgroundColor: AppColors.surfaceContainerHigh,
+            backgroundColor: context.colors.surfaceContainerHigh,
             onRefresh: () async => ref.invalidate(slotViewModelProvider),
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -117,12 +118,12 @@ class _DateSelector extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
               decoration: BoxDecoration(
                 color: isToday
-                    ? AppColors.surfaceContainerHigh
-                    : AppColors.surfaceContainerHigh.withValues(alpha: 0.4),
+                    ? context.colors.surfaceContainerHigh
+                    : context.colors.surfaceContainerHigh.withValues(alpha: 0.4),
                 borderRadius: BorderRadius.circular(AppSpacing.radiusChip),
                 border: Border.all(
                   color: isToday
-                      ? AppColors.neonCyan.withValues(alpha: 0.5)
+                      ? context.colors.neonCyan.withValues(alpha: 0.5)
                       : Colors.transparent,
                 ),
               ),
@@ -132,7 +133,7 @@ class _DateSelector extends StatelessWidget {
                   Text(
                     label,
                     style: AppTypography.labelSmall.copyWith(
-                      color: isToday ? AppColors.neonCyan : AppColors.onSurfaceVariant,
+                      color: isToday ? context.colors.neonCyan : context.colors.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -157,9 +158,9 @@ class _HeatmapBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+        color: context.colors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppSpacing.radiusChip),
-        border: Border.all(color: AppColors.glassBorder(opacity: 0.1)),
+        border: Border.all(color: context.colors.glassBorder(opacity: 0.1)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -219,7 +220,7 @@ class _SlotCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.schedule_rounded, color: AppColors.neonCyan, size: 16),
+                          Icon(Icons.schedule_rounded, color: context.colors.neonCyan, size: 16),
                           const SizedBox(width: 6),
                           Text(slot.timeRange,
                               style: AppTypography.mono(fontSize: 16, fontWeight: FontWeight.w700)),
@@ -229,7 +230,7 @@ class _SlotCard extends StatelessWidget {
                       Text(slot.region, style: AppTypography.bodyMuted),
                     ],
                   ),
-                  const NeonBadge(label: 'My Slot', color: AppColors.onSurfaceVariant),
+                  NeonBadge(label: 'My Slot', color: context.colors.onSurfaceVariant),
                 ],
               ),
               const SizedBox(height: AppSpacing.lg),
@@ -247,9 +248,9 @@ class _SlotCard extends StatelessWidget {
                   OutlinedButton(
                     onPressed: () => viewModel.releaseSlot(slot.id),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.error,
-                      backgroundColor: AppColors.surfaceContainerHighest,
-                      side: BorderSide(color: AppColors.glassBorder()),
+                      foregroundColor: context.colors.error,
+                      backgroundColor: context.colors.surfaceContainerHighest,
+                      side: BorderSide(color: context.colors.glassBorder()),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppSpacing.radiusButton),
                       ),
@@ -265,7 +266,7 @@ class _SlotCard extends StatelessWidget {
           left: 0,
           top: 0,
           bottom: 0,
-          child: Container(width: 4, color: AppColors.neonCyan),
+          child: Container(width: 4, color: context.colors.neonCyan),
         ),
       ],
     );
@@ -273,7 +274,7 @@ class _SlotCard extends StatelessWidget {
 
   Widget _buildElevatedSlot(BuildContext context) {
     final isPeak = slot.demand == SlotDemand.peak;
-    final accent = isPeak ? AppColors.neonCyan : AppColors.gradientStart;
+    final accent = isPeak ? context.colors.neonCyan : AppColors.gradientStart;
 
     return Container(
       decoration: BoxDecoration(
@@ -296,7 +297,7 @@ class _SlotCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.schedule_rounded, color: AppColors.onSurfaceVariant, size: 16),
+                        Icon(Icons.schedule_rounded, color: context.colors.onSurfaceVariant, size: 16),
                         const SizedBox(width: 6),
                         Text(slot.timeRange,
                             style: AppTypography.mono(fontSize: 16, fontWeight: FontWeight.w700)),
@@ -336,7 +337,7 @@ class _SlotCard extends StatelessWidget {
                   child: TextButton(
                     onPressed: () => viewModel.claimSlot(slot.id),
                     style: TextButton.styleFrom(
-                      foregroundColor: AppColors.onPrimary,
+                      foregroundColor: context.colors.onPrimary,
                       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.sm),
                     ),
                     child: Text('Slot Al', style: AppTypography.body.copyWith(fontWeight: FontWeight.w700)),
@@ -363,7 +364,7 @@ class _SlotCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.schedule_rounded, color: AppColors.onSurfaceVariant, size: 16),
+                      Icon(Icons.schedule_rounded, color: context.colors.onSurfaceVariant, size: 16),
                       const SizedBox(width: 6),
                       Text(slot.timeRange,
                           style: AppTypography.mono(fontSize: 16, fontWeight: FontWeight.w700)),
@@ -391,7 +392,7 @@ class _SlotCard extends StatelessWidget {
                 onPressed: () => viewModel.claimSlot(slot.id),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.gradientStart,
-                  backgroundColor: AppColors.surfaceContainerHigh,
+                  backgroundColor: context.colors.surfaceContainerHigh,
                   side: BorderSide(color: AppColors.gradientStart.withValues(alpha: 0.3)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AppSpacing.radiusButton),

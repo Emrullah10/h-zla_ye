@@ -6,6 +6,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/glass_panel.dart';
 import '../../../core/widgets/gradient_button.dart';
 import '../viewmodel/login_viewmodel.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Stitch login.html ("Pilot Entrance") birebir uyarlaması.
 class LoginScreen extends ConsumerStatefulWidget {
@@ -16,8 +17,11 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  final _phoneController = TextEditingController();
-  final _pinController = TextEditingController();
+  // TODO(geçici): geliştirme kolaylığı için seed test kurye bilgisi
+  // otomatik dolduruluyor (db-schemas/05-seed-data.sql). Prod'a gitmeden
+  // önce kaldırılmalı.
+  final _phoneController = TextEditingController(text: '+905550000002');
+  final _pinController = TextEditingController(text: 'test123');
   String? _errorText;
 
   @override
@@ -28,10 +32,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Future<void> _submit() async {
+    final phone = _phoneController.text.trim();
+    final password = _pinController.text;
+    if (phone.isEmpty || password.isEmpty) {
+      setState(() => _errorText = 'Telefon numarası ve şifre gerekli');
+      return;
+    }
+
     setState(() => _errorText = null);
     final success = await ref.read(loginViewModelProvider.notifier).submit(
-          phone: _phoneController.text.trim(),
-          password: _pinController.text,
+          phone: phone,
+          password: password,
         );
     if (!success && mounted) {
       final error = ref.read(loginViewModelProvider).error;
@@ -45,7 +56,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final isLoading = loginState.isLoading;
 
     return Scaffold(
-      backgroundColor: AppColors.scaffold,
+      backgroundColor: context.colors.scaffold,
       body: DecoratedBox(
         decoration: BoxDecoration(
           gradient: RadialGradient(
@@ -53,7 +64,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             radius: 1.1,
             colors: [
               AppColors.brand.withValues(alpha: 0.15),
-              AppColors.scaffold.withValues(alpha: 0),
+              context.colors.scaffold.withValues(alpha: 0),
             ],
             stops: const [0, 0.6],
           ),
@@ -79,7 +90,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     Text(
                       'PILOT ENTRANCE',
                       style: AppTypography.label.copyWith(
-                        color: AppColors.secondary,
+                        color: context.colors.secondary,
                         letterSpacing: 3,
                       ),
                     ),
@@ -114,7 +125,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             Text(
                               _errorText!,
                               style: AppTypography.bodyMuted
-                                  .copyWith(color: AppColors.error),
+                                  .copyWith(color: context.colors.error),
                               textAlign: TextAlign.center,
                             ),
                           ],
@@ -189,20 +200,20 @@ class _LabeledField extends StatelessWidget {
             if (trailingLabel != null)
               Text(
                 trailingLabel!.toUpperCase(),
-                style: AppTypography.labelSmall.copyWith(color: AppColors.neonCyan),
+                style: AppTypography.labelSmall.copyWith(color: context.colors.neonCyan),
               ),
           ],
         ),
         const SizedBox(height: AppSpacing.sm),
         Container(
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainerHigh,
+            color: context.colors.surfaceContainerHigh,
             borderRadius: BorderRadius.circular(AppSpacing.radiusChip),
           ),
           child: Row(
             children: [
               const SizedBox(width: AppSpacing.lg),
-              Icon(icon, color: AppColors.onSurfaceVariant, size: 20),
+              Icon(icon, color: context.colors.onSurfaceVariant, size: 20),
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: TextField(
@@ -211,13 +222,13 @@ class _LabeledField extends StatelessWidget {
                   obscureText: obscureText,
                   style: AppTypography.mono(
                     fontSize: monoFontSize,
-                    color: AppColors.onSurface,
+                    color: context.colors.onSurface,
                   ).copyWith(letterSpacing: letterSpacing),
                   decoration: InputDecoration(
                     hintText: hint,
                     hintStyle: AppTypography.mono(
                       fontSize: monoFontSize,
-                      color: AppColors.surfaceContainerHighest,
+                      color: context.colors.surfaceContainerHighest,
                     ),
                     border: InputBorder.none,
                     contentPadding:
@@ -252,7 +263,7 @@ class _SecondaryButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Material(
-        color: transparent ? Colors.transparent : AppColors.surfaceContainerHigh,
+        color: transparent ? Colors.transparent : context.colors.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(AppSpacing.radiusChip),
         child: InkWell(
           borderRadius: BorderRadius.circular(AppSpacing.radiusChip),
@@ -264,7 +275,7 @@ class _SecondaryButton extends StatelessWidget {
                 : BoxDecoration(
                     borderRadius: BorderRadius.circular(AppSpacing.radiusChip),
                     border: Border.all(
-                      color: AppColors.outlineVariant.withValues(alpha: 0.15),
+                      color: context.colors.outlineVariant.withValues(alpha: 0.15),
                     ),
                   ),
             child: Row(
@@ -272,13 +283,13 @@ class _SecondaryButton extends StatelessWidget {
               children: [
                 Icon(icon,
                     size: 18,
-                    color: transparent ? AppColors.secondary : AppColors.onSurface),
+                    color: transparent ? context.colors.secondary : context.colors.onSurface),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
                   label,
                   style: AppTypography.title.copyWith(
                     fontSize: 14,
-                    color: transparent ? AppColors.secondary : AppColors.onSurface,
+                    color: transparent ? context.colors.secondary : context.colors.onSurface,
                   ),
                 ),
               ],

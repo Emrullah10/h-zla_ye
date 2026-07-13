@@ -6,6 +6,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/glass_panel.dart';
 import '../viewmodel/onboarding_viewmodel.dart';
 import 'widgets/onboarding_scaffold.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Onboarding Adım 4a — Eğitim modülleri (tamamlanınca completeTraining()
 /// çağrılır, router otomatik Onay Bekliyor ekranına yönlendirir).
@@ -130,12 +131,12 @@ class _TrainingModuleCard extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: isCompleted
                     ? AppColors.gradientStart.withValues(alpha: 0.1)
-                    : AppColors.scaffold,
+                    : context.colors.scaffold,
               ),
               child: Icon(
                 icon,
                 size: 24,
-                color: isCompleted ? AppColors.gradientStart : AppColors.secondary,
+                color: isCompleted ? AppColors.gradientStart : context.colors.secondary,
               ),
             ),
             const SizedBox(width: AppSpacing.md),
@@ -158,13 +159,13 @@ class _TrainingModuleCard extends StatelessWidget {
                 border: Border.all(
                   color: isCompleted
                       ? AppColors.gradientStart
-                      : AppColors.onSurface.withValues(alpha: 0.2),
+                      : context.colors.onSurface.withValues(alpha: 0.2),
                   width: 2,
                 ),
                 color: isCompleted ? AppColors.gradientStart : null,
               ),
               child: isCompleted
-                  ? const Icon(Icons.check_rounded, size: 16, color: AppColors.onPrimary)
+                  ? Icon(Icons.check_rounded, size: 16, color: context.colors.onPrimary)
                   : null,
             ),
           ],

@@ -6,6 +6,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/glass_panel.dart';
 import '../model/active_order.dart';
 import '../viewmodel/active_order_viewmodel.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// tasarim-spek-v3.md / mobil-tasarim-plani.md "Incoming Order / Akıllı
 /// Sipariş Kartı" — alttan yükselen bottom sheet. Platform rozeti,
@@ -82,7 +83,7 @@ class _IncomingOrderSheetState extends ConsumerState<IncomingOrderSheet> {
                       const SizedBox(height: 2),
                       Text(
                         '${order.distanceKm.toStringAsFixed(1)} km',
-                        style: AppTypography.mono(fontSize: 13, color: AppColors.onSurfaceVariant),
+                        style: AppTypography.mono(fontSize: 13, color: context.colors.onSurfaceVariant),
                       ),
                     ],
                   ),
@@ -96,12 +97,12 @@ class _IncomingOrderSheetState extends ConsumerState<IncomingOrderSheet> {
                       onPressed: _submitting ? null : () => _respond(false),
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-                        side: BorderSide(color: AppColors.glassBorder(opacity: 0.2)),
+                        side: BorderSide(color: context.colors.glassBorder(opacity: 0.2)),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(AppSpacing.radiusButton)),
                       ),
                       child: Text('Reddet',
-                          style: AppTypography.title.copyWith(color: AppColors.onSurfaceVariant)),
+                          style: AppTypography.title.copyWith(color: context.colors.onSurfaceVariant)),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.md),
@@ -111,7 +112,7 @@ class _IncomingOrderSheetState extends ConsumerState<IncomingOrderSheet> {
                       onPressed: _submitting ? null : () => _respond(true),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.brand,
-                        foregroundColor: AppColors.onPrimary,
+                        foregroundColor: context.colors.onPrimary,
                         padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(AppSpacing.radiusButton)),
@@ -146,7 +147,7 @@ class _PlatformBadge extends StatelessWidget {
       OrderPlatform.yemeksepeti => (AppColors.yemeksepeti, 'Yemeksepeti'),
       OrderPlatform.getir => (AppColors.getir, 'Getir'),
       OrderPlatform.trendyol => (AppColors.trendyol, 'Trendyol'),
-      OrderPlatform.unknown => (AppColors.onSurfaceVariant, 'Sipariş'),
+      OrderPlatform.unknown => (context.colors.onSurfaceVariant, 'Sipariş'),
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 4),

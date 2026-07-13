@@ -14,7 +14,7 @@ export const LoginForm = () => {
   return (
     <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%', maxWidth: '24rem' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        <label style={{ fontSize: '0.75rem', color: '#9e9e9e', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
           Telefon
         </label>
         <input
@@ -22,15 +22,15 @@ export const LoginForm = () => {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           style={{
-            background: '#2a2a2a', borderRadius: '16px', padding: '0.75rem 1rem',
-            color: '#e2e2e2', outline: 'none', border: 'none', fontSize: '1rem',
+            background: 'var(--surface-container-high)', borderRadius: '16px', padding: '0.75rem 1rem',
+            color: 'var(--text)', outline: 'none', border: 'none', fontSize: '1rem',
           }}
           placeholder="+905550000002"
           required
         />
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        <label style={{ fontSize: '0.75rem', color: '#9e9e9e', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
           Şifre
         </label>
         <input
@@ -38,20 +38,20 @@ export const LoginForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           style={{
-            background: '#2a2a2a', borderRadius: '16px', padding: '0.75rem 1rem',
-            color: '#e2e2e2', outline: 'none', border: 'none', fontSize: '1rem',
+            background: 'var(--surface-container-high)', borderRadius: '16px', padding: '0.75rem 1rem',
+            color: 'var(--text)', outline: 'none', border: 'none', fontSize: '1rem',
           }}
           placeholder="••••••••"
           required
         />
       </div>
-      {error && <p style={{ color: '#ffb4ab', fontSize: '0.875rem' }}>{error.message}</p>}
+      {error && <p style={{ color: 'var(--error)', fontSize: '0.875rem' }}>{error.message}</p>}
       <button
         type="submit"
         disabled={isPending}
         style={{
-          background: 'linear-gradient(135deg, #FF4B2B, #ff5637)',
-          color: '#e2e2e2',
+          background: 'linear-gradient(135deg, var(--brand), var(--brand-dark))',
+          color: 'var(--text)',
           fontWeight: 600,
           padding: '0.75rem',
           borderRadius: '16px',

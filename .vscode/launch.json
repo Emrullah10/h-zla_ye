@@ -74,6 +74,39 @@
       "cwd": "${workspaceFolder}/hızla-web-app",
       "console": "internalConsole",
       "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "hizla_mobile (macOS)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "cwd": "${workspaceFolder}/hizla_mobile",
+      "deviceId": "macos",
+      "args": ["--dart-define=API_BASE_URL=http://localhost:4000/api"]
+    },
+    {
+      "name": "hizla_mobile (iOS Simulator)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "cwd": "${workspaceFolder}/hizla_mobile",
+      "args": ["--dart-define=API_BASE_URL=http://localhost:4000/api"]
+    },
+    {
+      "name": "hizla_mobile (Android Emulator)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "cwd": "${workspaceFolder}/hizla_mobile",
+      "args": ["--dart-define=API_BASE_URL=http://10.0.2.2:4000/api"]
+    },
+    {
+      "name": "hizla_mobile (Gerçek Cihaz - LAN)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "cwd": "${workspaceFolder}/hizla_mobile",
+      "args": ["--dart-define=API_BASE_URL=http://192.168.1.6:4000/api"]
     }
   ]
 }

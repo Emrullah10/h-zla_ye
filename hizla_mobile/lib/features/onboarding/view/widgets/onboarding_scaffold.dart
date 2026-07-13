@@ -3,6 +3,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_gradients.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Onboarding adımlarının ortak iskeleti: geri/yardım header, ilerleme
 /// çubuğu, "Step X of 4" etiketi. Stitch onboarding-arac.html / onboarding-belge.html.
@@ -28,7 +29,7 @@ class OnboardingScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final progress = stepIndex / totalSteps;
     return Scaffold(
-      backgroundColor: AppColors.scaffold,
+      backgroundColor: context.colors.scaffold,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -42,14 +43,14 @@ class OnboardingScaffold extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: onBack ?? () => Navigator.maybePop(context),
-                    icon: const Icon(Icons.arrow_back_rounded,
-                        color: AppColors.onSurface),
+                    icon: Icon(Icons.arrow_back_rounded,
+                        color: context.colors.onSurface),
                   ),
                   Text('Hızla Ye', style: AppTypography.brandLogo.copyWith(fontSize: 18)),
                   IconButton(
                     onPressed: () {},
-                    icon: const Icon(Icons.help_outline_rounded,
-                        color: AppColors.onSurface),
+                    icon: Icon(Icons.help_outline_rounded,
+                        color: context.colors.onSurface),
                   ),
                 ],
               ),
@@ -61,7 +62,7 @@ class OnboardingScaffold extends StatelessWidget {
                   Text(
                     'Step $stepIndex of $totalSteps',
                     style: AppTypography.mono(
-                        fontSize: 13, color: AppColors.onSurfaceVariant),
+                        fontSize: 13, color: context.colors.onSurfaceVariant),
                   ),
                 ],
               ),
@@ -71,7 +72,7 @@ class OnboardingScaffold extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: progress,
                   minHeight: 4,
-                  backgroundColor: AppColors.surfaceContainerHigh,
+                  backgroundColor: context.colors.surfaceContainerHigh,
                   valueColor: const AlwaysStoppedAnimation(AppColors.gradientEnd),
                 ),
               ),
@@ -87,7 +88,7 @@ class OnboardingScaffold extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border(
                       top: BorderSide(
-                        color: AppColors.outlineVariant.withValues(alpha: 0.1),
+                        color: context.colors.outlineVariant.withValues(alpha: 0.1),
                       ),
                     ),
                   ),
@@ -142,13 +143,13 @@ class SelectableOptionCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: AppSpacing.md),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.surfaceContainerHighest
-              : AppColors.surfaceContainerHigh,
+              ? context.colors.surfaceContainerHighest
+              : context.colors.surfaceContainerHigh,
           borderRadius: BorderRadius.circular(AppSpacing.radiusChip),
           border: Border.all(
             color: isSelected
                 ? AppColors.gradientStart.withValues(alpha: 0.5)
-                : AppColors.outlineVariant.withValues(alpha: 0.15),
+                : context.colors.outlineVariant.withValues(alpha: 0.15),
           ),
           boxShadow: isSelected
               ? [
@@ -168,11 +169,11 @@ class SelectableOptionCard extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: isSelected
                     ? AppColors.gradientStart.withValues(alpha: 0.1)
-                    : AppColors.scaffold,
+                    : context.colors.scaffold,
               ),
               child: Icon(icon,
                   size: 26,
-                  color: isSelected ? AppColors.gradientStart : AppColors.secondary),
+                  color: isSelected ? AppColors.gradientStart : context.colors.secondary),
             ),
             const SizedBox(width: AppSpacing.md),
             Expanded(
@@ -192,14 +193,14 @@ class SelectableOptionCard extends StatelessWidget {
                 border: Border.all(
                   color: isSelected
                       ? AppColors.gradientStart
-                      : AppColors.onSurface.withValues(alpha: 0.2),
+                      : context.colors.onSurface.withValues(alpha: 0.2),
                   width: 2,
                 ),
                 color: isSelected ? AppColors.gradientStart : null,
               ),
               child: isSelected
-                  ? const Icon(Icons.check_rounded,
-                      size: 14, color: AppColors.onPrimary)
+                  ? Icon(Icons.check_rounded,
+                      size: 14, color: context.colors.onPrimary)
                   : null,
             ),
           ],
@@ -230,7 +231,7 @@ class OnboardingContinueButton extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: disabled ? null : AppGradients.primary,
-          color: disabled ? AppColors.surfaceContainerHighest : null,
+          color: disabled ? context.colors.surfaceContainerHighest : null,
           borderRadius: BorderRadius.circular(AppSpacing.radiusChip),
         ),
         child: Material(
@@ -240,11 +241,11 @@ class OnboardingContinueButton extends StatelessWidget {
             onTap: disabled ? null : onPressed,
             child: Center(
               child: isLoading
-                  ? const SizedBox(
+                  ? SizedBox(
                       width: 22,
                       height: 22,
                       child: CircularProgressIndicator(
-                          strokeWidth: 2.4, color: AppColors.onPrimary),
+                          strokeWidth: 2.4, color: context.colors.onPrimary),
                     )
                   : Row(
                       mainAxisSize: MainAxisSize.min,
@@ -252,16 +253,16 @@ class OnboardingContinueButton extends StatelessWidget {
                         Text(label,
                             style: AppTypography.title.copyWith(
                               color: disabled
-                                  ? AppColors.onSurfaceVariant
-                                  : AppColors.onPrimary,
+                                  ? context.colors.onSurfaceVariant
+                                  : context.colors.onPrimary,
                               fontWeight: FontWeight.w700,
                             )),
                         const SizedBox(width: AppSpacing.sm),
                         Icon(Icons.arrow_forward_rounded,
                             size: 20,
                             color: disabled
-                                ? AppColors.onSurfaceVariant
-                                : AppColors.onPrimary),
+                                ? context.colors.onSurfaceVariant
+                                : context.colors.onPrimary),
                       ],
                     ),
             ),

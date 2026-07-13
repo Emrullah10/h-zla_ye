@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/router/route_paths.dart';
-import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/async_value_view.dart';
@@ -17,6 +16,7 @@ import '../viewmodel/dashboard_viewmodel.dart';
 import 'widgets/earnings_ticker.dart';
 import 'widgets/map_backdrop.dart';
 import 'widgets/online_slider_card.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Stitch pilot-dashboard.html birebir uyarlaması ("Ana Komuta Merkezi").
 class DashboardScreen extends ConsumerStatefulWidget {
@@ -48,7 +48,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
     return Scaffold(
       extendBody: true,
-      backgroundColor: AppColors.scaffold,
+      backgroundColor: context.colors.scaffold,
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -158,8 +158,8 @@ class _Header extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 24,
-                    backgroundColor: AppColors.surfaceContainerHigh,
-                    child: Icon(Icons.person_rounded, color: AppColors.onSurfaceVariant, size: 28),
+                    backgroundColor: context.colors.surfaceContainerHigh,
+                    child: Icon(Icons.person_rounded, color: context.colors.onSurfaceVariant, size: 28),
                   ),
                   Positioned(
                     bottom: 0,
@@ -168,12 +168,12 @@ class _Header extends StatelessWidget {
                       width: 14,
                       height: 14,
                       decoration: BoxDecoration(
-                        color: AppColors.neonCyan,
+                        color: context.colors.neonCyan,
                         shape: BoxShape.circle,
-                        border: Border.all(color: AppColors.scaffold, width: 2),
+                        border: Border.all(color: context.colors.scaffold, width: 2),
                         boxShadow: [
                           BoxShadow(
-                              color: AppColors.neonCyan.withValues(alpha: 0.5), blurRadius: 8),
+                              color: context.colors.neonCyan.withValues(alpha: 0.5), blurRadius: 8),
                         ],
                       ),
                     ),
@@ -186,7 +186,7 @@ class _Header extends StatelessWidget {
                 children: [
                   Text('Efsane Kurye', style: AppTypography.title),
                   Text('LEVEL 42 PILOT',
-                      style: AppTypography.label.copyWith(color: AppColors.neonCyan)),
+                      style: AppTypography.label.copyWith(color: context.colors.neonCyan)),
                 ],
               ),
             ],
@@ -209,7 +209,7 @@ class _LocationPill extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.my_location_rounded, color: AppColors.neonCyan, size: 20),
+          Icon(Icons.my_location_rounded, color: context.colors.neonCyan, size: 20),
           const SizedBox(width: AppSpacing.sm),
           Text('Beşiktaş Merkez', style: AppTypography.mono(fontSize: 14)),
         ],

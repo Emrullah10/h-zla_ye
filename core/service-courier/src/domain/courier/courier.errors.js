@@ -11,4 +11,7 @@ export const CourierErrors = {
   INVALID_PERIOD: () => new DomainError('Period must be weekly or monthly', 400),
   MISSING_CATEGORY: () => new DomainError('Support category is required', 400),
   MISSING_MESSAGE: () => new DomainError('Support message is required', 400),
+  MISSING_ORDER_FIELDS: () => new DomainError('restaurantName, pickupAddr, deliveryAddr are required', 400),
+  INVALID_COORDINATES: () => new DomainError('lat/lng must be valid numbers', 400),
+  NO_AVAILABLE_COURIER: () => new DomainError('No available courier to assign', 409),
 };

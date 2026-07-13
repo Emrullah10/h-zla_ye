@@ -1,29 +1,33 @@
 import { TABLES } from '../../schemas/table-definitions.js';
 
+const ORDER_COLUMNS = `order_id, courier_id, restaurant_name, platform, pickup_addr, delivery_addr,
+                pickup_lat, pickup_lng, delivery_lat, delivery_lng,
+                status, amount, fee, distance_meters, qr_code, created_at, updated_at`;
+
 export const findByUserId = (userId) => ({
-  text: `SELECT courier_id, courier_user_id, name, phone, status, vehicle_type, rating
+  text: `SELECT courier_id, courier_user_id, name, phone, status, vehicle_type, rating,
+                last_lat, last_lng, location_updated_at
          FROM ${TABLES.COURIERS} WHERE courier_user_id = $1`,
   values: [userId],
 });
 
 export const findById = (courierId) => ({
-  text: `SELECT courier_id, courier_user_id, name, phone, status, vehicle_type, rating
+  text: `SELECT courier_id, courier_user_id, name, phone, status, vehicle_type, rating,
+                last_lat, last_lng, location_updated_at
          FROM ${TABLES.COURIERS} WHERE courier_id = $1`,
   values: [courierId],
 });
 
 export const findActiveByCourierId = (courierId) => ({
-  text: `SELECT order_id, courier_id, restaurant_name, pickup_addr, delivery_addr,
-                status, amount, fee, distance_meters, qr_code, created_at, updated_at
+  text: `SELECT ${ORDER_COLUMNS}
          FROM ${TABLES.ORDERS}
-         WHERE courier_id = $1 AND status IN ('accepted', 'picked_up')
+         WHERE courier_id = $1 AND status IN ('pending', 'accepted', 'picked_up')
          ORDER BY updated_at DESC LIMIT 1`,
   values: [courierId],
 });
 
 export const findOrderById = (orderId) => ({
-  text: `SELECT order_id, courier_id, restaurant_name, pickup_addr, delivery_addr,
-                status, amount, fee, distance_meters, qr_code, created_at, updated_at
+  text: `SELECT ${ORDER_COLUMNS}
          FROM ${TABLES.ORDERS} WHERE order_id = $1`,
   values: [orderId],
 });
@@ -31,9 +35,48 @@ export const findOrderById = (orderId) => ({
 export const updateOrderStatus = (orderId, status) => ({
   text: `UPDATE ${TABLES.ORDERS} SET status = $2, updated_at = NOW()
          WHERE order_id = $1
-         RETURNING order_id, courier_id, restaurant_name, pickup_addr, delivery_addr,
-                   status, amount, fee, distance_meters, qr_code, created_at, updated_at`,
+         RETURNING ${ORDER_COLUMNS}`,
   values: [orderId, status],
+});
+
+export const createOrder = ({
+  courierId, restaurantName, platform, pickupAddr, deliveryAddr,
+  pickupLat, pickupLng, deliveryLat, deliveryLng, amount, fee, distanceMeters,
+}) => ({
+  text: `INSERT INTO ${TABLES.ORDERS}
+           (courier_id, restaurant_name, platform, pickup_addr, delivery_addr,
+            pickup_lat, pickup_lng, delivery_lat, delivery_lng, amount, fee, distance_meters)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+         RETURNING ${ORDER_COLUMNS}`,
+  values: [
+    courierId, restaurantName, platform, pickupAddr, deliveryAddr,
+    pickupLat, pickupLng, deliveryLat, deliveryLng, amount, fee, distanceMeters,
+  ],
+});
+
+export const findFirstAvailableCourier = () => ({
+  text: `SELECT courier_id, courier_user_id, name, phone, status, vehicle_type, rating,
+                last_lat, last_lng, location_updated_at
+         FROM ${TABLES.COURIERS}
+         ORDER BY (status = 'online') DESC, updated_at DESC
+         LIMIT 1`,
+  values: [],
+});
+
+export const updateCourierLocation = (courierId, lat, lng) => ({
+  text: `UPDATE ${TABLES.COURIERS} SET last_lat = $2, last_lng = $3, location_updated_at = NOW()
+         WHERE courier_id = $1
+         RETURNING courier_id, courier_user_id, name, phone, status, vehicle_type, rating,
+                   last_lat, last_lng, location_updated_at`,
+  values: [courierId, lat, lng],
+});
+
+export const findLatestCourierLocations = () => ({
+  text: `SELECT courier_id, last_lat, last_lng, location_updated_at
+         FROM ${TABLES.COURIERS}
+         WHERE last_lat IS NOT NULL AND last_lng IS NOT NULL
+         ORDER BY location_updated_at DESC LIMIT 50`,
+  values: [],
 });
 
 export const createRating = ({ orderId, courierId, restaurantRating, comment }) => ({

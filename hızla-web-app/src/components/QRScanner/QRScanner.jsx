@@ -66,14 +66,14 @@ export const QRScanner = ({ onScan }) => {
   }
 
   return (
-    <div style={{ position: 'relative', width: '100%', aspectRatio: '1', background: '#1f1f1f', borderRadius: '16px', overflow: 'hidden' }}>
+    <div style={{ position: 'relative', width: '100%', aspectRatio: '1', background: 'var(--surface-container)', borderRadius: '16px', overflow: 'hidden' }}>
       <video ref={videoRef} autoPlay playsInline muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       <div style={{
         position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
         <div style={{
-          width: '12rem', height: '12rem', border: '2px solid #00daf3', borderRadius: '16px',
+          width: '12rem', height: '12rem', border: '2px solid var(--neon)', borderRadius: '16px',
           boxShadow: '0 0 20px rgba(0,218,243,0.3)',
         }} />
       </div>
@@ -81,7 +81,7 @@ export const QRScanner = ({ onScan }) => {
       {error && (
         <div style={{
           position: 'absolute', top: '0.5rem', left: '0.5rem', right: '0.5rem',
-          padding: '0.5rem', background: 'rgba(255,75,43,0.9)', color: '#e2e2e2',
+          padding: '0.5rem', background: 'rgba(255,75,43,0.9)', color: 'var(--text)',
           borderRadius: '16px', fontSize: '0.75rem', textAlign: 'center',
         }}>
           {error}
@@ -102,13 +102,13 @@ export const QRScanner = ({ onScan }) => {
             autoFocus
             style={{
               flex: 1, padding: '0.5rem 0.75rem', borderRadius: '9999px',
-              border: '1px solid #00daf3', background: '#111', color: '#e2e2e2', fontSize: '0.875rem',
+              border: '1px solid var(--neon)', background: '#111', color: 'var(--text)', fontSize: '0.875rem',
             }}
           />
           <button
             onClick={handleManualSubmit}
             style={{
-              padding: '0.5rem 1.25rem', background: 'linear-gradient(135deg, #FF4B2B, #ff5637)', color: '#e2e2e2',
+              padding: '0.5rem 1.25rem', background: 'linear-gradient(135deg, var(--brand), var(--brand-dark))', color: 'var(--text)',
               borderRadius: '9999px', border: 'none', fontSize: '0.875rem', cursor: 'pointer',
             }}
           >
@@ -120,7 +120,7 @@ export const QRScanner = ({ onScan }) => {
           onClick={() => setShowManualInput(true)}
           style={{
             position: 'absolute', bottom: '1rem', left: '50%', transform: 'translateX(-50%)',
-            padding: '0.5rem 1.5rem', background: 'linear-gradient(135deg, #FF4B2B, #ff5637)', color: '#e2e2e2',
+            padding: '0.5rem 1.5rem', background: 'linear-gradient(135deg, var(--brand), var(--brand-dark))', color: 'var(--text)',
             borderRadius: '9999px', border: 'none', fontSize: '0.875rem', cursor: 'pointer',
           }}
         >

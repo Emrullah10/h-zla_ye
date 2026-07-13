@@ -46,13 +46,18 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- Test sipariş
-INSERT INTO courier.orders (order_id, courier_id, restaurant_name, pickup_addr, delivery_addr, status, amount, fee, distance_meters, qr_code)
+INSERT INTO courier.orders (order_id, courier_id, restaurant_name, platform, pickup_addr, delivery_addr, pickup_lat, pickup_lng, delivery_lat, delivery_lng, status, amount, fee, distance_meters, qr_code)
 VALUES (
   'd0000000-0000-0000-0000-000000000001',
   'b0000000-0000-0000-0000-000000000001',
   'Burger Palace',
+  'yemeksepeti',
   'Bağcılar Mah. Atatürk Cad. No:1',
   'Güneşli Mah. 1234 Sok. No:5',
+  41.0430,
+  29.0090,
+  41.0480,
+  29.0150,
   'accepted',
   85.00,
   12.50,

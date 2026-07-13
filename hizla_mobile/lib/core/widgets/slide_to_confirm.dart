@@ -4,6 +4,7 @@ import '../theme/app_colors.dart';
 import '../theme/app_gradients.dart';
 import '../theme/app_shadows.dart';
 import '../theme/app_typography.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// İmza etkileşim: Stitch'teki slide-to-accept / slide-to-deliver.
 /// Track + gradyanlı thumb, sürüklerken dolan fill, eşik %85'te onay,
@@ -105,7 +106,7 @@ class _SlideToConfirmState extends State<SlideToConfirm>
         return Container(
           height: widget.height,
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainerHighest,
+            color: context.colors.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(widget.height / 2),
           ),
           child: Stack(
@@ -130,7 +131,7 @@ class _SlideToConfirmState extends State<SlideToConfirm>
                           ? 'BAŞLATILIYOR...'
                           : widget.label.toUpperCase()),
                   style: AppTypography.label.copyWith(
-                    color: AppColors.onSurface.withValues(alpha: 0.9),
+                    color: context.colors.onSurface.withValues(alpha: 0.9),
                     fontSize: 12,
                   ),
                 ),
@@ -155,7 +156,7 @@ class _SlideToConfirmState extends State<SlideToConfirm>
                     ),
                     child: Icon(
                       _confirmed ? widget.confirmedIcon : widget.icon,
-                      color: AppColors.onPrimary,
+                      color: context.colors.onPrimary,
                       size: 26,
                     ),
                   ),

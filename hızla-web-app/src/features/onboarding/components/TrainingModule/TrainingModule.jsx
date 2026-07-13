@@ -27,10 +27,10 @@ export const TrainingModule = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <span style={{ fontSize: '2rem' }}>{mod.icon}</span>
               <div style={{ flex: 1 }}>
-                <p style={{ fontWeight: 600, color: '#e2e2e2' }}>{mod.title}</p>
-                <p style={{ fontSize: '0.75rem', color: '#9e9e9e' }}>{mod.duration}</p>
+                <p style={{ fontWeight: 600, color: 'var(--text)' }}>{mod.title}</p>
+                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{mod.duration}</p>
               </div>
-              {completed.has(mod.id) && <span style={{ color: '#FF4B2B', fontSize: '1.25rem' }}>✓</span>}
+              {completed.has(mod.id) && <span style={{ color: 'var(--brand)', fontSize: '1.25rem' }}>✓</span>}
             </div>
           </GlassCard>
         </button>
@@ -39,8 +39,8 @@ export const TrainingModule = () => {
         onClick={() => mutate()}
         disabled={!allDone || isPending}
         style={{
-          background: 'linear-gradient(135deg, #FF4B2B, #ff5637)',
-          color: '#e2e2e2', padding: '0.75rem', borderRadius: '16px', border: 'none',
+          background: 'linear-gradient(135deg, var(--brand), var(--brand-dark))',
+          color: 'var(--text)', padding: '0.75rem', borderRadius: '16px', border: 'none',
           fontWeight: 600, fontSize: '1rem', cursor: (!allDone || isPending) ? 'not-allowed' : 'pointer',
           opacity: (!allDone || isPending) ? 0.5 : 1, marginTop: '0.5rem',
         }}

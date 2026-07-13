@@ -12,7 +12,7 @@ export const ErrorPage = ({ code, title, description }) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#0e0e0e',
+        background: 'var(--bg)',
         padding: '1.5rem',
         textAlign: 'center',
       }}
@@ -23,7 +23,7 @@ export const ErrorPage = ({ code, title, description }) => {
             fontFamily: "'JetBrains Mono', monospace",
             fontSize: '3rem',
             fontWeight: 700,
-            background: 'linear-gradient(135deg, #ffb4a5, #ff5637)',
+            background: 'linear-gradient(135deg, var(--brand), var(--brand-dark))',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             marginBottom: '0.5rem',
@@ -33,7 +33,7 @@ export const ErrorPage = ({ code, title, description }) => {
         </div>
         <div
           style={{
-            color: '#e2e2e2',
+            color: 'var(--text)',
             fontSize: '1.25rem',
             fontWeight: 600,
             marginBottom: '0.5rem',
@@ -43,7 +43,7 @@ export const ErrorPage = ({ code, title, description }) => {
         </div>
         <div
           style={{
-            color: '#e5bdb6',
+            color: 'var(--text-muted)',
             fontSize: '0.9rem',
             marginBottom: '1.5rem',
           }}
@@ -57,8 +57,8 @@ export const ErrorPage = ({ code, title, description }) => {
             padding: '0.9rem',
             border: 'none',
             borderRadius: '16px',
-            background: 'linear-gradient(135deg, #ffb4a5, #ff5637)',
-            color: '#650b00',
+            background: 'linear-gradient(135deg, var(--brand), var(--brand-dark))',
+            color: 'var(--surface)',
             fontWeight: 700,
             fontSize: '0.95rem',
             cursor: 'pointer',

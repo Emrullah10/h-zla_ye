@@ -8,6 +8,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/glass_panel.dart';
 import '../viewmodel/onboarding_viewmodel.dart';
 import 'widgets/onboarding_scaffold.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Stitch onboarding-belge.html birebir uyarlaması (Onboarding Adım 2).
 class DocumentUploadScreen extends ConsumerStatefulWidget {
@@ -133,12 +134,12 @@ class _DocumentCard extends StatelessWidget {
             height: 48,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.scaffold,
+              color: context.colors.scaffold,
             ),
             child: Icon(
               isUploaded ? Icons.check_circle_rounded : icon,
               size: 24,
-              color: isUploaded ? AppColors.neonCyan : AppColors.gradientStart,
+              color: isUploaded ? context.colors.neonCyan : AppColors.gradientStart,
             ),
           ),
           const SizedBox(width: AppSpacing.md),
@@ -173,18 +174,18 @@ class _DocumentCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
                       child: Center(
                         child: isUploading
-                            ? const SizedBox(
+                            ? SizedBox(
                                 width: 16,
                                 height: 16,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
-                                  color: AppColors.onPrimary,
+                                  color: context.colors.onPrimary,
                                 ),
                               )
                             : Text(
                                 'Yükle',
                                 style: AppTypography.label.copyWith(
-                                  color: AppColors.onPrimary,
+                                  color: context.colors.onPrimary,
                                   fontSize: 12,
                                 ),
                               ),

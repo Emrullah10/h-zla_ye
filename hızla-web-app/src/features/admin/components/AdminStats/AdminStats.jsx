@@ -19,12 +19,12 @@ export const AdminStats = () => {
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', padding: '1rem' }}>
       {stats.map(({ label, value, mono }) => (
         <GlassCard key={label} style={{ padding: '1rem' }}>
-          <p style={{ fontSize: '0.75rem', color: '#9e9e9e', marginBottom: '4px' }}>{label}</p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>{label}</p>
           <p style={{
             fontSize: '1.5rem',
             fontFamily: mono ? 'JetBrains Mono, monospace' : 'inherit',
             fontWeight: mono ? 400 : 700,
-            color: '#e2e2e2',
+            color: 'var(--text)',
           }}>
             {value}
           </p>

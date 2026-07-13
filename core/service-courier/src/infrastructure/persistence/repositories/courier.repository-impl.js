@@ -9,6 +9,9 @@ function mapCourier(row) {
     status: row.status,
     vehicleType: row.vehicle_type,
     rating: row.rating,
+    lastLat: row.last_lat,
+    lastLng: row.last_lng,
+    locationUpdatedAt: row.location_updated_at,
   };
 }
 
@@ -17,8 +20,13 @@ function mapOrder(row) {
     orderId: row.order_id,
     courierId: row.courier_id,
     restaurantName: row.restaurant_name,
+    platform: row.platform,
     pickupAddr: row.pickup_addr,
     deliveryAddr: row.delivery_addr,
+    pickupLat: row.pickup_lat,
+    pickupLng: row.pickup_lng,
+    deliveryLat: row.delivery_lat,
+    deliveryLng: row.delivery_lng,
     status: row.status,
     amount: row.amount,
     fee: row.fee,
@@ -41,6 +49,26 @@ export class CourierRepositoryImpl {
     const res = await this.db.query(q.findById(courierId));
     return res.rows.length ? mapCourier(res.rows[0]) : null;
   }
+
+  async findFirstAvailable() {
+    const res = await this.db.query(q.findFirstAvailableCourier());
+    return res.rows.length ? mapCourier(res.rows[0]) : null;
+  }
+
+  async updateLocation(courierId, lat, lng) {
+    const res = await this.db.query(q.updateCourierLocation(courierId, lat, lng));
+    return mapCourier(res.rows[0]);
+  }
+
+  async findLatestLocations() {
+    const res = await this.db.query(q.findLatestCourierLocations());
+    return res.rows.map((row) => ({
+      courierId: row.courier_id,
+      lat: row.last_lat,
+      lng: row.last_lng,
+      updatedAt: row.location_updated_at,
+    }));
+  }
 }
 
 export class OrderRepositoryImpl {
@@ -58,6 +86,11 @@ export class OrderRepositoryImpl {
 
   async updateStatus(orderId, status) {
     const res = await this.db.query(q.updateOrderStatus(orderId, status));
+    return mapOrder(res.rows[0]);
+  }
+
+  async create(data) {
+    const res = await this.db.query(q.createOrder(data));
     return mapOrder(res.rows[0]);
   }
 }

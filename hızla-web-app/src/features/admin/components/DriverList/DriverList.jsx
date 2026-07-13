@@ -21,7 +21,7 @@ export const DriverList = () => {
 
   if (drivers.length === 0) {
     return (
-      <p style={{ color: '#9e9e9e', fontSize: '0.875rem', textAlign: 'center', padding: '2rem 0' }}>
+      <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', textAlign: 'center', padding: '2rem 0' }}>
         Bekleyen başvuru yok
       </p>
     )
@@ -34,15 +34,15 @@ export const DriverList = () => {
       {drivers.map((d) => (
         <GlassCard key={d.appId} style={{ padding: '1rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-            <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#e2e2e2' }}>{d.phone}</span>
+            <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text)' }}>{d.phone}</span>
             <span style={{
               fontSize: '0.7rem', padding: '2px 8px', borderRadius: '4px',
-              background: 'rgba(255,75,43,0.15)', color: '#FF4B2B',
+              background: 'rgba(255,75,43,0.15)', color: 'var(--brand)',
             }}>
               {VEHICLE_LABELS[d.vehicleType] ?? d.vehicleType}
             </span>
           </div>
-          <p style={{ fontSize: '0.75rem', color: '#9e9e9e', marginBottom: '0.75rem' }}>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '0.75rem' }}>
             {new Date(d.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
           </p>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -51,7 +51,7 @@ export const DriverList = () => {
               disabled={isBusy}
               style={{
                 flex: 1, padding: '0.5rem', borderRadius: '16px', border: 'none',
-                background: 'linear-gradient(135deg, #FF4B2B, #ff5637)', color: '#e2e2e2', fontWeight: 600, fontSize: '0.85rem',
+                background: 'linear-gradient(135deg, var(--brand), var(--brand-dark))', color: 'var(--text)', fontWeight: 600, fontSize: '0.85rem',
                 cursor: isBusy ? 'not-allowed' : 'pointer', opacity: isBusy ? 0.5 : 1,
               }}
             >
@@ -62,8 +62,8 @@ export const DriverList = () => {
               disabled={isBusy}
               style={{
                 flex: 1, padding: '0.5rem', borderRadius: '16px',
-                background: '#353535',
-                color: '#9e9e9e', fontWeight: 500, fontSize: '0.85rem',
+                background: 'var(--surface-container-highest)',
+                color: 'var(--text-secondary)', fontWeight: 500, fontSize: '0.85rem',
                 cursor: isBusy ? 'not-allowed' : 'pointer', opacity: isBusy ? 0.5 : 1,
               }}
             >

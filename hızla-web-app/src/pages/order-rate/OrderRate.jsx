@@ -10,7 +10,7 @@ const OrderRate = () => {
 
   return (
     <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center' }}>
-      <h1 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#e2e2e2', textAlign: 'center' }}>
+      <h1 style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--text)', textAlign: 'center' }}>
         Restoranı Değerlendir
       </h1>
       <EmojiRating onRate={setRating} />
@@ -20,8 +20,8 @@ const OrderRate = () => {
           disabled={isPending}
           style={{
             width: '100%', maxWidth: '20rem', padding: '0.75rem',
-            background: 'linear-gradient(135deg, #FF4B2B, #ff5637)',
-            color: '#e2e2e2', border: 'none', borderRadius: '16px',
+            background: 'linear-gradient(135deg, var(--brand), var(--brand-dark))',
+            color: 'var(--text)', border: 'none', borderRadius: '16px',
             fontWeight: 600, fontSize: '1rem', cursor: isPending ? 'not-allowed' : 'pointer',
             opacity: isPending ? 0.5 : 1,
           }}

@@ -1,5 +1,43 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: #0e0e0e; color: #e2e2e2; font-family: 'Inter', sans-serif; }
+
+:root {
+  --bg: #0e0e0e;
+  --surface: #131313;
+  --surface-container: #1f1f1f;
+  --surface-container-high: #2a2a2a;
+  --surface-container-highest: #353535;
+  --text: #e2e2e2;
+  --text-secondary: #9e9e9e;
+  --text-muted: #e5bdb6;
+  --neon: #00daf3;
+  --error: #ffb4ab;
+  --success: #4bff8f;
+  --outline: rgba(255,255,255,0.12);
+  --scrollbar-track: #131313;
+  --scrollbar-thumb: #353535;
+  /* Marka rengi her iki temada aynı — token olarak da erişilebilir */
+  --brand: #FF4B2B;
+  --brand-dark: #ff5637;
+}
+
+:root[data-theme="light"] {
+  --bg: #faf7f5;
+  --surface: #ffffff;
+  --surface-container: #efeae6;
+  --surface-container-high: #e8e2dd;
+  --surface-container-highest: #dfd8d2;
+  --text: #1d1b1a;
+  --text-secondary: #6e5a54;
+  --text-muted: #6e5a54;
+  --neon: #0093a6;
+  --error: #ba1a1a;
+  --success: #1b8a4f;
+  --outline: rgba(0,0,0,0.08);
+  --scrollbar-track: #efeae6;
+  --scrollbar-thumb: #dfd8d2;
+}
+
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #131313; }
-::-webkit-scrollbar-thumb { background: #353535; border-radius: 2px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 2px; }

@@ -1,3 +1,5 @@
+import '../../../shared/utils/json_parse.dart';
+
 /// GET /courier/earnings?period=weekly|monthly yanıtı —
 /// get-earnings.use-case.js + courier.repository-impl.js ile birebir.
 class EarningsBar {
@@ -8,7 +10,7 @@ class EarningsBar {
 
   factory EarningsBar.fromJson(Map<String, dynamic> json) => EarningsBar(
         label: json['label']?.toString() ?? '',
-        amount: (json['amount'] as num?)?.toDouble() ?? 0,
+        amount: toDoubleSafe(json['amount']),
       );
 }
 
@@ -31,10 +33,10 @@ class Earnings {
       bars.isEmpty ? 0 : bars.map((b) => b.amount).reduce((a, b) => a > b ? a : b);
 
   factory Earnings.fromJson(Map<String, dynamic> json) => Earnings(
-        total: (json['total'] as num?)?.toDouble() ?? 0,
-        orderCount: (json['orderCount'] as num?)?.toInt() ?? 0,
-        avgOrderFee: (json['avgOrderFee'] as num?)?.toDouble() ?? 0,
-        onlineHours: (json['onlineHours'] as num?)?.toDouble() ?? 0,
+        total: toDoubleSafe(json['total']),
+        orderCount: toIntSafe(json['orderCount']),
+        avgOrderFee: toDoubleSafe(json['avgOrderFee']),
+        onlineHours: toDoubleSafe(json['onlineHours']),
         bars: (json['bars'] as List<dynamic>?)
                 ?.map((e) => EarningsBar.fromJson(e as Map<String, dynamic>))
                 .toList() ??

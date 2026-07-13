@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_shadows.dart';
 import '../theme/app_typography.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 class GlassNavItem {
   const GlassNavItem({required this.icon, required this.label});
@@ -33,7 +34,7 @@ class GlassBottomNav extends StatelessWidget {
           height: 80,
           padding: const EdgeInsets.symmetric(horizontal: 8),
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainerLow.withValues(alpha: 0.6),
+            color: context.colors.surfaceContainerLow.withValues(alpha: 0.6),
             borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
             boxShadow: AppShadows.navShadow,
           ),
@@ -67,7 +68,7 @@ class _NavItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isActive ? AppColors.gradientStart : AppColors.onSecondaryFixedVariant;
+    final color = isActive ? AppColors.gradientStart : context.colors.onSecondaryFixedVariant;
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,

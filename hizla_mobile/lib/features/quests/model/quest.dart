@@ -1,3 +1,5 @@
+import '../../../shared/utils/json_parse.dart';
+
 /// GET /courier/quests yanıtı — get-quests.use-case.js + courier.repository-impl.js ile birebir.
 class Quest {
   const Quest({
@@ -29,10 +31,10 @@ class Quest {
         questId: json['questId']?.toString() ?? '',
         title: json['title']?.toString() ?? '',
         description: json['description']?.toString() ?? '',
-        reward: (json['reward'] as num?)?.toDouble() ?? 0,
-        targetCount: (json['targetCount'] as num?)?.toInt() ?? 0,
+        reward: toDoubleSafe(json['reward']),
+        targetCount: toIntSafe(json['targetCount']),
         rarity: json['rarity']?.toString() ?? 'common',
-        progress: (json['progress'] as num?)?.toInt() ?? 0,
+        progress: toIntSafe(json['progress']),
         expiresAt: json['expiresAt'] != null
             ? DateTime.tryParse(json['expiresAt'].toString())
             : null,

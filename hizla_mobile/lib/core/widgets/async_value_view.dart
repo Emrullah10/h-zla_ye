@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
 import 'gradient_button.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// `AsyncValue&lt;T&gt;` için standart loading/error/data sarmalayıcı.
 class AsyncValueView<T> extends StatelessWidget {
@@ -30,7 +31,7 @@ class AsyncValueView<T> extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.wifi_off_rounded, color: AppColors.error, size: 40),
+              Icon(Icons.wifi_off_rounded, color: context.colors.error, size: 40),
               const SizedBox(height: 12),
               Text(
                 'Bir şeyler ters gitti',

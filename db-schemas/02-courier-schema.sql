@@ -8,6 +8,9 @@ CREATE TABLE IF NOT EXISTS courier.couriers (
   status          VARCHAR(20) NOT NULL DEFAULT 'offline',
   vehicle_type    shared.vehicle_type NOT NULL,
   rating          NUMERIC(3,2) NOT NULL DEFAULT 5.00,
+  last_lat            DOUBLE PRECISION,
+  last_lng            DOUBLE PRECISION,
+  location_updated_at TIMESTAMPTZ,
   created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -16,8 +19,13 @@ CREATE TABLE IF NOT EXISTS courier.orders (
   order_id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   courier_id        UUID REFERENCES courier.couriers(courier_id),
   restaurant_name   VARCHAR(100) NOT NULL,
+  platform          VARCHAR(30) NOT NULL DEFAULT 'unknown',
   pickup_addr       TEXT NOT NULL,
   delivery_addr     TEXT NOT NULL,
+  pickup_lat        DOUBLE PRECISION,
+  pickup_lng        DOUBLE PRECISION,
+  delivery_lat      DOUBLE PRECISION,
+  delivery_lng      DOUBLE PRECISION,
   status            shared.order_status NOT NULL DEFAULT 'pending',
   amount            NUMERIC(10,2) NOT NULL DEFAULT 0,
   fee               NUMERIC(10,2) NOT NULL DEFAULT 0,

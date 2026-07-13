@@ -17,13 +17,19 @@ class AppGradients {
     colors: [Color(0xFF9CF0FF), AppColors.neonCyan],
   );
 
-  static LinearGradient scaffoldFade({bool topToBottom = true}) =>
+  /// Scaffold rengi verilen temaya göre üstten/alttan kararma —
+  /// `scaffoldFadeFor(context.colors)` ile çağrılmalı.
+  static LinearGradient scaffoldFadeFor(AppColorScheme c, {bool topToBottom = true}) =>
       LinearGradient(
         begin: topToBottom ? Alignment.topCenter : Alignment.bottomCenter,
         end: topToBottom ? Alignment.bottomCenter : Alignment.topCenter,
         colors: [
-          AppColors.scaffold,
-          AppColors.scaffold.withValues(alpha: 0.0),
+          c.scaffold,
+          c.scaffold.withValues(alpha: 0.0),
         ],
       );
+
+  @Deprecated('scaffoldFadeFor(context.colors) kullanın — koyu tema sabitliyor')
+  static LinearGradient scaffoldFade({bool topToBottom = true}) =>
+      scaffoldFadeFor(AppColorScheme.dark, topToBottom: topToBottom);
 }

@@ -3,6 +3,7 @@ import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_typography.dart';
 import 'glass_panel.dart';
+import 'package:hizla_mobile/core/theme/theme_context.dart';
 
 /// Küçük glass istatistik kartı — "Aktif Süre 00:00:00" gibi.
 class StatTile extends StatelessWidget {
@@ -11,14 +12,14 @@ class StatTile extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.value,
-    this.valueColor = AppColors.onSurface,
+    this.valueColor,
     this.iconColor = AppColors.gradientStart,
   });
 
   final IconData icon;
   final String label;
   final String value;
-  final Color valueColor;
+  final Color? valueColor;
   final Color iconColor;
 
   @override
@@ -37,7 +38,9 @@ class StatTile extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(label, style: AppTypography.labelSmall),
-              Text(value, style: AppTypography.mono(fontSize: 14, color: valueColor)),
+              Text(value,
+                  style: AppTypography.mono(
+                      fontSize: 14, color: valueColor ?? context.colors.onSurface)),
             ],
           ),
         ],

@@ -3,37 +3,34 @@ import 'app_colors.dart';
 import 'app_spacing.dart';
 import 'app_typography.dart';
 
-/// Uygulama yalnızca dark tema destekler ("Kinetic Nocturne" tek tema).
+/// "Kinetic Nocturne" (koyu) ve "Kinetic Daylight" (açık) temaları.
 class AppTheme {
   AppTheme._();
 
-  static ThemeData get dark {
-    final base = ThemeData.dark(useMaterial3: true);
+  static ThemeData get dark => _base(AppColorScheme.dark, Brightness.dark);
+  static ThemeData get light => _base(AppColorScheme.light, Brightness.light);
+
+  static ThemeData _base(AppColorScheme c, Brightness brightness) {
+    final base = ThemeData(brightness: brightness, useMaterial3: true);
     return base.copyWith(
-      scaffoldBackgroundColor: AppColors.scaffold,
+      scaffoldBackgroundColor: c.scaffold,
       colorScheme: base.colorScheme.copyWith(
-        surface: AppColors.surface,
+        brightness: brightness,
+        surface: c.surface,
         primary: AppColors.gradientEnd,
-        secondary: AppColors.neonCyan,
-        error: AppColors.error,
-        onSurface: AppColors.onSurface,
+        secondary: c.neonCyan,
+        error: c.error,
+        onSurface: c.onSurface,
       ),
-      textTheme: base.textTheme.copyWith(
-        displayLarge: AppTypography.displayLarge,
-        headlineMedium: AppTypography.headline,
-        titleMedium: AppTypography.title,
-        bodyMedium: AppTypography.body,
-        bodySmall: AppTypography.bodyMuted,
-        labelSmall: AppTypography.label,
-      ),
+      textTheme: AppTypography.themedTextTheme(base.textTheme, c),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
-        titleTextStyle: AppTypography.title,
+        titleTextStyle: AppTypography.title.copyWith(color: c.onSurface),
       ),
       cardTheme: CardThemeData(
-        color: AppColors.surfaceContainerHigh.withValues(alpha: 0.6),
+        color: c.surfaceContainerHigh.withValues(alpha: 0.6),
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
@@ -42,7 +39,7 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.gradientEnd,
-          foregroundColor: AppColors.onSurface,
+          foregroundColor: c.onSurface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSpacing.radiusButton),
           ),
@@ -51,7 +48,7 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.surfaceContainerHigh,
+        fillColor: c.surfaceContainerHigh,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSpacing.radiusButton),
           borderSide: BorderSide.none,
@@ -64,6 +61,7 @@ class AppTheme {
         ),
       ),
       splashFactory: NoSplash.splashFactory,
+      extensions: [c],
     );
   }
 }

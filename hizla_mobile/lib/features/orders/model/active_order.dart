@@ -1,5 +1,13 @@
+import '../../../shared/utils/json_parse.dart';
+
 /// Platform entegrasyonu — sipariş kartındaki rozet rengi için.
 enum OrderPlatform { yemeksepeti, getir, trendyol, unknown }
+
+double? _toNullableDouble(dynamic value) {
+  if (value == null) return null;
+  if (value is num) return value.toDouble();
+  return double.tryParse(value.toString());
+}
 
 OrderPlatform _platformFromString(String? value) {
   switch (value?.toLowerCase()) {
@@ -30,6 +38,10 @@ class ActiveOrder {
     required this.earnings,
     required this.platform,
     required this.status,
+    this.pickupLat,
+    this.pickupLng,
+    this.deliveryLat,
+    this.deliveryLng,
   });
 
   final String id;
@@ -41,6 +53,10 @@ class ActiveOrder {
   final double earnings;
   final OrderPlatform platform;
   final String status;
+  final double? pickupLat;
+  final double? pickupLng;
+  final double? deliveryLat;
+  final double? deliveryLng;
 
   double get distanceKm => distanceMeters / 1000;
 
@@ -66,18 +82,16 @@ class ActiveOrder {
       customerAddress: raw['customerAddress']?.toString() ??
           raw['address']?.toString() ??
           '',
-      distanceMeters: (raw['distanceMeters'] as num?)?.toDouble() ??
-          (raw['distance'] as num?)?.toDouble() ??
-          0,
-      etaMinutes: (raw['etaMinutes'] as num?)?.toInt() ??
-          (raw['eta'] as num?)?.toInt() ??
-          0,
-      earnings: (raw['fee'] as num?)?.toDouble() ??
-          (raw['earnings'] as num?)?.toDouble() ??
-          0,
+      distanceMeters: toDoubleSafe(raw['distanceMeters'] ?? raw['distance']),
+      etaMinutes: toIntSafe(raw['etaMinutes'] ?? raw['eta']),
+      earnings: toDoubleSafe(raw['fee'] ?? raw['earnings']),
       platform: _platformFromString(
           raw['platform']?.toString() ?? raw['integration']?.toString()),
       status: raw['status']?.toString() ?? 'pending',
+      pickupLat: _toNullableDouble(raw['pickupLat'] ?? raw['pickup_lat']),
+      pickupLng: _toNullableDouble(raw['pickupLng'] ?? raw['pickup_lng']),
+      deliveryLat: _toNullableDouble(raw['deliveryLat'] ?? raw['delivery_lat']),
+      deliveryLng: _toNullableDouble(raw['deliveryLng'] ?? raw['delivery_lng']),
     );
   }
 }

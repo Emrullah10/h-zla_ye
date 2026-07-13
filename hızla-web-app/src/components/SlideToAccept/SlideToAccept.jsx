@@ -20,7 +20,7 @@ export const SlideToAccept = ({ onAccept, label = 'Kabul Et' }) => {
       onPointerUp={() => setPos(0)}
       style={{
         position: 'relative', height: '3.5rem', width: '100%',
-        background: '#2a2a2a', borderRadius: '9999px', overflow: 'hidden', userSelect: 'none',
+        background: 'var(--surface-container-high)', borderRadius: '9999px', overflow: 'hidden', userSelect: 'none',
       }}
     >
       <div style={{
@@ -29,7 +29,7 @@ export const SlideToAccept = ({ onAccept, label = 'Kabul Et' }) => {
       }} />
       <div style={{
         position: 'absolute', top: '4px', left: '4px', width: '3rem', height: '3rem',
-        borderRadius: '50%', background: 'linear-gradient(135deg, #FF4B2B, #ff5637)',
+        borderRadius: '50%', background: 'linear-gradient(135deg, var(--brand), var(--brand-dark))',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         cursor: 'grab', transform: `translateX(${pos}px)`, transition: 'none',
       }}>
@@ -37,7 +37,7 @@ export const SlideToAccept = ({ onAccept, label = 'Kabul Et' }) => {
       </div>
       <span style={{
         position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: '0.875rem', color: '#9e9e9e', paddingLeft: '4rem',
+        fontSize: '0.875rem', color: 'var(--text-secondary)', paddingLeft: '4rem',
       }}>
         {label}
       </span>

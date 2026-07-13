@@ -25,4 +25,5 @@ class ApiEndpoints {
   static const earnings = '/courier/earnings';
   static const quests = '/courier/quests';
   static const support = '/courier/support';
+  static const courierLocation = '/courier/location';
 }

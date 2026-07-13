@@ -27,8 +27,8 @@ export const EarningsChart = () => {
             style={{
               padding: '0.375rem 1rem', borderRadius: '9999px', fontSize: '0.875rem', border: 'none',
               cursor: 'pointer', transition: 'all 0.2s',
-              background: period === value ? 'linear-gradient(135deg, #FF4B2B, #ff5637)' : '#2a2a2a',
-              color: period === value ? '#e2e2e2' : '#9e9e9e',
+              background: period === value ? 'linear-gradient(135deg, var(--brand), var(--brand-dark))' : 'var(--surface-container-high)',
+              color: period === value ? 'var(--text)' : 'var(--text-secondary)',
             }}
           >
             {label}
@@ -36,8 +36,8 @@ export const EarningsChart = () => {
         ))}
       </div>
       <GlassCard>
-        <p style={{ fontSize: '0.75rem', color: '#9e9e9e', marginBottom: '4px' }}>Toplam Kazanç</p>
-        <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.875rem', color: '#e2e2e2', marginBottom: '1rem' }}>
+        <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Toplam Kazanç</p>
+        <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.875rem', color: 'var(--text)', marginBottom: '1rem' }}>
           {formatCurrency(data?.total ?? 0)}
         </p>
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', height: '8rem' }}>
@@ -47,7 +47,7 @@ export const EarningsChart = () => {
                 width: '100%', background: 'rgba(255,75,43,0.3)', borderRadius: '2px',
                 height: `${(bar.amount / maxVal) * 100}%`, transition: 'height 0.3s',
               }} />
-              <span style={{ fontSize: '0.65rem', color: '#9e9e9e' }}>{bar.label}</span>
+              <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)' }}>{bar.label}</span>
             </div>
           ))}
         </div>
@@ -59,8 +59,8 @@ export const EarningsChart = () => {
           { label: 'Çevrimiçi', value: `${data?.onlineHours ?? 0}s`, mono: true },
         ].map(({ label, value }) => (
           <GlassCard key={label} style={{ padding: '0.75rem' }}>
-            <p style={{ fontSize: '0.75rem', color: '#9e9e9e', marginBottom: '4px' }}>{label}</p>
-            <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.125rem', color: '#e2e2e2' }}>{value}</p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>{label}</p>
+            <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.125rem', color: 'var(--text)' }}>{value}</p>
           </GlassCard>
         ))}
       </div>

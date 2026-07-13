@@ -1,17 +1,20 @@
 import { buildContainer } from '../../container.js';
 
-export default function courierController(_appConfig) {
+export default function courierController(_appConfig, { broadcast } = {}) {
   const {
     getActiveOrder,
     acceptOrder,
     rejectOrder,
     verifyPackage,
     rateRestaurant,
+    createOrder,
     getWallet,
     getEarnings,
     getQuests,
     createSupportTicket,
-  } = buildContainer();
+    updateLocation,
+    getLatestLocations,
+  } = buildContainer({ broadcast });
 
   return {
     async getActiveOrder(req, res, next) {
@@ -73,6 +76,27 @@ export default function courierController(_appConfig) {
     async createSupportTicket(req, res, next) {
       try {
         const result = await createSupportTicket({ userId: req.user.userId, ...req.body });
+        res.json(result);
+      } catch (err) { next(err); }
+    },
+
+    async createOrder(req, res, next) {
+      try {
+        const result = await createOrder(req.body);
+        res.status(201).json(result);
+      } catch (err) { next(err); }
+    },
+
+    async updateLocation(req, res, next) {
+      try {
+        const result = await updateLocation({ userId: req.user.userId, ...req.body });
+        res.json(result);
+      } catch (err) { next(err); }
+    },
+
+    async getLatestLocations(req, res, next) {
+      try {
+        const result = await getLatestLocations();
         res.json(result);
       } catch (err) { next(err); }
     },

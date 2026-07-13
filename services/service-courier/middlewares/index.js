@@ -6,13 +6,13 @@ import applyCors from './cors-middleware.js';
 import applyLog from './log-middleware.js';
 import restRoutes from '../routes/rest-routes.js';
 
-export default (appConfig, serviceDiscoveryInstance, openApi) => {
+export default (appConfig, serviceDiscoveryInstance, openApi, { broadcast } = {}) => {
   const router = express.Router();
   applyBodyParser(router);
   applyHelmet(router);
   applyCompression(router);
   applyCors(router);
   applyLog(router);
-  router.use(restRoutes(appConfig));
+  router.use(restRoutes(appConfig, { broadcast }));
   return router;
 };

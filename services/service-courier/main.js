@@ -9,6 +9,7 @@ import rawDatasourceConfig from './configs/datasource-config.js';
 import middlewareFactory from './middlewares/index.js';
 import boot from './src/boot.js';
 import openApi from './definitions/rest-api-definition.js';
+import { setupWsServer } from './src/ws/ws-server.js';
 
 async function initialize() {
   const app = express();
@@ -36,9 +37,11 @@ async function initialize() {
     process.exit(1);
   });
 
-  app.use(middlewareFactory(appConfig, serviceDiscoveryInstance, openApi));
+  const server = app.listen(appConfig.port);
+  const { broadcast } = setupWsServer(server);
 
-  app.listen(appConfig.port);
+  app.use(middlewareFactory(appConfig, serviceDiscoveryInstance, openApi, { broadcast }));
+
   helper.application.appStarted(appConfig);
 
   registerWithGateway({

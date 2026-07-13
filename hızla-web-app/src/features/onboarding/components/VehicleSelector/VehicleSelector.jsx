@@ -21,14 +21,14 @@ export const VehicleSelector = () => {
           style={{ textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer' }}
         >
           <GlassCard style={{
-            outline: selected === v.type ? '2px solid #FF4B2B' : '2px solid transparent',
+            outline: selected === v.type ? '2px solid var(--brand)' : '2px solid transparent',
             transition: 'outline 0.2s',
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <span style={{ fontSize: '2.5rem' }}>{v.icon}</span>
               <div>
-                <p style={{ fontWeight: 600, color: '#e2e2e2' }}>{v.label}</p>
-                <p style={{ fontSize: '0.75rem', color: '#9e9e9e' }}>{v.desc}</p>
+                <p style={{ fontWeight: 600, color: 'var(--text)' }}>{v.label}</p>
+                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{v.desc}</p>
               </div>
             </div>
           </GlassCard>
@@ -38,8 +38,8 @@ export const VehicleSelector = () => {
         onClick={() => selected && mutate(selected)}
         disabled={!selected || isPending}
         style={{
-          background: 'linear-gradient(135deg, #FF4B2B, #ff5637)',
-          color: '#e2e2e2', padding: '0.75rem', borderRadius: '16px', border: 'none',
+          background: 'linear-gradient(135deg, var(--brand), var(--brand-dark))',
+          color: 'var(--text)', padding: '0.75rem', borderRadius: '16px', border: 'none',
           fontWeight: 600, fontSize: '1rem', cursor: (!selected || isPending) ? 'not-allowed' : 'pointer',
           opacity: (!selected || isPending) ? 0.5 : 1, marginTop: '0.5rem',
         }}
