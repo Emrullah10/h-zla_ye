@@ -1,0 +1,1262 @@
+<title>Hızla Tasarım Sistemi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Atkinson+Hyperlegible+Mono:wght@200..800&display=swap">
+<style>
+/* Düzen: spesifikasyon defteri. Ortada 1180px içerik; her bölüm kısa başlık + gerekçe + canlı örnek.
+   Sayfa Hızla'nın kendi token'larıyla çizilir: renkler, yazı tipleri ve yoğunluklar dokümandaki değerlerin aynısıdır. */
+:root {
+  color-scheme: light;
+  /* Turkuaz */
+  --tz-50:#E8FAFB; --tz-100:#C6F1F4; --tz-200:#93E3EA; --tz-300:#4FD2DC; --tz-400:#16BCCB; --tz-500:#00A0B0;
+  --tz-600:#00808E; --tz-700:#006A77; --tz-800:#0A5560; --tz-900:#0C434B; --tz-950:#062A2F;
+  /* Asfalt */
+  --as-0:#FFFFFF; --as-25:#F6F8F8; --as-50:#EEF2F3; --as-100:#E3E8EA; --as-200:#CBD3D6; --as-300:#A9B5B9; --as-400:#83939A;
+  --as-500:#63737A; --as-600:#4B5A60; --as-700:#374348; --as-800:#253035; --as-850:#1A2327; --as-900:#131B1E; --as-950:#0B1214;
+  --kor:#FF4B2B;
+  --pf-ys:#EA004B; --pf-getir:#5D3EBD; --pf-ty:#FF6000;
+
+  /* Anlamsal: açık */
+  --hz-bg:var(--as-25); --hz-surface:var(--as-0); --hz-surface-2:var(--as-50); --hz-surface-3:var(--as-100);
+  --hz-line:var(--as-100); --hz-line-strong:var(--as-200);
+  --hz-text:var(--as-900); --hz-text-2:var(--as-600); --hz-text-3:var(--as-500);
+  --hz-brand-fill:var(--tz-400); --hz-on-brand:var(--tz-950); --hz-brand-ink:var(--tz-700); --hz-brand-tint:var(--tz-50); --hz-focus:var(--tz-500);
+  --hz-success:#16794A; --hz-success-tint:#E5F5EC; --hz-success-fill:#1B8A50;
+  --hz-warning:#9A5B00; --hz-warning-tint:#FFF3DC; --hz-warning-fill:#F5A524; --hz-on-warning:#2A1A00;
+  --hz-danger:#B42A23;  --hz-danger-tint:#FDE8E6;  --hz-danger-fill:#D63A31;
+  --hz-info:#2B55C9;    --hz-info-tint:#E8EEFD;
+  --hz-scrim:rgb(11 18 20 / .48);
+  --shadow-1:0 1px 2px rgb(19 27 30 / .06), 0 1px 1px rgb(19 27 30 / .04);
+  --shadow-2:0 8px 24px rgb(19 27 30 / .12);
+  --shadow-3:0 16px 48px rgb(19 27 30 / .18);
+  --bezel:#1A2327; --bezel-line:#0B1214;
+  /* Harita */
+  --map-land:#EDF1F1; --map-road:#FFFFFF; --map-edge:#D2DADC; --map-major:#FFFFFF; --map-water:#C7E2E7; --map-park:#DAEBE0; --map-label:#4B5A60;
+  --route:var(--tz-700); --route-case:#FFFFFF; --zone-fill:rgb(22 188 203 / .10); --zone-line:var(--tz-700);
+
+  /* Tipografi */
+  --font-display:'Archivo','Atkinson Hyperlegible Next',system-ui,sans-serif;
+  --font-text:'Atkinson Hyperlegible Next','Archivo',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-mono:'Atkinson Hyperlegible Mono','Archivo',ui-monospace,'SFMono-Regular',Menlo,monospace;
+
+  /* Hareket */
+  --dur-quick:160ms; --dur-base:240ms; --ease:cubic-bezier(.2,0,0,1);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --hz-bg:var(--as-950); --hz-surface:var(--as-900); --hz-surface-2:var(--as-850); --hz-surface-3:var(--as-800);
+    --hz-line:var(--as-800); --hz-line-strong:var(--as-700);
+    --hz-text:var(--as-100); --hz-text-2:var(--as-300); --hz-text-3:var(--as-400);
+    --hz-brand-fill:var(--tz-300); --hz-on-brand:#04262B; --hz-brand-ink:var(--tz-300); --hz-brand-tint:var(--tz-900); --hz-focus:var(--tz-300);
+    --hz-success:#4CC987; --hz-success-tint:#12301F; --hz-success-fill:#1B8A50;
+    --hz-warning:#FFC24D; --hz-warning-tint:#3A2A08; --hz-warning-fill:#F5A524;
+    --hz-danger:#FF7B72;  --hz-danger-tint:#3D1513;  --hz-danger-fill:#D63A31;
+    --hz-info:#8EA8FF;    --hz-info-tint:#18234A;
+    --hz-scrim:rgb(0 0 0 / .6);
+    --shadow-1:none; --shadow-2:none; --shadow-3:none;
+    --bezel:#253035; --bezel-line:#374348;
+    --map-land:#0F181B; --map-road:#1E2A2E; --map-edge:#0B1214; --map-major:#2B3A3F; --map-water:#082A31; --map-park:#11251B; --map-label:#A9B5B9;
+    --route:var(--tz-300); --route-case:#0B1214; --zone-fill:rgb(79 210 220 / .10); --zone-line:var(--tz-300);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --hz-bg:var(--as-950); --hz-surface:var(--as-900); --hz-surface-2:var(--as-850); --hz-surface-3:var(--as-800);
+  --hz-line:var(--as-800); --hz-line-strong:var(--as-700);
+  --hz-text:var(--as-100); --hz-text-2:var(--as-300); --hz-text-3:var(--as-400);
+  --hz-brand-fill:var(--tz-300); --hz-on-brand:#04262B; --hz-brand-ink:var(--tz-300); --hz-brand-tint:var(--tz-900); --hz-focus:var(--tz-300);
+  --hz-success:#4CC987; --hz-success-tint:#12301F; --hz-success-fill:#1B8A50;
+  --hz-warning:#FFC24D; --hz-warning-tint:#3A2A08; --hz-warning-fill:#F5A524;
+  --hz-danger:#FF7B72;  --hz-danger-tint:#3D1513;  --hz-danger-fill:#D63A31;
+  --hz-info:#8EA8FF;    --hz-info-tint:#18234A;
+  --hz-scrim:rgb(0 0 0 / .6);
+  --shadow-1:none; --shadow-2:none; --shadow-3:none;
+  --bezel:#253035; --bezel-line:#374348;
+  --map-land:#0F181B; --map-road:#1E2A2E; --map-edge:#0B1214; --map-major:#2B3A3F; --map-water:#082A31; --map-park:#11251B; --map-label:#A9B5B9;
+  --route:var(--tz-300); --route-case:#0B1214; --zone-fill:rgb(79 210 220 / .10); --zone-line:var(--tz-300);
+}
+
+/* ── Yoğunluk ─────────────────────────────────────────────── */
+.d-courier { --t-dxl:44px; --l-dxl:48px; --t-d:34px; --t-tl:26px; --t-t:21px; --t-bl:18px; --t-b:16px; --t-lab:16px; --t-cap:14px; --t-ov:13px; --t-code:22px;
+  --ctl:56px; --ctl-p:64px; --row:72px; --pad:20px; --gut:20px; --r-btn:16px; --r-card:16px; --ic:28px; }
+.d-merchant { --t-dxl:36px; --l-dxl:42px; --t-d:30px; --t-tl:24px; --t-t:19px; --t-bl:17px; --t-b:16px; --t-lab:15px; --t-cap:13px; --t-ov:12px; --t-code:16px;
+  --ctl:48px; --ctl-p:48px; --row:56px; --pad:16px; --gut:24px; --r-btn:12px; --r-card:16px; --ic:24px; }
+.d-ops { --t-dxl:32px; --l-dxl:38px; --t-d:26px; --t-tl:20px; --t-t:16px; --t-bl:15px; --t-b:14px; --t-lab:13px; --t-cap:12px; --t-ov:11px; --t-code:13px;
+  --ctl:36px; --ctl-p:36px; --row:36px; --pad:12px; --gut:24px; --r-btn:8px; --r-card:12px; --ic:20px; }
+
+/* ── Sayfa ────────────────────────────────────────────────── */
+* { box-sizing:border-box; }
+body { background:var(--hz-bg); color:var(--hz-text); font-family:var(--font-text); font-size:16px; line-height:1.6; margin:0; }
+.page { max-width:1180px; margin:0 auto; padding-inline:16px; padding-block:24px 64px; }
+@media (min-width:720px) { .page { padding-inline:32px; } }
+h1,h2,h3,h4 { font-family:var(--font-display); font-stretch:112%; margin:0; text-wrap:balance; color:var(--hz-text); }
+h2 { font-size:clamp(28px,4vw,38px); line-height:1.1; font-weight:750; letter-spacing:-.01em; }
+h3 { font-size:20px; line-height:1.25; font-weight:700; font-stretch:100%; }
+p { margin:0; }
+.lead { color:var(--hz-text-2); max-width:68ch; font-size:17px; }
+.ov { font-family:var(--font-text); font-weight:700; text-transform:uppercase; letter-spacing:.06em; font-size:12px; color:var(--hz-brand-ink); }
+.muted { color:var(--hz-text-2); }
+.num { font-variant-numeric:tabular-nums; }
+.mono { font-family:var(--font-mono); }
+code { font-family:var(--font-mono); font-size:.92em; background:var(--hz-surface-2); padding:1px 6px; border-radius:4px; color:var(--hz-text); }
+a { color:var(--hz-brand-ink); }
+:focus-visible { outline:2px solid var(--hz-focus); outline-offset:2px; }
+.ic { width:1em; height:1em; fill:currentColor; flex:none; vertical-align:-.125em; }
+section.sec { padding-block:56px 8px; border-top:1px solid var(--hz-line); margin-top:56px; display:grid; gap:24px; }
+.sec-head { display:grid; gap:10px; }
+.grid { display:grid; gap:16px; }
+.card { background:var(--hz-surface); border:1px solid var(--hz-line); border-radius:16px; padding:20px; min-width:0; }
+.cap { font-size:13px; color:var(--hz-text-2); line-height:1.45; }
+.scroller { overflow-x:auto; padding-bottom:8px; }
+.scroller > table.t { min-width:680px; }
+
+/* Başlık */
+.top { display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between; position:sticky; top:env(safe-area-inset-top,0px); z-index:20;
+  background:color-mix(in oklab, var(--hz-bg) 92%, transparent); backdrop-filter:blur(8px); padding-block:12px; border-bottom:1px solid var(--hz-line); }
+.top nav { display:flex; flex-wrap:wrap; gap:4px 14px; font-size:14px; }
+.top nav a { color:var(--hz-text-2); text-decoration:none; font-weight:600; }
+.top nav a:hover { color:var(--hz-brand-ink); }
+.seg { display:inline-flex; background:var(--hz-surface-2); border-radius:999px; padding:3px; gap:2px; }
+.seg button { font:inherit; font-size:13px; font-weight:700; border:0; background:transparent; color:var(--hz-text-2); padding:6px 12px; border-radius:999px; cursor:pointer; display:inline-flex; align-items:center; gap:6px; }
+.seg button[aria-pressed="true"] { background:var(--hz-surface); color:var(--hz-text); box-shadow:var(--shadow-1); }
+:root[data-theme="dark"] .seg button[aria-pressed="true"] { outline:1px solid var(--hz-line-strong); }
+
+.mast { display:grid; gap:20px; padding-block:48px 8px; }
+.wordmark { font-family:var(--font-display); font-weight:800; font-stretch:118%; letter-spacing:-.03em; line-height:.9; color:var(--hz-text); display:inline-flex; align-items:flex-end; }
+.wordmark .i { position:relative; display:inline-block; }
+.wordmark .i::after { content:""; position:absolute; width:.19em; height:.19em; border-radius:50%; background:var(--kor); left:.46em; top:-.13em; }
+.wm-xl { font-size:clamp(72px,14vw,148px); }
+.mast h1 { font-size:clamp(28px,4.4vw,44px); font-weight:750; line-height:1.08; max-width:22ch; }
+.mast .meta { display:flex; flex-wrap:wrap; gap:8px; align-items:center; font-size:14px; color:var(--hz-text-2); }
+.pill { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:999px; background:var(--hz-surface-2); font-weight:700; font-size:13px; color:var(--hz-text); }
+
+/* Karar tablosu */
+table.t { width:100%; border-collapse:collapse; font-size:15px; }
+table.t th, table.t td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--hz-line); vertical-align:top; }
+table.t th { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--hz-text-2); font-weight:700; border-bottom-color:var(--hz-line-strong); }
+table.t td.num, table.t th.num { text-align:right; font-variant-numeric:tabular-nums; }
+.was { color:var(--hz-text-3); text-decoration:line-through; text-decoration-color:var(--hz-line-strong); }
+.dot { width:12px; height:12px; border-radius:3px; display:inline-block; vertical-align:-1px; margin-right:6px; border:1px solid rgb(0 0 0 / .08); }
+
+/* Renk */
+.ramp { display:grid; grid-template-columns:repeat(auto-fill,minmax(84px,1fr)); gap:6px; }
+.sw { border-radius:10px; overflow:hidden; border:1px solid var(--hz-line); background:var(--hz-surface); }
+.sw .c { height:56px; }
+.sw .l { padding:6px 8px; font-size:12px; line-height:1.3; }
+.sw .l b { display:block; font-weight:700; }
+.sw .l span { font-family:var(--font-mono); color:var(--hz-text-2); font-size:11px; }
+.tok { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:10px; }
+.tok .row { display:flex; gap:12px; align-items:center; padding:10px; border-radius:12px; background:var(--hz-surface); border:1px solid var(--hz-line); min-width:0; }
+.tok .chipc { width:40px; height:40px; border-radius:10px; flex:none; border:1px solid var(--hz-line-strong); }
+.tok .row div { min-width:0; }
+.tok .row b { font-family:var(--font-mono); font-size:13px; display:block; overflow-wrap:anywhere; }
+.tok .row span { font-size:12px; color:var(--hz-text-2); }
+.contrast { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px; }
+.cpair { border-radius:12px; padding:14px; display:flex; justify-content:space-between; align-items:center; gap:10px; border:1px solid var(--hz-line); }
+.cpair .aa { font-family:var(--font-display); font-weight:750; font-size:26px; }
+.cpair .r { text-align:right; font-size:12px; line-height:1.3; }
+.cpair .r b { font-size:16px; font-variant-numeric:tabular-nums; display:block; }
+
+/* Tipografi */
+.spec { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; }
+.spec .card { display:grid; gap:12px; align-content:start; }
+.big-money { font-family:var(--font-display); font-weight:800; font-stretch:112%; font-size:clamp(48px,7vw,72px); line-height:1; font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
+.legible { font-family:var(--font-text); font-size:44px; line-height:1.1; font-weight:600; letter-spacing:.04em; }
+.scale-row { display:grid; grid-template-columns:110px minmax(0,1fr) 110px 110px 110px; gap:12px; align-items:baseline; padding-block:10px; border-bottom:1px solid var(--hz-line); }
+.scale-row .n { font-family:var(--font-mono); font-size:13px; color:var(--hz-text-2); }
+.scale-row .v { font-size:13px; color:var(--hz-text-2); font-variant-numeric:tabular-nums; }
+.scale-row.h { font-size:12px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; color:var(--hz-text-2); }
+.scale-row .s { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+@media (max-width:760px) { .scale-row { grid-template-columns:96px minmax(0,1fr); } .scale-row .v, .scale-row.h .v { display:none; } }
+
+/* ── Bileşenler ───────────────────────────────────────────── */
+.btn { font-family:var(--font-text); font-weight:700; font-size:var(--t-lab); height:var(--ctl); border-radius:var(--r-btn); border:0; padding:0 18px;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px; cursor:pointer; white-space:nowrap; transition:filter var(--dur-quick) var(--ease); }
+.btn .ic { width:calc(var(--ic) * .8); height:calc(var(--ic) * .8); }
+.btn:hover { filter:brightness(.97); }
+.btn-p { background:var(--hz-brand-fill); color:var(--hz-on-brand); }
+.btn-p.xl { height:var(--ctl-p); font-size:calc(var(--t-lab) + 2px); }
+.btn-s { background:var(--hz-surface-2); color:var(--hz-text); }
+.btn-g { background:transparent; color:var(--hz-brand-ink); }
+.btn-d { background:var(--hz-danger-fill); color:#fff; }
+.btn.block { width:100%; }
+.chip { display:inline-flex; align-items:center; gap:6px; height:calc(var(--t-cap) * 1.9); padding:0 10px 0 8px; border-radius:999px; font-size:var(--t-cap); font-weight:700; white-space:nowrap; }
+.chip .ic { width:1.15em; height:1.15em; }
+.chip.n { background:var(--hz-surface-2); color:var(--hz-text-2); }
+.chip.b { background:var(--hz-brand-tint); color:var(--hz-brand-ink); }
+.chip.s { background:var(--hz-success-tint); color:var(--hz-success); }
+.badge { display:inline-flex; align-items:center; gap:4px; padding:2px 8px 2px 6px; border-radius:6px; font-size:calc(var(--t-cap) - 1px); font-weight:700; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.badge .ic { width:1.1em; height:1.1em; }
+.badge.w { background:var(--hz-warning-tint); color:var(--hz-warning); }
+.badge.d { background:var(--hz-danger-fill); color:#fff; }
+.plat { display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border-radius:6px; background:var(--hz-surface-2); font-size:calc(var(--t-cap) - 1px); font-weight:700; color:var(--hz-text); white-space:nowrap; }
+.plat i { width:8px; height:8px; border-radius:2px; display:inline-block; }
+.money { font-family:var(--font-display); font-weight:800; font-stretch:112%; font-variant-numeric:tabular-nums; letter-spacing:-.01em; line-height:1; white-space:nowrap; }
+.money small { font-size:.62em; font-weight:700; }
+.dxl { font-size:var(--t-dxl); line-height:var(--l-dxl); }
+.eta { display:inline-grid; text-align:right; line-height:1.05; }
+.eta b { font-family:var(--font-display); font-stretch:112%; font-weight:800; font-size:calc(var(--t-t) + 4px); font-variant-numeric:tabular-nums; }
+.eta span { font-size:var(--t-cap); color:var(--hz-text-2); font-variant-numeric:tabular-nums; }
+.ring { position:relative; width:64px; height:64px; flex:none; }
+.ring svg { width:100%; height:100%; transform:rotate(-90deg); }
+.ring .trk { fill:none; stroke:var(--hz-surface-3); stroke-width:6; }
+.ring .val { fill:none; stroke:var(--hz-brand-fill); stroke-width:6; stroke-linecap:round; }
+.ring b { position:absolute; inset:0; display:grid; place-items:center; font-family:var(--font-display); font-weight:800; font-size:20px; font-variant-numeric:tabular-nums; }
+.stepper { display:grid; grid-template-columns:repeat(5,1fr); gap:4px; }
+.stepper i { height:4px; border-radius:2px; background:var(--hz-surface-3); }
+.stepper i.done { background:var(--hz-brand-ink); }
+.stepper i.now { background:var(--hz-brand-fill); }
+.avatar { width:40px; height:40px; border-radius:50%; display:grid; place-items:center; font-weight:700; font-size:14px; background:var(--hz-surface-3); color:var(--hz-text); flex:none; box-shadow:0 0 0 2px var(--hz-surface), 0 0 0 4px var(--ring, transparent); }
+.avatar.on { --ring:var(--hz-success); } .avatar.del { --ring:var(--hz-brand-fill); } .avatar.brk { --ring:var(--hz-text-3); } .avatar.off { box-shadow:0 0 0 2px var(--hz-surface), 0 0 0 4px var(--hz-surface), 0 0 0 5px var(--hz-line-strong); }
+.input { display:grid; gap:6px; }
+.input label { font-size:var(--t-cap); font-weight:700; }
+.input .f { height:var(--ctl); border-radius:var(--r-btn); border:1px solid var(--hz-line-strong); background:var(--hz-surface); padding:0 14px; display:flex; align-items:center; gap:8px; font-size:var(--t-b); color:var(--hz-text); }
+.input .hint { font-size:var(--t-cap); color:var(--hz-text-2); }
+.input.err .f { border-color:var(--hz-danger); }
+.input.err .hint { color:var(--hz-danger); display:flex; gap:6px; align-items:center; }
+.banner { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:12px; font-size:var(--t-b); line-height:1.4; }
+.banner .ic { width:20px; height:20px; margin-top:1px; }
+.banner.b { background:var(--hz-brand-tint); color:var(--hz-text); } .banner.b .ic { color:var(--hz-brand-ink); }
+.banner.w { background:var(--hz-warning-tint); color:var(--hz-text); } .banner.w .ic { color:var(--hz-warning); }
+.pin { width:30px; height:30px; display:grid; place-items:center; font-weight:800; font-size:13px; font-family:var(--font-display); box-shadow:0 0 0 2px var(--hz-surface); }
+.pin.a { background:var(--hz-brand-fill); color:var(--hz-on-brand); border-radius:8px; }
+.pin.bb { background:var(--hz-text); color:var(--hz-surface); border-radius:50%; }
+.pin.w { box-shadow:0 0 0 2px var(--hz-surface), 0 0 0 4px var(--hz-warning-fill); outline:2px dashed var(--hz-warning-fill); outline-offset:5px; }
+.pin.dg { box-shadow:0 0 0 2px var(--hz-surface), 0 0 0 4px var(--hz-danger-fill), 0 0 0 6px var(--hz-surface), 0 0 0 8px var(--hz-danger-fill); }
+.cour { width:30px; height:30px; border-radius:50%; background:var(--hz-surface); display:grid; place-items:center; color:var(--hz-brand-ink); box-shadow:var(--shadow-2), 0 0 0 3px var(--hz-brand-fill); }
+.cour .ic { width:16px; height:16px; }
+.demo-row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+.demo-col { display:grid; gap:12px; align-content:start; }
+.label-sm { font-size:12px; font-weight:700; color:var(--hz-text-2); text-transform:uppercase; letter-spacing:.06em; }
+
+/* Slot kartı ve kazanç dökümü */
+.slot { display:grid; gap:8px; padding:var(--pad); border-radius:var(--r-card); background:var(--hz-surface-2); }
+.slot .hd { display:flex; justify-content:space-between; gap:8px; align-items:center; }
+.slot .tm { font-family:var(--font-display); font-weight:800; font-stretch:108%; font-size:var(--t-t); font-variant-numeric:tabular-nums; }
+.slot .meta { display:flex; flex-wrap:wrap; gap:6px 12px; font-size:var(--t-cap); color:var(--hz-text-2); }
+.slot .meta b { color:var(--hz-text); }
+.check { width:28px; height:28px; border-radius:8px; border:2px solid var(--hz-line-strong); display:grid; place-items:center; flex:none; }
+.check.on { background:var(--hz-brand-fill); border-color:var(--hz-brand-fill); color:var(--hz-on-brand); }
+.check .ic { width:18px; height:18px; }
+.bar { height:6px; border-radius:3px; background:var(--hz-surface-3); overflow:hidden; }
+.bar i { display:block; height:100%; background:var(--hz-brand-ink); border-radius:3px; }
+.brk { display:grid; gap:6px; font-size:var(--t-b); }
+.brk div { display:flex; justify-content:space-between; gap:12px; font-variant-numeric:tabular-nums; }
+.brk div span:first-child { color:var(--hz-text-2); }
+.brk .tot { border-top:1px solid var(--hz-line-strong); padding-top:8px; font-weight:700; }
+.brk .tot span:first-child { color:var(--hz-text); }
+
+/* ── Cihaz çerçeveleri ────────────────────────────────────── */
+.phones { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:28px 20px; justify-items:center; }
+figure { margin:0; }
+.phone { width:340px; max-width:100%; display:grid; gap:12px; }
+.phone .scr { height:720px; border-radius:40px; background:var(--hz-bg); border:10px solid var(--bezel); box-shadow:0 0 0 1px var(--bezel-line), var(--shadow-3); overflow:hidden; position:relative; display:flex; flex-direction:column; color:var(--hz-text); }
+.phone figcaption, .frame-cap { font-size:14px; color:var(--hz-text-2); line-height:1.45; padding-inline:4px; }
+.phone figcaption b, .frame-cap b { color:var(--hz-text); }
+.sbar { height:30px; flex:none; display:flex; justify-content:space-between; align-items:center; padding:0 20px; font-size:13px; font-weight:700; font-variant-numeric:tabular-nums; }
+.sbar .r { display:flex; gap:5px; align-items:center; }
+.sbar .r i { width:16px; height:9px; border-radius:2px; border:1.5px solid currentColor; display:inline-block; position:relative; }
+.sbar .r i::after { content:""; position:absolute; inset:1px 4px 1px 1px; background:currentColor; border-radius:1px; }
+.ph-head { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; padding:6px var(--gut) 10px; }
+.ph-head h3 { font-size:var(--t-tl); font-stretch:112%; font-weight:750; }
+.ph-head .sub { font-size:var(--t-cap); color:var(--hz-text-2); }
+.icon-btn { width:44px; height:44px; border-radius:12px; background:var(--hz-surface-2); display:grid; place-items:center; color:var(--hz-text); flex:none; }
+.icon-btn .ic { width:24px; height:24px; }
+.map { position:relative; overflow:hidden; background:var(--map-land); }
+.map > svg.base { position:absolute; inset:0; width:100%; height:100%; }
+.map .ov { position:absolute; transform:translate(-50%,-50%); }
+.m-land { fill:var(--map-land); } .m-water { fill:var(--map-water); } .m-park { fill:var(--map-park); }
+.m-case { fill:none; stroke:var(--map-edge); stroke-linecap:round; stroke-linejoin:round; }
+.m-road { fill:none; stroke:var(--map-road); stroke-linecap:round; stroke-linejoin:round; }
+.m-major { fill:none; stroke:var(--map-major); stroke-linecap:round; }
+.m-label { fill:var(--map-label); font-family:var(--font-text); font-weight:700; font-size:13px; }
+.m-zone { fill:var(--zone-fill); stroke:var(--zone-line); stroke-width:2; stroke-dasharray:0; }
+.m-zone2 { fill:none; stroke:var(--zone-line); stroke-width:1.5; stroke-dasharray:6 5; opacity:.7; }
+.m-route-case { fill:none; stroke:var(--route-case); stroke-width:10; stroke-linecap:round; stroke-linejoin:round; }
+.m-route { fill:none; stroke:var(--route); stroke-width:6; stroke-linecap:round; stroke-linejoin:round; }
+.sheet { background:var(--hz-surface); border-radius:24px 24px 0 0; box-shadow:var(--shadow-3); position:relative; display:flex; flex-direction:column; gap:14px; padding:10px var(--gut) 14px; }
+:root[data-theme="dark"] .sheet { border-top:1px solid var(--hz-line); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sheet { border-top:1px solid var(--hz-line); } }
+.grab { width:40px; height:5px; border-radius:3px; background:var(--hz-line-strong); margin:0 auto 2px; }
+.tabbar { flex:none; display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--hz-line); background:var(--hz-surface); padding:6px 4px 12px; }
+.tabbar a { display:grid; justify-items:center; gap:2px; font-size:12px; font-weight:700; color:var(--hz-text-3); text-decoration:none; }
+.tabbar a .ic { width:26px; height:26px; }
+.tabbar a.on { color:var(--hz-brand-ink); }
+.ph-body { flex:1; display:flex; flex-direction:column; min-height:0; }
+.scrim { position:absolute; inset:0; background:var(--hz-scrim); }
+.kv { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+.stop { display:grid; grid-template-columns:30px minmax(0,1fr) auto; gap:10px; align-items:center; }
+.stop .t { font-weight:700; font-size:var(--t-b); line-height:1.25; }
+.stop .s { font-size:var(--t-cap); color:var(--hz-text-2); line-height:1.3; }
+.stop .d { font-variant-numeric:tabular-nums; font-weight:700; font-size:var(--t-b); }
+.vline { width:2px; height:14px; background:var(--hz-line-strong); margin-left:14px; }
+.daystrip { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; padding:0 var(--gut); }
+.daystrip div { display:grid; justify-items:center; padding:6px 0; border-radius:12px; font-size:12px; font-weight:700; color:var(--hz-text-2); }
+.daystrip div b { font-family:var(--font-display); font-size:18px; color:var(--hz-text); font-variant-numeric:tabular-nums; }
+.daystrip div.on { background:var(--hz-brand-fill); color:var(--hz-on-brand); }
+.daystrip div.on b { color:var(--hz-on-brand); }
+.daystrip div.has::after { content:""; width:5px; height:5px; border-radius:50%; background:var(--hz-brand-ink); margin-top:2px; }
+.daystrip div.on.has::after { background:var(--hz-on-brand); }
+.segc { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; background:var(--hz-surface-2); border-radius:12px; padding:4px; gap:4px; margin:0 var(--gut); }
+.segc span { text-align:center; padding:8px 4px; border-radius:9px; font-weight:700; font-size:14px; color:var(--hz-text-2); }
+.segc span.on { background:var(--hz-surface); color:var(--hz-text); box-shadow:var(--shadow-1); }
+.list-row { display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:12px; align-items:center; padding:12px 0; border-bottom:1px solid var(--hz-line); }
+.list-row .t { font-weight:700; font-size:var(--t-b); line-height:1.25; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.list-row .s { font-size:var(--t-cap); color:var(--hz-text-2); font-variant-numeric:tabular-nums; }
+.list-row .tm { font-variant-numeric:tabular-nums; font-size:var(--t-cap); color:var(--hz-text-2); font-weight:700; }
+
+/* Tablet ve masaüstü çerçeveleri */
+.device { background:var(--bezel); border-radius:28px; padding:12px; box-shadow:0 0 0 1px var(--bezel-line), var(--shadow-3); }
+.device .scr { border-radius:18px; overflow:hidden; background:var(--hz-bg); color:var(--hz-text); }
+.tablet { width:1024px; }
+.tablet .scr { height:660px; display:grid; grid-template-columns:84px minmax(0,1fr); }
+.desktop { width:1116px; border-radius:16px; padding:8px; }
+.desktop .scr { border-radius:10px; height:820px; display:grid; grid-template-columns:216px minmax(0,1fr); }
+.rail { background:var(--hz-surface); border-right:1px solid var(--hz-line); display:flex; flex-direction:column; align-items:center; gap:6px; padding:16px 6px; }
+.appicon { width:44px; height:44px; border-radius:12px; background:var(--hz-brand-fill); color:var(--hz-on-brand); display:grid; place-items:center; font-family:var(--font-display); font-weight:800; font-size:28px; line-height:1; position:relative; flex:none; }
+.appicon::after { content:""; position:absolute; width:7px; height:7px; border-radius:50%; background:var(--kor); left:24px; top:9px; }
+.rail .appicon { margin-bottom:12px; }
+.rail a { width:72px; display:grid; justify-items:center; gap:3px; padding:10px 0; border-radius:12px; color:var(--hz-text-2); text-decoration:none; font-size:12px; font-weight:700; }
+.rail a .ic { width:24px; height:24px; }
+.rail a.on { background:var(--hz-brand-tint); color:var(--hz-brand-ink); }
+.mbody { display:flex; flex-direction:column; min-width:0; }
+.mtop { display:flex; align-items:center; gap:14px; padding:14px 24px; border-bottom:1px solid var(--hz-line); background:var(--hz-surface); flex-wrap:wrap; }
+.mtop h3 { font-size:24px; font-stretch:112%; }
+.select { display:inline-flex; align-items:center; gap:8px; height:40px; padding:0 12px; border:1px solid var(--hz-line-strong); border-radius:10px; font-weight:700; font-size:14px; background:var(--hz-surface); }
+.kan { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; padding:16px 24px; flex:1; min-height:0; }
+.kcol { display:flex; flex-direction:column; gap:10px; min-width:0; }
+.kcol > header { display:flex; justify-content:space-between; align-items:center; font-weight:700; font-size:15px; padding:0 2px; }
+.kcol > header .n { background:var(--hz-surface-3); border-radius:999px; padding:0 9px; font-size:13px; font-variant-numeric:tabular-nums; }
+.kcard { background:var(--hz-surface); border:1px solid var(--hz-line); border-radius:14px; padding:12px 14px 12px 18px; display:grid; gap:8px; position:relative; box-shadow:var(--shadow-1); min-width:0; }
+.kcard::before { content:""; position:absolute; left:0; top:10px; bottom:10px; width:4px; border-radius:0 3px 3px 0; background:var(--strip, var(--hz-brand-fill)); }
+.kcard.pickup { --strip:var(--hz-line-strong); }
+.kcard .r1 { display:flex; justify-content:space-between; gap:8px; align-items:center; }
+.kcard .code { font-family:var(--font-mono); font-weight:700; font-size:22px; letter-spacing:.02em; }
+.kcard .r2 { display:flex; justify-content:space-between; gap:10px; align-items:center; }
+.kcard .who { display:flex; gap:10px; align-items:center; min-width:0; }
+.kcard .who .t { font-weight:700; font-size:16px; } .kcard .who .s { font-size:13px; color:var(--hz-text-2); }
+.stepper-n { display:inline-flex; align-items:center; border:1px solid var(--hz-line-strong); border-radius:10px; overflow:hidden; height:44px; }
+.stepper-n span { white-space:nowrap; padding:0 12px; font-weight:700; font-variant-numeric:tabular-nums; font-size:15px; }
+.stepper-n span.b { color:var(--hz-brand-ink); background:var(--hz-surface-2); height:100%; display:grid; place-items:center; }
+.mfoot { display:flex; justify-content:space-between; gap:12px; padding:12px 24px; border-top:1px solid var(--hz-line); background:var(--hz-surface); font-size:14px; color:var(--hz-text-2); }
+
+/* Operasyon */
+.side { background:var(--hz-surface); border-right:1px solid var(--hz-line); padding:16px 12px; display:flex; flex-direction:column; gap:2px; }
+.side .logo { font-family:var(--font-display); font-weight:800; font-stretch:118%; font-size:26px; padding:0 8px 14px; display:flex; align-items:center; gap:8px; }
+.side .logo .sub { font-family:var(--font-text); font-stretch:100%; font-size:12px; font-weight:700; color:var(--hz-text-2); letter-spacing:.06em; text-transform:uppercase; }
+.side .logo .appicon { width:36px; height:36px; font-size:22px; border-radius:10px; }
+.side .logo .appicon::after { width:6px; height:6px; left:19px; top:7px; }
+.side a { display:flex; align-items:center; gap:10px; height:36px; padding:0 10px; border-radius:8px; color:var(--hz-text-2); text-decoration:none; font-weight:700; font-size:14px; }
+.side a .ic { width:20px; height:20px; }
+.side a.on { background:var(--hz-brand-tint); color:var(--hz-brand-ink); }
+.side a .cnt { margin-left:auto; font-size:12px; background:var(--hz-warning-tint); color:var(--hz-warning); border-radius:999px; padding:0 7px; font-variant-numeric:tabular-nums; }
+.obody { display:grid; grid-template-rows:auto auto minmax(0,1fr) auto; min-width:0; min-height:0; }
+.otop { display:flex; align-items:center; gap:12px; padding:10px 20px; border-bottom:1px solid var(--hz-line); background:var(--hz-surface); }
+.otop .search { flex:1; display:flex; align-items:center; gap:8px; height:36px; padding:0 12px; border:1px solid var(--hz-line-strong); border-radius:8px; color:var(--hz-text-3); font-size:14px; max-width:420px; }
+.otop .search kbd { margin-left:auto; font-family:var(--font-mono); font-size:12px; background:var(--hz-surface-2); padding:1px 6px; border-radius:4px; color:var(--hz-text-2); }
+.kpis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; padding:14px 20px 0; }
+.kpi { background:var(--hz-surface); border:1px solid var(--hz-line); border-radius:12px; padding:12px 14px; display:grid; gap:4px; min-width:0; }
+.kpi .l { font-size:12px; font-weight:700; color:var(--hz-text-2); }
+.kpi .v { display:flex; align-items:flex-end; justify-content:space-between; gap:8px; }
+.kpi .v b { font-family:var(--font-display); font-stretch:112%; font-weight:800; font-size:30px; line-height:1; font-variant-numeric:tabular-nums; }
+.kpi .v b small { font-size:16px; color:var(--hz-text-2); font-weight:700; }
+.kpi .v svg { width:96px; height:32px; }
+.kpi .sp-a { fill:var(--hz-brand-tint); } .kpi .sp-l { fill:none; stroke:var(--hz-brand-ink); stroke-width:1.75; } .kpi .sp-d { fill:var(--hz-brand-ink); }
+.kpi.warn { background:var(--hz-warning-tint); border-color:transparent; }
+.kpi.warn .sp-a { fill:rgb(245 165 36 / .2); } .kpi.warn .sp-l { stroke:var(--hz-warning); } .kpi.warn .sp-d { fill:var(--hz-warning); }
+.kpi .d { font-size:12px; color:var(--hz-text-2); font-variant-numeric:tabular-nums; }
+.omain { display:grid; grid-template-columns:minmax(0,62fr) minmax(0,38fr); gap:12px; padding:12px 20px; min-height:0; }
+.omain .map { border-radius:12px; border:1px solid var(--hz-line); }
+.queue { background:var(--hz-surface); border:1px solid var(--hz-line); border-radius:12px; display:flex; flex-direction:column; min-height:0; overflow:hidden; }
+.queue header { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid var(--hz-line); font-weight:700; font-size:14px; }
+.qrow { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:6px 10px; padding:10px 14px; border-bottom:1px solid var(--hz-line); align-items:center; font-size:13px; }
+.qrow.hl { background:var(--hz-brand-tint); }
+.qrow .t { display:flex; gap:8px; align-items:center; min-width:0; flex-wrap:wrap; }
+.qrow .t .code { font-family:var(--font-mono); font-weight:700; font-size:13px; }
+.qrow .why { grid-column:1; color:var(--hz-text-2); }
+.qrow .btn { grid-row:1 / span 2; grid-column:2; }
+.otable { padding:0 20px 14px; }
+.otable table { width:100%; border-collapse:collapse; font-size:13px; background:var(--hz-surface); border:1px solid var(--hz-line); border-radius:12px; overflow:hidden; }
+.otable th, .otable td { padding:0 10px; height:36px; text-align:left; border-bottom:1px solid var(--hz-line); white-space:nowrap; }
+.otable th { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--hz-text-2); font-weight:700; background:var(--hz-surface-2); }
+.otable td.r, .otable th.r { text-align:right; font-variant-numeric:tabular-nums; }
+.otable td.code { font-family:var(--font-mono); font-weight:700; }
+.otable tr:last-child td { border-bottom:0; }
+
+/* Isı haritası */
+.heat { display:grid; grid-template-columns:120px repeat(12,minmax(44px,1fr)); gap:3px; font-size:12px; min-width:760px; }
+.heat .h { font-weight:700; color:var(--hz-text-2); text-align:center; font-variant-numeric:tabular-nums; padding-bottom:4px; }
+.heat .z { font-weight:700; display:flex; align-items:center; font-size:13px; }
+.heat .c { height:44px; border-radius:6px; display:grid; place-items:center; font-variant-numeric:tabular-nums; font-weight:700; color:var(--hz-text); background:color-mix(in oklab, var(--hz-brand-fill) var(--p), var(--hz-surface-2)); }
+.heat .c.hi { color:var(--hz-on-brand); }
+.heat .c.short { outline:2px solid var(--hz-warning-fill); outline-offset:-2px; }
+.fair { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; }
+.fair div { background:var(--hz-surface-2); border-radius:12px; padding:12px; display:grid; gap:2px; }
+.fair b { font-family:var(--font-display); font-stretch:112%; font-weight:800; font-size:24px; font-variant-numeric:tabular-nums; }
+.fair span { font-size:12px; color:var(--hz-text-2); line-height:1.35; }
+
+/* Kurallar */
+.rules { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; }
+.rule { background:var(--hz-surface); border:1px solid var(--hz-line); border-radius:14px; padding:16px; display:grid; gap:6px; }
+.rule b { font-family:var(--font-display); font-stretch:108%; font-size:17px; }
+.rule p { font-size:15px; color:var(--hz-text-2); line-height:1.5; }
+footer.end { margin-top:64px; padding-top:20px; border-top:1px solid var(--hz-line); display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; font-size:14px; color:var(--hz-text-2); }
+
+@media (prefers-reduced-motion: reduce) { * { transition:none !important; animation:none !important; } }
+</style>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="i-storefront" viewBox="0 0 256 256"><path d="M232,96a7.89,7.89,0,0,0-.3-2.2L217.35,43.6A16.07,16.07,0,0,0,202,32H54A16.07,16.07,0,0,0,38.65,43.6L24.31,93.8A7.89,7.89,0,0,0,24,96h0v16a40,40,0,0,0,16,32v72a8,8,0,0,0,8,8H208a8,8,0,0,0,8-8V144a40,40,0,0,0,16-32V96ZM54,48H202l11.42,40H42.61Zm50,56h48v8a24,24,0,0,1-48,0Zm-16,0v8a24,24,0,0,1-35.12,21.26,7.88,7.88,0,0,0-1.82-1.06A24,24,0,0,1,40,112v-8ZM200,208H56V151.2a40.57,40.57,0,0,0,8,.8,40,40,0,0,0,32-16,40,40,0,0,0,64,0,40,40,0,0,0,32,16,40.57,40.57,0,0,0,8-.8Zm4.93-75.8a8.08,8.08,0,0,0-1.8,1.05A24,24,0,0,1,168,112v-8h48v8A24,24,0,0,1,204.93,132.2Z"/></symbol>
+<symbol id="i-house" viewBox="0 0 256 256"><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"/></symbol>
+<symbol id="i-moped" viewBox="0 0 256 256"><path d="M216,128a39.3,39.3,0,0,0-6.27.5L175.49,37.19A8,8,0,0,0,168,32H136a8,8,0,0,0,0,16h26.46l32.3,86.13a40.13,40.13,0,0,0-18,25.87H136.54l-25-66.81A8,8,0,0,0,104,88H24a8,8,0,0,0,0,16h8v13.39A56.12,56.12,0,0,0,0,168a8,8,0,0,0,8,8h8.8a40,40,0,0,0,78.4,0h81.6A40,40,0,1,0,216,128ZM42.67,130.27A8,8,0,0,0,48,122.73V104H98.46l21,56H16.81A40.07,40.07,0,0,1,42.67,130.27ZM56,192a24,24,0,0,1-22.62-16H78.62A24,24,0,0,1,56,192Zm160,0a24,24,0,0,1-15.43-42.36l7.94,21.17a8,8,0,0,0,15-5.62L215.55,144H216a24,24,0,0,1,0,48Z"/></symbol>
+<symbol id="i-package" viewBox="0 0 256 256"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm176,85.78h0l-80,43.79V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.77Z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"/></symbol>
+<symbol id="i-check-circle" viewBox="0 0 256 256"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></symbol>
+<symbol id="i-siren" viewBox="0 0 256 256"><path d="M120,16V8a8,8,0,0,1,16,0v8a8,8,0,0,1-16,0Zm80,32a8,8,0,0,0,5.66-2.34l8-8a8,8,0,0,0-11.32-11.32l-8,8A8,8,0,0,0,200,48ZM50.34,45.66A8,8,0,0,0,61.66,34.34l-8-8A8,8,0,0,0,42.34,37.66Zm87,26.45a8,8,0,1,0-2.64,15.78C153.67,91.08,168,108.32,168,128a8,8,0,0,0,16,0C184,100.6,163.93,76.57,137.32,72.11ZM232,176v24a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V176a16,16,0,0,1,16-16V128a88,88,0,0,1,88.67-88c48.15.36,87.33,40.29,87.33,89v31A16,16,0,0,1,232,176ZM56,160H200V129c0-40-32.05-72.71-71.45-73H128a72,72,0,0,0-72,72Zm160,40V176H40v24H216Z"/></symbol>
+<symbol id="i-x-circle" viewBox="0 0 256 256"><path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></symbol>
+<symbol id="i-map-pin" viewBox="0 0 256 256"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/></symbol>
+<symbol id="i-wallet" viewBox="0 0 256 256"><path d="M216,64H56a8,8,0,0,1,0-16H192a8,8,0,0,0,0-16H56A24,24,0,0,0,32,56V184a24,24,0,0,0,24,24H216a16,16,0,0,0,16-16V80A16,16,0,0,0,216,64Zm0,128H56a8,8,0,0,1-8-8V78.63A23.84,23.84,0,0,0,56,80H216Zm-48-60a12,12,0,1,1,12,12A12,12,0,0,1,168,132Z"/></symbol>
+<symbol id="i-calendar-check" viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-38.34-85.66a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L116,164.69l42.34-42.35A8,8,0,0,1,169.66,122.34Z"/></symbol>
+<symbol id="i-user" viewBox="0 0 256 256"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"/></symbol>
+<symbol id="i-lifebuoy" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm39.1,131.79a47.84,47.84,0,0,0,0-55.58l28.5-28.49a87.83,87.83,0,0,1,0,112.56ZM96,128a32,32,0,1,1,32,32A32,32,0,0,1,96,128Zm88.28-67.6L155.79,88.9a47.84,47.84,0,0,0-55.58,0L71.72,60.4a87.83,87.83,0,0,1,112.56,0ZM60.4,71.72l28.5,28.49a47.84,47.84,0,0,0,0,55.58L60.4,184.28a87.83,87.83,0,0,1,0-112.56ZM71.72,195.6l28.49-28.5a47.84,47.84,0,0,0,55.58,0l28.49,28.5a87.83,87.83,0,0,1-112.56,0Z"/></symbol>
+<symbol id="i-cloud-slash" viewBox="0 0 256 256"><path d="M53.92,34.62A8,8,0,1,0,42.08,45.38L81.32,88.55l-.06.12A65,65,0,0,0,72,88a64,64,0,0,0,0,128h88a87.34,87.34,0,0,0,31.8-5.93l10.28,11.31a8,8,0,1,0,11.84-10.76ZM160,200H72a48,48,0,0,1,0-96c1.1,0,2.2,0,3.3.12A88.4,88.4,0,0,0,72,128a8,8,0,0,0,16,0,72.25,72.25,0,0,1,5.06-26.54l87,95.7A71.66,71.66,0,0,1,160,200Zm88-72a87.89,87.89,0,0,1-22.35,58.61A8,8,0,0,1,213.71,176,72,72,0,0,0,117.37,70a8,8,0,0,1-9.48-12.89A88,88,0,0,1,248,128Z"/></symbol>
+<symbol id="i-warning-circle" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"/></symbol>
+<symbol id="i-timer" viewBox="0 0 256 256"><path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"/></symbol>
+<symbol id="i-qr-code" viewBox="0 0 256 256"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm0,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48ZM200,40H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-64,72V144a8,8,0,0,1,16,0v32a8,8,0,0,1-16,0Zm80-16a8,8,0,0,1-8,8H184v40a8,8,0,0,1-8,8H144a8,8,0,0,1,0-16h24V144a8,8,0,0,1,16,0v8h24A8,8,0,0,1,216,160Zm0,32v16a8,8,0,0,1-16,0V192a8,8,0,0,1,16,0Z"/></symbol>
+<symbol id="i-password" viewBox="0 0 256 256"><path d="M48,56V200a8,8,0,0,1-16,0V56a8,8,0,0,1,16,0Zm92,54.5L120,117V96a8,8,0,0,0-16,0v21L84,110.5a8,8,0,0,0-5,15.22l20,6.49-12.34,17a8,8,0,1,0,12.94,9.4l12.34-17,12.34,17a8,8,0,1,0,12.94-9.4l-12.34-17,20-6.49A8,8,0,0,0,140,110.5ZM246,115.64A8,8,0,0,0,236,110.5L216,117V96a8,8,0,0,0-16,0v21l-20-6.49a8,8,0,0,0-4.95,15.22l20,6.49-12.34,17a8,8,0,1,0,12.94,9.4l12.34-17,12.34,17a8,8,0,1,0,12.94-9.4l-12.34-17,20-6.49A8,8,0,0,0,246,115.64Z"/></symbol>
+<symbol id="i-camera" viewBox="0 0 256 256"><path d="M208,56H180.28L166.65,35.56A8,8,0,0,0,160,32H96a8,8,0,0,0-6.65,3.56L75.71,56H48A24,24,0,0,0,24,80V192a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V80A24,24,0,0,0,208,56Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V80a8,8,0,0,1,8-8H80a8,8,0,0,0,6.66-3.56L100.28,48h55.43l13.63,20.44A8,8,0,0,0,176,72h32a8,8,0,0,1,8,8ZM128,88a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,88Zm0,72a28,28,0,1,1,28-28A28,28,0,0,1,128,160Z"/></symbol>
+<symbol id="i-navigation-arrow" viewBox="0 0 256 256"><path d="M237.33,106.21,61.41,41l-.16-.05A16,16,0,0,0,40.9,61.25a1,1,0,0,0,.05.16l65.26,175.92A15.77,15.77,0,0,0,121.28,248h.3a15.77,15.77,0,0,0,15-11.29l.06-.2,21.84-78,78-21.84.2-.06a16,16,0,0,0,.62-30.38ZM149.84,144.3a8,8,0,0,0-5.54,5.54L121.3,232l-.06-.17L56,56l175.82,65.22.16.06Z"/></symbol>
+<symbol id="i-phone" viewBox="0 0 256 256"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"/></symbol>
+<symbol id="i-coffee" viewBox="0 0 256 256"><path d="M80,56V24a8,8,0,0,1,16,0V56a8,8,0,0,1-16,0Zm40,8a8,8,0,0,0,8-8V24a8,8,0,0,0-16,0V56A8,8,0,0,0,120,64Zm32,0a8,8,0,0,0,8-8V24a8,8,0,0,0-16,0V56A8,8,0,0,0,152,64Zm96,56v8a40,40,0,0,1-37.51,39.91,96.59,96.59,0,0,1-27,40.09H208a8,8,0,0,1,0,16H32a8,8,0,0,1,0-16H56.54A96.3,96.3,0,0,1,24,136V88a8,8,0,0,1,8-8H208A40,40,0,0,1,248,120ZM200,96H40v40a80.27,80.27,0,0,0,45.12,72h69.76A80.27,80.27,0,0,0,200,136Zm32,24a24,24,0,0,0-16-22.62V136a95.78,95.78,0,0,1-1.2,15A24,24,0,0,0,232,128Z"/></symbol>
+<symbol id="i-bell" viewBox="0 0 256 256"><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"/></symbol>
+<symbol id="i-squares-four" viewBox="0 0 256 256"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"/></symbol>
+<symbol id="i-list-checks" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H128a8,8,0,0,1,0-16h88A8,8,0,0,1,224,128ZM128,72h88a8,8,0,0,0,0-16H128a8,8,0,0,0,0,16Zm88,112H128a8,8,0,0,0,0,16h88a8,8,0,0,0,0-16ZM82.34,42.34,56,68.69,45.66,58.34A8,8,0,0,0,34.34,69.66l16,16a8,8,0,0,0,11.32,0l32-32A8,8,0,0,0,82.34,42.34Zm0,64L56,132.69,45.66,122.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Zm0,64L56,196.69,45.66,186.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Z"/></symbol>
+<symbol id="i-users" viewBox="0 0 256 256"><path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"/></symbol>
+<symbol id="i-chart-line-up" viewBox="0 0 256 256"><path d="M232,208a8,8,0,0,1-8,8H32a8,8,0,0,1-8-8V48a8,8,0,0,1,16,0V156.69l50.34-50.35a8,8,0,0,1,11.32,0L128,132.69,180.69,80H160a8,8,0,0,1,0-16h40a8,8,0,0,1,8,8v40a8,8,0,0,1-16,0V91.31l-58.34,58.35a8,8,0,0,1-11.32,0L96,123.31l-56,56V200H224A8,8,0,0,1,232,208Z"/></symbol>
+<symbol id="i-map-trifold" viewBox="0 0 256 256"><path d="M228.92,49.69a8,8,0,0,0-6.86-1.45L160.93,63.52,99.58,32.84a8,8,0,0,0-5.52-.6l-64,16A8,8,0,0,0,24,56V200a8,8,0,0,0,9.94,7.76l61.13-15.28,61.35,30.68A8.15,8.15,0,0,0,160,224a8,8,0,0,0,1.94-.24l64-16A8,8,0,0,0,232,200V56A8,8,0,0,0,228.92,49.69ZM104,52.94l48,24V203.06l-48-24ZM40,62.25l48-12v127.5l-48,12Zm176,131.5-48,12V78.25l48-12Z"/></symbol>
+<symbol id="i-gear" viewBox="0 0 256 256"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm88-29.84q.06-2.16,0-4.32l14.92-18.64a8,8,0,0,0,1.48-7.06,107.21,107.21,0,0,0-10.88-26.25,8,8,0,0,0-6-3.93l-23.72-2.64q-1.48-1.56-3-3L186,40.54a8,8,0,0,0-3.94-6,107.71,107.71,0,0,0-26.25-10.87,8,8,0,0,0-7.06,1.49L130.16,40Q128,40,125.84,40L107.2,25.11a8,8,0,0,0-7.06-1.48A107.6,107.6,0,0,0,73.89,34.51a8,8,0,0,0-3.93,6L67.32,64.27q-1.56,1.49-3,3L40.54,70a8,8,0,0,0-6,3.94,107.71,107.71,0,0,0-10.87,26.25,8,8,0,0,0,1.49,7.06L40,125.84Q40,128,40,130.16L25.11,148.8a8,8,0,0,0-1.48,7.06,107.21,107.21,0,0,0,10.88,26.25,8,8,0,0,0,6,3.93l23.72,2.64q1.49,1.56,3,3L70,215.46a8,8,0,0,0,3.94,6,107.71,107.71,0,0,0,26.25,10.87,8,8,0,0,0,7.06-1.49L125.84,216q2.16.06,4.32,0l18.64,14.92a8,8,0,0,0,7.06,1.48,107.21,107.21,0,0,0,26.25-10.88,8,8,0,0,0,3.93-6l2.64-23.72q1.56-1.48,3-3L215.46,186a8,8,0,0,0,6-3.94,107.71,107.71,0,0,0,10.87-26.25,8,8,0,0,0-1.49-7.06Zm-16.1-6.5a73.93,73.93,0,0,1,0,8.68,8,8,0,0,0,1.74,5.48l14.19,17.73a91.57,91.57,0,0,1-6.23,15L187,173.11a8,8,0,0,0-5.1,2.64,74.11,74.11,0,0,1-6.14,6.14,8,8,0,0,0-2.64,5.1l-2.51,22.58a91.32,91.32,0,0,1-15,6.23l-17.74-14.19a8,8,0,0,0-5-1.75h-.48a73.93,73.93,0,0,1-8.68,0,8,8,0,0,0-5.48,1.74L100.45,215.8a91.57,91.57,0,0,1-15-6.23L82.89,187a8,8,0,0,0-2.64-5.1,74.11,74.11,0,0,1-6.14-6.14,8,8,0,0,0-5.1-2.64L46.43,170.6a91.32,91.32,0,0,1-6.23-15l14.19-17.74a8,8,0,0,0,1.74-5.48,73.93,73.93,0,0,1,0-8.68,8,8,0,0,0-1.74-5.48L40.2,100.45a91.57,91.57,0,0,1,6.23-15L69,82.89a8,8,0,0,0,5.1-2.64,74.11,74.11,0,0,1,6.14-6.14A8,8,0,0,0,82.89,69L85.4,46.43a91.32,91.32,0,0,1,15-6.23l17.74,14.19a8,8,0,0,0,5.48,1.74,73.93,73.93,0,0,1,8.68,0,8,8,0,0,0,5.48-1.74L155.55,40.2a91.57,91.57,0,0,1,15,6.23L173.11,69a8,8,0,0,0,2.64,5.1,74.11,74.11,0,0,1,6.14,6.14,8,8,0,0,0,5.1,2.64l22.58,2.51a91.32,91.32,0,0,1,6.23,15l-14.19,17.74A8,8,0,0,0,199.87,123.66Z"/></symbol>
+<symbol id="i-magnifying-glass" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></symbol>
+<symbol id="i-plus" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></symbol>
+<symbol id="i-plus-circle" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm48-88a8,8,0,0,1-8,8H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32A8,8,0,0,1,176,128Z"/></symbol>
+<symbol id="i-arrow-right" viewBox="0 0 256 256"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></symbol>
+<symbol id="i-caret-right" viewBox="0 0 256 256"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></symbol>
+<symbol id="i-caret-down" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></symbol>
+<symbol id="i-sun" viewBox="0 0 256 256"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></symbol>
+<symbol id="i-moon" viewBox="0 0 256 256"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></symbol>
+<symbol id="i-chat-circle" viewBox="0 0 256 256"><path d="M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z"/></symbol>
+<symbol id="i-receipt" viewBox="0 0 256 256"><path d="M72,104a8,8,0,0,1,8-8h96a8,8,0,0,1,0,16H80A8,8,0,0,1,72,104Zm8,40h96a8,8,0,0,0,0-16H80a8,8,0,0,0,0,16ZM232,56V208a8,8,0,0,1-11.58,7.15L192,200.94l-28.42,14.21a8,8,0,0,1-7.16,0L128,200.94,99.58,215.15a8,8,0,0,1-7.16,0L64,200.94,35.58,215.15A8,8,0,0,1,24,208V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56Zm-16,0H40V195.06l20.42-10.22a8,8,0,0,1,7.16,0L96,199.06l28.42-14.22a8,8,0,0,1,7.16,0L160,199.06l28.42-14.22a8,8,0,0,1,7.16,0L216,195.06Z"/></symbol>
+<symbol id="i-chart-bar" viewBox="0 0 256 256"><path d="M224,200h-8V40a8,8,0,0,0-8-8H152a8,8,0,0,0-8,8V80H96a8,8,0,0,0-8,8v40H48a8,8,0,0,0-8,8v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16ZM160,48h40V200H160ZM104,96h40V200H104ZM56,144H88v56H56Z"/></symbol>
+<symbol id="i-speaker-slash" viewBox="0 0 256 256"><path d="M53.92,34.62A8,8,0,1,0,42.08,45.38L73.55,80H32A16,16,0,0,0,16,96v64a16,16,0,0,0,16,16H77.25l69.84,54.31A8,8,0,0,0,160,224V175.09l42.08,46.29a8,8,0,1,0,11.84-10.76ZM32,96H72v64H32ZM144,207.64,88,164.09V95.89l56,61.6Zm42-63.77a24,24,0,0,0,0-31.72,8,8,0,1,1,12-10.57,40,40,0,0,1,0,52.88,8,8,0,0,1-12-10.59Zm-80.16-76a8,8,0,0,1,1.4-11.23l39.85-31A8,8,0,0,1,160,32v74.83a8,8,0,0,1-16,0V48.36l-26.94,21A8,8,0,0,1,105.84,67.91ZM248,128a79.9,79.9,0,0,1-20.37,53.34,8,8,0,0,1-11.92-10.67,64,64,0,0,0,0-85.33,8,8,0,1,1,11.92-10.67A79.83,79.83,0,0,1,248,128Z"/></symbol>
+<symbol id="i-arrows-left-right" viewBox="0 0 256 256"><path d="M213.66,181.66l-32,32a8,8,0,0,1-11.32-11.32L188.69,184H48a8,8,0,0,1,0-16H188.69l-18.35-18.34a8,8,0,0,1,11.32-11.32l32,32A8,8,0,0,1,213.66,181.66Zm-139.32-64a8,8,0,0,0,11.32-11.32L67.31,88H208a8,8,0,0,0,0-16H67.31L85.66,53.66A8,8,0,0,0,74.34,42.34l-32,32a8,8,0,0,0,0,11.32Z"/></symbol>
+<symbol id="i-lightning" viewBox="0 0 256 256"><path d="M215.79,118.17a8,8,0,0,0-5-5.66L153.18,90.9l14.66-73.33a8,8,0,0,0-13.69-7l-112,120a8,8,0,0,0,3,13l57.63,21.61L88.16,238.43a8,8,0,0,0,13.69,7l112-120A8,8,0,0,0,215.79,118.17ZM109.37,214l10.47-52.38a8,8,0,0,0-5-9.06L62,132.71l84.62-90.66L136.16,94.43a8,8,0,0,0,5,9.06l52.8,19.8Z"/></symbol>
+<symbol id="i-info" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"/></symbol>
+<symbol id="i-broadcast" viewBox="0 0 256 256"><path d="M128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152Zm73.71,7.14a80,80,0,0,1-14.08,22.2,8,8,0,0,1-11.92-10.67,63.95,63.95,0,0,0,0-85.33,8,8,0,1,1,11.92-10.67,80.08,80.08,0,0,1,14.08,84.47ZM69,103.09a64,64,0,0,0,11.26,67.58,8,8,0,0,1-11.92,10.67,79.93,79.93,0,0,1,0-106.67A8,8,0,1,1,80.29,85.34,63.77,63.77,0,0,0,69,103.09ZM248,128a119.58,119.58,0,0,1-34.29,84,8,8,0,1,1-11.42-11.2,103.9,103.9,0,0,0,0-145.56A8,8,0,1,1,213.71,44,119.58,119.58,0,0,1,248,128ZM53.71,200.78A8,8,0,1,1,42.29,212a119.87,119.87,0,0,1,0-168,8,8,0,1,1,11.42,11.2,103.9,103.9,0,0,0,0,145.56Z"/></symbol>
+<symbol id="i-path" viewBox="0 0 256 256"><path d="M200,168a32.06,32.06,0,0,0-31,24H72a32,32,0,0,1,0-64h96a40,40,0,0,0,0-80H72a8,8,0,0,0,0,16h96a24,24,0,0,1,0,48H72a48,48,0,0,0,0,96h97a32,32,0,1,0,31-40Zm0,48a16,16,0,1,1,16-16A16,16,0,0,1,200,216Z"/></symbol>
+<symbol id="i-hourglass-medium" viewBox="0 0 256 256"><path d="M200,75.64V40a16,16,0,0,0-16-16H72A16,16,0,0,0,56,40V76a16.07,16.07,0,0,0,6.4,12.8L114.67,128,62.4,167.2A16.07,16.07,0,0,0,56,180v36a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V180.36a16.09,16.09,0,0,0-6.35-12.77L141.27,128l52.38-39.6A16.05,16.05,0,0,0,200,75.64ZM72,40H184V75.64L178.23,80H77.33L72,76Zm56,78L98.67,96h58.4Zm56,98H72V180l48-36v24a8,8,0,0,0,16,0V144.08l48,36.28Z"/></symbol>
+<symbol id="i-sun-horizon" viewBox="0 0 256 256"><path d="M240,152H199.55a73.54,73.54,0,0,0,.45-8,72,72,0,0,0-144,0,73.54,73.54,0,0,0,.45,8H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM72,144a56,56,0,1,1,111.41,8H72.59A56.13,56.13,0,0,1,72,144Zm144,56a8,8,0,0,1-8,8H48a8,8,0,0,1,0-16H208A8,8,0,0,1,216,200ZM72.84,43.58a8,8,0,0,1,14.32-7.16l8,16a8,8,0,0,1-14.32,7.16Zm-56,48.84a8,8,0,0,1,10.74-3.57l16,8a8,8,0,0,1-7.16,14.31l-16-8A8,8,0,0,1,16.84,92.42Zm192,15.16a8,8,0,0,1,3.58-10.73l16-8a8,8,0,1,1,7.16,14.31l-16,8a8,8,0,0,1-10.74-3.58Zm-48-55.16,8-16a8,8,0,0,1,14.32,7.16l-8,16a8,8,0,1,1-14.32-7.16Z"/></symbol>
+<symbol id="i-desktop" viewBox="0 0 256 256"><path d="M208,40H48A24,24,0,0,0,24,64V176a24,24,0,0,0,24,24h72v16H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V200h72a24,24,0,0,0,24-24V64A24,24,0,0,0,208,40ZM48,56H208a8,8,0,0,1,8,8v80H40V64A8,8,0,0,1,48,56ZM208,184H48a8,8,0,0,1-8-8V160H216v16A8,8,0,0,1,208,184Z"/></symbol>
+<symbol id="i-device-mobile" viewBox="0 0 256 256"><path d="M176,16H80A24,24,0,0,0,56,40V216a24,24,0,0,0,24,24h96a24,24,0,0,0,24-24V40A24,24,0,0,0,176,16ZM72,64H184V192H72Zm8-32h96a8,8,0,0,1,8,8v8H72V40A8,8,0,0,1,80,32Zm96,192H80a8,8,0,0,1-8-8v-8H184v8A8,8,0,0,1,176,224Z"/></symbol>
+<symbol id="i-device-tablet" viewBox="0 0 256 256"><path d="M192,24H64A24,24,0,0,0,40,48V208a24,24,0,0,0,24,24H192a24,24,0,0,0,24-24V48A24,24,0,0,0,192,24ZM56,72H200V184H56Zm8-32H192a8,8,0,0,1,8,8v8H56V48A8,8,0,0,1,64,40ZM192,216H64a8,8,0,0,1-8-8v-8H200v8A8,8,0,0,1,192,216Z"/></symbol>
+<symbol id="i-monitor" viewBox="0 0 256 256"><path d="M208,40H48A24,24,0,0,0,24,64V176a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V64A24,24,0,0,0,208,40Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V64a8,8,0,0,1,8-8H208a8,8,0,0,1,8,8Zm-48,48a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,224Z"/></symbol>
+<symbol id="i-star" viewBox="0 0 256 256"><path d="M239.18,97.26A16.38,16.38,0,0,0,224.92,86l-59-4.76L143.14,26.15a16.36,16.36,0,0,0-30.27,0L90.11,81.23,31.08,86a16.46,16.46,0,0,0-9.37,28.86l45,38.83L53,211.75a16.38,16.38,0,0,0,24.5,17.82L128,198.49l50.53,31.08A16.4,16.4,0,0,0,203,211.75l-13.76-58.07,45-38.83A16.43,16.43,0,0,0,239.18,97.26Zm-15.34,5.47-48.7,42a8,8,0,0,0-2.56,7.91l14.88,62.8a.37.37,0,0,1-.17.48c-.18.14-.23.11-.38,0l-54.72-33.65a8,8,0,0,0-8.38,0L69.09,215.94c-.15.09-.19.12-.38,0a.37.37,0,0,1-.17-.48l14.88-62.8a8,8,0,0,0-2.56-7.91l-48.7-42c-.12-.1-.23-.19-.13-.5s.18-.27.33-.29l63.92-5.16A8,8,0,0,0,103,91.86l24.62-59.61c.08-.17.11-.25.35-.25s.27.08.35.25L153,91.86a8,8,0,0,0,6.75,4.92l63.92,5.16c.15,0,.24,0,.33.29S224,102.63,223.84,102.73Z"/></symbol>
+<symbol id="i-question-mark" viewBox="0 0 256 256"><path d="M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z"/></symbol>
+<symbol id="i-arrow-clockwise" viewBox="0 0 256 256"><path d="M240,56v48a8,8,0,0,1-8,8H184a8,8,0,0,1,0-16H211.4L184.81,71.64l-.25-.24a80,80,0,1,0-1.67,114.78,8,8,0,0,1,11,11.63A95.44,95.44,0,0,1,128,224h-1.32A96,96,0,1,1,195.75,60L224,85.8V56a8,8,0,1,1,16,0Z"/></symbol>
+<symbol id="i-calendar-blank" viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z"/></symbol>
+<symbol id="i-funnel" viewBox="0 0 256 256"><path d="M230.6,49.53A15.81,15.81,0,0,0,216,40H40A16,16,0,0,0,28.19,66.76l.08.09L96,139.17V216a16,16,0,0,0,24.87,13.32l32-21.34A16,16,0,0,0,160,194.66V139.17l67.74-72.32.08-.09A15.8,15.8,0,0,0,230.6,49.53ZM40,56h0Zm106.18,74.58A8,8,0,0,0,144,136v58.66L112,216V136a8,8,0,0,0-2.16-5.47L40,56H216Z"/></symbol>
+<symbol id="i-dots-three-vertical" viewBox="0 0 256 256"><path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM128,72a12,12,0,1,0-12-12A12,12,0,0,0,128,72Zm0,112a12,12,0,1,0,12,12A12,12,0,0,0,128,184Z"/></symbol>
+<symbol id="i-speaker-high" viewBox="0 0 256 256"><path d="M155.51,24.81a8,8,0,0,0-8.42.88L77.25,80H32A16,16,0,0,0,16,96v64a16,16,0,0,0,16,16H77.25l69.84,54.31A8,8,0,0,0,160,224V32A8,8,0,0,0,155.51,24.81ZM32,96H72v64H32ZM144,207.64,88,164.09V91.91l56-43.55Zm54-106.08a40,40,0,0,1,0,52.88,8,8,0,0,1-12-10.58,24,24,0,0,0,0-31.72,8,8,0,0,1,12-10.58ZM248,128a79.9,79.9,0,0,1-20.37,53.34,8,8,0,0,1-11.92-10.67,64,64,0,0,0,0-85.33,8,8,0,1,1,11.92-10.67A79.83,79.83,0,0,1,248,128Z"/></symbol>
+<symbol id="i-sun-horizon-f" viewBox="0 0 256 256"><path d="M248,160a8,8,0,0,1-8,8H16a8,8,0,0,1,0-16H56.45a73.54,73.54,0,0,1-.45-8,72,72,0,0,1,144,0,73.54,73.54,0,0,1-.45,8H240A8,8,0,0,1,248,160Zm-40,32H48a8,8,0,0,0,0,16H208a8,8,0,0,0,0-16ZM80.84,59.58a8,8,0,0,0,14.32-7.16l-8-16a8,8,0,0,0-14.32,7.16ZM20.42,103.16l16,8a8,8,0,1,0,7.16-14.31l-16-8a8,8,0,1,0-7.16,14.31ZM216,112a8,8,0,0,0,3.57-.84l16-8a8,8,0,1,0-7.16-14.31l-16,8A8,8,0,0,0,216,112ZM164.42,63.16a8,8,0,0,0,10.74-3.58l8-16a8,8,0,0,0-14.32-7.16l-8,16A8,8,0,0,0,164.42,63.16Z"/></symbol>
+<symbol id="i-calendar-check-f" viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM169.66,133.66l-48,48a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L116,164.69l42.34-42.35a8,8,0,0,1,11.32,11.32ZM48,80V48H72v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80Z"/></symbol>
+<symbol id="i-wallet-f" viewBox="0 0 256 256"><path d="M216,64H56a8,8,0,0,1,0-16H192a8,8,0,0,0,0-16H56A24,24,0,0,0,32,56V184a24,24,0,0,0,24,24H216a16,16,0,0,0,16-16V80A16,16,0,0,0,216,64Zm-36,80a12,12,0,1,1,12-12A12,12,0,0,1,180,144Z"/></symbol>
+<symbol id="i-user-f" viewBox="0 0 256 256"><path d="M230.93,220a8,8,0,0,1-6.93,4H32a8,8,0,0,1-6.92-12c15.23-26.33,38.7-45.21,66.09-54.16a72,72,0,1,1,73.66,0c27.39,8.95,50.86,27.83,66.09,54.16A8,8,0,0,1,230.93,220Z"/></symbol>
+<symbol id="i-check-circle-f" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"/></symbol>
+<symbol id="i-star-f" viewBox="0 0 256 256"><path d="M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,86l59-4.76,22.76-55.08a16.36,16.36,0,0,1,30.27,0l22.75,55.08,59,4.76a16.46,16.46,0,0,1,9.37,28.86Z"/></symbol>
+</svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="city" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+      <rect class="m-land" width="400" height="400"/>
+      <path class="m-water" d="M0,0 H74 C98,58 62,118 88,178 C112,236 70,300 98,352 C108,372 96,388 104,400 H0 Z"/>
+      <path class="m-water" d="M0,352 C40,340 70,360 104,400 H0 Z"/>
+      <rect class="m-park" x="256" y="296" width="96" height="62" rx="8"/>
+      <rect class="m-park" x="150" y="40" width="44" height="34" rx="6"/>
+      <g class="m-case" stroke-width="9">
+        <path d="M88,46 H400 M96,96 H400 M104,146 H400 M118,246 H400 M110,296 H250 M118,346 H400 M88,20 H400"/>
+        <path d="M132,0 V400 M182,0 V400 M232,0 V400 M282,0 V290 M332,0 V290 M378,0 V400 M282,360 V400"/>
+      </g>
+      <g class="m-road" stroke-width="6">
+        <path d="M88,46 H400 M96,96 H400 M104,146 H400 M118,246 H400 M110,296 H250 M118,346 H400 M88,20 H400"/>
+        <path d="M132,0 V400 M182,0 V400 M232,0 V400 M282,0 V290 M332,0 V290 M378,0 V400 M282,360 V400"/>
+      </g>
+      <path class="m-case" stroke-width="16" d="M84,198 C160,186 236,214 400,172"/>
+      <path class="m-case" stroke-width="16" d="M206,0 C214,120 190,262 236,400"/>
+      <path class="m-major" stroke-width="12" d="M84,198 C160,186 236,214 400,172"/>
+      <path class="m-major" stroke-width="12" d="M206,0 C214,120 190,262 236,400"/>
+      <text class="m-label" x="112" y="128">Kadıköy</text>
+      <text class="m-label" x="252" y="232">Bahariye</text>
+      <text class="m-label" x="136" y="276">Caferağa</text>
+      <text class="m-label" x="122" y="330">Moda</text>
+      <text class="m-label" x="262" y="384">Fenerbahçe</text>
+      <text class="m-label" x="300" y="80">Hasanpaşa</text>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="page" lang="tr">
+
+<header class="top">
+  <nav aria-label="Bölümler">
+    <a href="#kararlar">Kararlar</a><a href="#renk">Renk</a><a href="#tipografi">Tipografi</a><a href="#durum">Durum dili</a><a href="#bilesen">Bileşenler</a><a href="#kurye">Kurye</a><a href="#isletme">İşletme</a><a href="#operasyon">Operasyon</a><a href="#ilkeler">İlkeler</a>
+  </nav>
+  <div class="seg" role="group" aria-label="Tema">
+    <button type="button" id="th-system" data-t="system" aria-pressed="true">Sistem</button>
+    <button type="button" id="th-light" data-t="light" aria-pressed="false"><svg class="ic"><use href="#i-sun"/></svg>Açık</button>
+    <button type="button" id="th-dark" data-t="dark" aria-pressed="false"><svg class="ic"><use href="#i-moon"/></svg>Koyu</button>
+  </div>
+</header>
+
+<section class="mast" aria-labelledby="t-mast">
+  <div class="wordmark wm-xl" aria-label="hızla">h<span class="i">ı</span>zla</div>
+  <h1 id="t-mast">Kurye, işletme ve operasyon için tek görsel dil.</h1>
+  <p class="lead">Üç yüzey aynı renkleri, aynı yazı tiplerini, aynı ikonları ve aynı kelimeleri kullanır. Değişen tek şey yoğunluktur: kurye ekranı büyük ve seyrek, operasyon ekranı küçük ve yoğun. Logodaki kor nokta, noktası olmayan Türkçe <b>ı</b>'nın üstünde yola çıkmış kuryedir.</p>
+  <div class="meta">
+    <span class="pill"><svg class="ic"><use href="#i-device-mobile"/></svg>Kurye · Flutter</span>
+    <span class="pill"><svg class="ic"><use href="#i-device-tablet"/></svg>İşletme · tablet</span>
+    <span class="pill"><svg class="ic"><use href="#i-desktop"/></svg>Operasyon · masaüstü</span>
+    <span>Sürüm 1.0 · 6 Ekim 2026</span>
+  </div>
+</section>
+
+<!-- KARARLAR -->
+<section class="sec" id="kararlar" aria-labelledby="t-kar">
+  <div class="sec-head">
+    <span class="ov">Özet</span>
+    <h2 id="t-kar">Bugünden yeniye</h2>
+    <p class="lead">Web ve mobil bugün iki ayrı palet, üç farklı alt gezinme dizisi ve dört farklı köşe yarıçapı kullanıyor. Aşağıdaki kararlar ikisini tek sisteme indirir.</p>
+  </div>
+  <div class="scroller">
+  <table class="t">
+    <thead><tr><th>Konu</th><th>Bugün</th><th>Yeni</th><th>Neden</th></tr></thead>
+    <tbody>
+      <tr><td><b>Ana renk</b></td><td class="was"><span class="dot" style="background:#FF4B2B"></span>Kor #FF4B2B</td><td><span class="dot" style="background:var(--tz-400)"></span>Turkuaz #16BCCB · metin #006A77</td><td class="muted">Hata kırmızısıyla ve Trendyol/Yemeksepeti rozetleriyle çakışıyor; beyazda 3,34:1. DoorDash kırmızısına ΔE 3,8.</td></tr>
+      <tr><td><b>Nötr</b></td><td class="was"><span class="dot" style="background:#0E0E0E"></span>Saf siyah + sıcak gri</td><td><span class="dot" style="background:var(--as-950)"></span>Asfalt: turkuaza eğilimli soğuk gri</td><td class="muted">Saf siyah OLED'de iz bırakır, gece sert kontrast yaratır.</td></tr>
+      <tr><td><b>Yazı</b></td><td class="was">Inter · Space Grotesk · JetBrains Mono</td><td>Archivo · Atkinson Hyperlegible Next · Mono</td><td class="muted">0/O ve 1/l/I ayrımı; JetBrains Mono'da ₺ glifi yok.</td></tr>
+      <tr><td><b>Durum</b></td><td class="was">Her durum ayrı renk</td><td>Renk = dikkat; ikon + etiket = adım</td><td class="muted">Doygun renk yalnızca anormal durumda (ISA-101).</td></tr>
+      <tr><td><b>İkon</b></td><td class="was">Web emoji, mobil Material</td><td>Phosphor, iki platformda aynı</td><td class="muted">Emoji her cihazda farklı çizilir.</td></tr>
+      <tr><td><b>Köşe</b></td><td class="was">Web 16 her yerde, mobil kart 28</td><td>4 · 8 · 12 · 16 · 24 · tam, role göre</td><td class="muted">Yoğun tablo ile kurye kartı aynı köşeyi taşıyamaz.</td></tr>
+      <tr><td><b>Harita</b></td><td class="was">CARTO raster, anahtarsız</td><td>MapLibre + özel stil, etiket ≥ 7:1</td><td class="muted">Dark Matter yol etiketi 1,65:1; CARTO artık anahtar istiyor.</td></tr>
+      <tr><td><b>Kaynak</b></td><td class="was">Web ve mobilde elle yazılmış değerler</td><td>Tek <code>tokens.json</code> → CSS + Dart</td><td class="muted">CI, üretilen dosyalar elle değişirse kırmızı olur.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- RENK -->
+<section class="sec" id="renk" aria-labelledby="t-renk">
+  <div class="sec-head">
+    <span class="ov">Temel</span>
+    <h2 id="t-renk">Renk</h2>
+    <p class="lead">Turkuaz, Türkiye'deki teslimat markalarının boş bıraktığı tek ton bölgesi: pazar pembe-kırmızı, turuncu ve mor ile dolu. Açık temada metin ve ikon için koyu turkuaz, dolgu için parlak turkuaz kullanılır; parlak turkuaz beyaz zeminde metin olamaz.</p>
+  </div>
+
+  <div class="grid">
+    <h3>Turkuaz</h3>
+    <div class="ramp">
+      <div class="sw"><div class="c" style="background:var(--tz-50)"></div><div class="l"><b>tz-50</b><span>#E8FAFB</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--tz-100)"></div><div class="l"><b>tz-100</b><span>#C6F1F4</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--tz-200)"></div><div class="l"><b>tz-200</b><span>#93E3EA</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--tz-300)"></div><div class="l"><b>tz-300</b><span>#4FD2DC · koyu ana</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--tz-400)"></div><div class="l"><b>tz-400</b><span>#16BCCB · açık dolgu</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--tz-500)"></div><div class="l"><b>tz-500</b><span>#00A0B0 · odak</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--tz-600)"></div><div class="l"><b>tz-600</b><span>#00808E</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--tz-700)"></div><div class="l"><b>tz-700</b><span>#006A77 · açık metin</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--tz-800)"></div><div class="l"><b>tz-800</b><span>#0A5560</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--tz-900)"></div><div class="l"><b>tz-900</b><span>#0C434B</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--tz-950)"></div><div class="l"><b>tz-950</b><span>#062A2F · mürekkep</span></div></div>
+    </div>
+    <h3>Asfalt</h3>
+    <div class="ramp">
+      <div class="sw"><div class="c" style="background:var(--as-0)"></div><div class="l"><b>as-0</b><span>#FFFFFF</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--as-25)"></div><div class="l"><b>as-25</b><span>#F6F8F8</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--as-50)"></div><div class="l"><b>as-50</b><span>#EEF2F3</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--as-100)"></div><div class="l"><b>as-100</b><span>#E3E8EA</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--as-200)"></div><div class="l"><b>as-200</b><span>#CBD3D6</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--as-300)"></div><div class="l"><b>as-300</b><span>#A9B5B9</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--as-400)"></div><div class="l"><b>as-400</b><span>#83939A</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--as-500)"></div><div class="l"><b>as-500</b><span>#63737A</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--as-600)"></div><div class="l"><b>as-600</b><span>#4B5A60</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--as-700)"></div><div class="l"><b>as-700</b><span>#374348</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--as-800)"></div><div class="l"><b>as-800</b><span>#253035</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--as-850)"></div><div class="l"><b>as-850</b><span>#1A2327</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--as-900)"></div><div class="l"><b>as-900</b><span>#131B1E</span></div></div>
+      <div class="sw"><div class="c" style="background:var(--as-950)"></div><div class="l"><b>as-950</b><span>#0B1214</span></div></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <h3>Anlamsal token'lar <span class="muted" style="font-family:var(--font-text);font-size:15px;font-weight:400">· kutular şu anki temada çizilir; tema düğmesiyle değiştirin</span></h3>
+    <div class="tok">
+      <div class="row"><i class="chipc" style="background:var(--hz-bg)"></i><div><b>--hz-bg</b><span>sayfa zemini · as-25 / as-950</span></div></div>
+      <div class="row"><i class="chipc" style="background:var(--hz-surface)"></i><div><b>--hz-surface</b><span>kart, tablo · as-0 / as-900</span></div></div>
+      <div class="row"><i class="chipc" style="background:var(--hz-surface-2)"></i><div><b>--hz-surface-2</b><span>gömülü alan · as-50 / as-850</span></div></div>
+      <div class="row"><i class="chipc" style="background:var(--hz-surface-3)"></i><div><b>--hz-surface-3</b><span>seçili zemin · as-100 / as-800</span></div></div>
+      <div class="row"><i class="chipc" style="background:var(--hz-text)"></i><div><b>--hz-text</b><span>ana metin · as-900 / as-100</span></div></div>
+      <div class="row"><i class="chipc" style="background:var(--hz-text-2)"></i><div><b>--hz-text-2</b><span>ikincil metin · as-600 / as-300</span></div></div>
+      <div class="row"><i class="chipc" style="background:var(--hz-brand-fill)"></i><div><b>--hz-brand-fill</b><span>birincil buton · tz-400 / tz-300</span></div></div>
+      <div class="row"><i class="chipc" style="background:var(--hz-brand-ink)"></i><div><b>--hz-brand-ink</b><span>marka metni, link · tz-700 / tz-300</span></div></div>
+      <div class="row"><i class="chipc" style="background:var(--hz-brand-tint)"></i><div><b>--hz-brand-tint</b><span>marka zemin tonu · tz-50 / tz-900</span></div></div>
+      <div class="row"><i class="chipc" style="background:var(--hz-success)"></i><div><b>--hz-success</b><span>teslim edildi, müsait</span></div></div>
+      <div class="row"><i class="chipc" style="background:var(--hz-warning-fill)"></i><div><b>--hz-warning</b><span>süre riski rozeti</span></div></div>
+      <div class="row"><i class="chipc" style="background:var(--hz-danger-fill)"></i><div><b>--hz-danger</b><span>geç kaldı, sorun</span></div></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <h3>Kontrast (WCAG 2.2, hesaplandı)</h3>
+    <div class="contrast">
+      <div class="cpair" style="background:var(--as-25);color:var(--as-900)"><span class="aa">Aa</span><span class="r"><b>16,37</b>metin / zemin · açık</span></div>
+      <div class="cpair" style="background:#fff;color:var(--tz-700)"><span class="aa">Aa</span><span class="r"><b>6,31</b>marka metni / beyaz</span></div>
+      <div class="cpair" style="background:var(--tz-400);color:var(--tz-950)"><span class="aa">Aa</span><span class="r"><b>6,59</b>mürekkep / dolgu · açık</span></div>
+      <div class="cpair" style="background:var(--as-950);color:var(--as-100)"><span class="aa">Aa</span><span class="r"><b>15,30</b>metin / zemin · koyu</span></div>
+      <div class="cpair" style="background:var(--as-950);color:var(--tz-300)"><span class="aa">Aa</span><span class="r"><b>10,43</b>marka / zemin · koyu</span></div>
+      <div class="cpair" style="background:#fff;color:#FF4B2B"><span class="aa">Aa</span><span class="r"><b>3,34</b>bugünkü kor / beyaz · AA altı</span></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <h3>Platform rozetleri ve kor nokta</h3>
+    <div class="demo-row d-merchant">
+      <span class="plat"><i style="background:var(--pf-ys)"></i>Yemeksepeti</span>
+      <span class="plat"><i style="background:var(--pf-getir)"></i>Getir</span>
+      <span class="plat"><i style="background:var(--pf-ty)"></i>Trendyol Go</span>
+      <span class="plat"><i style="background:var(--as-500)"></i>Doğrudan</span>
+      <span class="cap" style="max-width:60ch">Platform rengi yalnızca 8 px'lik işarette yaşar, büyük alan boyamaz. Rozet "nereden geldi"yi söyler, durum çipiyle yan yana gelmez. Kor <span class="dot" style="background:var(--kor);border-radius:50%"></span>yalnızca logo noktası ve pazarlamadadır.</span>
+    </div>
+  </div>
+</section>
+
+<!-- TİPOGRAFİ -->
+<section class="sec" id="tipografi" aria-labelledby="t-tip">
+  <div class="sec-head">
+    <span class="ov">Temel</span>
+    <h2 id="t-tip">Tipografi</h2>
+    <p class="lead">Motor üstünde bir saniyelik bakışta "No:10/B D:1" yanlış okunmamalı. Metin ailesi Braille Institute'un az gören okurlar için çizdiği Atkinson Hyperlegible'ın 2025 sürümü; karışan harfleri bilinçli olarak ayırır. Büyük rakamlar genişlik ekseni olan Archivo ile yazılır.</p>
+  </div>
+  <div class="spec">
+    <div class="card">
+      <span class="label-sm">Başlık ve büyük rakam · Archivo</span>
+      <div class="big-money">₺1.240<small style="font-size:.55em">,50</small></div>
+      <p class="cap">Değişken: genişlik 62–125, ağırlık 100–900. Burada genişlik 112, ağırlık 800, <code>tnum</code>. ₺ glifi var; diğer yığınların yedeği.</p>
+    </div>
+    <div class="card">
+      <span class="label-sm">Metin · Atkinson Hyperlegible Next</span>
+      <div class="legible">0O 1lI 8B rn</div>
+      <p style="font-size:18px;line-height:1.45">Caferağa Mah. Moda Cad. No:10/B D:1, Kadıköy. Teslim alma: arka kapı, zile basın.</p>
+      <p class="cap">Sıfırın çizgisi, l'nin kuyruğu, I'nın tırnakları var. Türkçe karakterler tam (ğ ş ı İ ç ö ü â î û), <code>tnum</code> var, ₺ yok → Archivo'dan gelir.</p>
+    </div>
+    <div class="card">
+      <span class="label-sm">Kod · Atkinson Hyperlegible Mono</span>
+      <div class="mono" style="font-size:30px;font-weight:700;line-height:1.3">HZ-7F3K<br>34 HZL 482<br>PIN 4827</div>
+      <p class="cap">Sipariş kodu, teslim PIN'i, plaka, IBAN. Kod alfabesinden 0, O, 1, I, L çıkarılır.</p>
+    </div>
+  </div>
+  <div class="card" style="padding:8px 20px 12px">
+    <div class="scale-row h"><span>Ad</span><span>Örnek (kurye boyutunda)</span><span class="v">Kurye</span><span class="v">İşletme</span><span class="v">Operasyon</span></div>
+    <div class="scale-row"><span class="n">display-xl</span><span class="s money" style="font-size:44px">₺86,40</span><span class="v">44/48</span><span class="v">36/42</span><span class="v">32/38</span></div>
+    <div class="scale-row"><span class="n">display</span><span class="s" style="font-family:var(--font-display);font-stretch:112%;font-weight:750;font-size:34px">12 dk</span><span class="v">34/40</span><span class="v">30/36</span><span class="v">26/32</span></div>
+    <div class="scale-row"><span class="n">title-l</span><span class="s" style="font-family:var(--font-display);font-weight:700;font-size:26px">Slotlar</span><span class="v">26/32</span><span class="v">24/30</span><span class="v">20/26</span></div>
+    <div class="scale-row"><span class="n">title</span><span class="s" style="font-weight:700;font-size:21px">Kadıköy Burger</span><span class="v">21/28</span><span class="v">19/26</span><span class="v">16/22</span></div>
+    <div class="scale-row"><span class="n">body-l</span><span class="s" style="font-size:18px">Bahariye Cad. No:47, Kadıköy</span><span class="v">18/26</span><span class="v">17/24</span><span class="v">15/22</span></div>
+    <div class="scale-row"><span class="n">body</span><span class="s" style="font-size:16px">Kurye 4 dakika içinde şubenizde.</span><span class="v">16/24</span><span class="v">16/24</span><span class="v">14/20</span></div>
+    <div class="scale-row"><span class="n">label</span><span class="s" style="font-size:16px;font-weight:700">Teslim aldım</span><span class="v">16/20</span><span class="v">15/20</span><span class="v">13/18</span></div>
+    <div class="scale-row"><span class="n">caption</span><span class="s" style="font-size:14px;color:var(--hz-text-2)">Geçmek puanını etkilemez.</span><span class="v">14/20</span><span class="v">13/18</span><span class="v">12/16</span></div>
+    <div class="scale-row"><span class="n">overline</span><span class="s ov" style="font-size:13px;color:var(--hz-text-2)">istanbul · İSTANBUL</span><span class="v">13/16</span><span class="v">12/16</span><span class="v">11/14</span></div>
+    <div class="scale-row"><span class="n">code</span><span class="s mono" style="font-size:22px;font-weight:700">HZ-7F3K</span><span class="v">22/28</span><span class="v">16/22</span><span class="v">13/18</span></div>
+  </div>
+  <p class="cap">Overline satırı Türkçe büyük harf kuralını gösteriyor: <code>lang="tr"</code> altında CSS "istanbul"u "İSTANBUL" yazar. Flutter'da <code>toUpperCase()</code> yerel ayara duyarsızdır; <code>toUpperCaseTr()</code> yardımcı fonksiyonu kullanılır.</p>
+</section>
+
+<!-- DURUM DİLİ -->
+<section class="sec" id="durum" aria-labelledby="t-dur">
+  <div class="sec-head">
+    <span class="ov">Dil</span>
+    <h2 id="t-dur">Durum dili</h2>
+    <p class="lead">Teslimatın on adımı var; her birine ayrı renk vermek ekranda gökkuşağı ve ezber üretir. Durum çipi üç tonla adımı söyler. Gecikme ve sorun ayrı bir rozettir ve çipin yanına eklenir. Normal akışta ekran sakin kalır, göz yalnızca rozetlere gider.</p>
+  </div>
+  <div class="grid d-merchant" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div class="card demo-col">
+      <span class="label-sm">Nötr · henüz kimsede değil</span>
+      <div class="demo-row">
+        <span class="chip n"><svg class="ic"><use href="#i-hourglass-medium"/></svg>Hazırlanıyor</span>
+        <span class="chip n"><svg class="ic"><use href="#i-broadcast"/></svg>Kurye aranıyor</span>
+        <span class="chip n"><svg class="ic"><use href="#i-bell"/></svg>Teklif edildi</span>
+        <span class="chip n"><svg class="ic"><use href="#i-x-circle"/></svg>İptal</span>
+      </div>
+    </div>
+    <div class="card demo-col">
+      <span class="label-sm">Marka · Hızla'nın elinde, hareket hâlinde</span>
+      <div class="demo-row">
+        <span class="chip b"><svg class="ic"><use href="#i-moped"/></svg>Kurye yolda</span>
+        <span class="chip b"><svg class="ic"><use href="#i-storefront"/></svg>Kurye işletmede</span>
+        <span class="chip b"><svg class="ic"><use href="#i-package"/></svg>Teslim alındı</span>
+        <span class="chip b"><svg class="ic"><use href="#i-house"/></svg>Adreste</span>
+      </div>
+    </div>
+    <div class="card demo-col">
+      <span class="label-sm">Başarı · bitti</span>
+      <div class="demo-row"><span class="chip s"><svg class="ic"><use href="#i-check-circle-f"/></svg>Teslim edildi</span></div>
+      <span class="label-sm" style="margin-top:6px">Dikkat rozetleri · çipe eklenir</span>
+      <div class="demo-row">
+        <span class="chip b"><svg class="ic"><use href="#i-storefront"/></svg>Kurye işletmede</span><span class="badge w"><svg class="ic"><use href="#i-clock"/></svg>Bekleme 11 dk</span>
+      </div>
+      <div class="demo-row">
+        <span class="chip b"><svg class="ic"><use href="#i-house"/></svg>Adreste</span><span class="badge d"><svg class="ic"><use href="#i-siren"/></svg>Müşteriye ulaşılamıyor</span>
+      </div>
+    </div>
+  </div>
+  <div class="grid d-merchant" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div class="card demo-col">
+      <span class="label-sm">Adım çizgisi · teslimatın neresindeyiz</span>
+      <div class="stepper" aria-label="Adım 3 / 5"><i class="done"></i><i class="done"></i><i class="now"></i><i></i><i></i></div>
+      <div class="demo-row cap" style="justify-content:space-between"><span>Restorana git</span><span>İşletmede</span><b style="color:var(--hz-text)">Teslim alındı</b><span>Adres</span><span>Bitti</span></div>
+    </div>
+    <div class="card demo-col">
+      <span class="label-sm">Kurye varlığı · avatar halkası</span>
+      <div class="demo-row">
+        <span class="demo-row" style="gap:8px"><span class="avatar on">MK</span><span class="cap">Müsait</span></span>
+        <span class="demo-row" style="gap:8px"><span class="avatar del">EŞ</span><span class="cap">Teslimatta</span></span>
+        <span class="demo-row" style="gap:8px"><span class="avatar brk">AY</span><span class="cap">Molada</span></span>
+        <span class="demo-row" style="gap:8px"><span class="avatar off">ZD</span><span class="cap">Çevrimdışı</span></span>
+      </div>
+    </div>
+    <div class="card demo-col">
+      <span class="label-sm">Harita işaretleri · şekil + harf + renk</span>
+      <div class="demo-row" style="gap:22px;padding:8px 6px">
+        <span class="pin a">A</span><span class="pin bb">B</span><span class="cour"><svg class="ic"><use href="#i-navigation-arrow"/></svg></span><span class="pin a w">A</span><span class="pin bb dg">B</span>
+      </div>
+      <p class="cap">İşletme kare, adres daire, kurye yön oku. Uyarı kesikli halka, tehlike çift halka: renk körlüğünde de ayrışır.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BİLEŞENLER -->
+<section class="sec" id="bilesen" aria-labelledby="t-bil">
+  <div class="sec-head">
+    <span class="ov">Dil</span>
+    <h2 id="t-bil">Bileşenler ve yoğunluk</h2>
+    <p class="lead">Aynı buton üç yüzeyde aynı renk ve aynı kelimeyle durur; yalnızca yüksekliği, köşesi ve yazı boyutu yoğunluk token'ından gelir. Kuryenin en küçük dokunma alanı 56 px, birincil eylemi 64 px: eldivenle, titreyen bir motor üzerinde.</p>
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
+    <div class="card demo-col d-courier">
+      <span class="label-sm">Kurye · rahat · 56/64 px</span>
+      <button class="btn btn-p xl block" type="button"><svg class="ic"><use href="#i-qr-code"/></svg>Teslim aldım</button>
+      <div class="demo-row"><button class="btn btn-s" type="button">Mola ver</button><button class="btn btn-g" type="button">Çevrimdışı ol</button></div>
+    </div>
+    <div class="card demo-col d-merchant">
+      <span class="label-sm">İşletme · orta · 48 px</span>
+      <div class="demo-row"><button class="btn btn-p" type="button"><svg class="ic"><use href="#i-check-circle"/></svg>Hazır</button><button class="btn btn-s" type="button"><svg class="ic"><use href="#i-plus"/></svg>Yeni teslimat</button></div>
+      <div class="demo-row"><span class="stepper-n"><span class="b">−5</span><span>12 dk</span><span class="b">+5</span></span><button class="btn btn-g" type="button">Ayrıntı</button></div>
+    </div>
+    <div class="card demo-col d-ops">
+      <span class="label-sm">Operasyon · sıkı · 36 px</span>
+      <div class="demo-row"><button class="btn btn-p" type="button">Elle ata</button><button class="btn btn-s" type="button">İşletmeyi ara</button><button class="btn btn-d" type="button">İptal et</button></div>
+      <div class="demo-row"><span class="chip b"><svg class="ic"><use href="#i-moped"/></svg>Kurye yolda</span><span class="badge w"><svg class="ic"><use href="#i-clock"/></svg>+6 dk</span><span class="plat"><i style="background:var(--pf-getir)"></i>Getir</span></div>
+    </div>
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div class="card demo-col d-courier">
+      <span class="label-sm">HzMoney · HzEta · geri sayım</span>
+      <div class="demo-row" style="justify-content:space-between">
+        <span class="money dxl">₺86<small>,40</small></span>
+        <span class="eta"><b>12 dk</b><span>21:47</span></span>
+        <span class="ring"><svg viewBox="0 0 64 64"><circle class="trk" cx="32" cy="32" r="27"/><circle class="val" cx="32" cy="32" r="27" stroke-dasharray="169.6" stroke-dashoffset="49"/></svg><b>32</b></span>
+      </div>
+      <p class="cap">Kuruş bir kademe küçük. Geri sayım yalnızca teklif yanıtı içindir; teslimat süresi kuryeye geri sayım olarak gösterilmez.</p>
+    </div>
+    <div class="card demo-col d-courier">
+      <span class="label-sm">HzSlotCard</span>
+      <div class="slot">
+        <div class="hd"><span class="tm">18:00–22:00</span><span class="check on"><svg class="ic"><use href="#i-check-circle-f"/></svg></span></div>
+        <div class="meta"><span><b>Kadıköy</b></span><span>Yoğunluk yüksek</span><span>Garanti <b>₺170/sa</b></span><span>Teşvik <b>+₺10</b>/paket</span></div>
+        <div class="bar"><i style="width:72%"></i></div>
+        <div class="meta"><span>14 talep · 9 kapasite · talep penceresi Pzt 12:00'de kapanır</span></div>
+      </div>
+    </div>
+    <div class="card demo-col d-courier">
+      <span class="label-sm">HzEarningBreakdown</span>
+      <div class="brk">
+        <div><span>Taban</span><span>₺62,00</span></div>
+        <div><span>Mesafe · 3,4 km</span><span>₺14,40</span></div>
+        <div><span>Bekleme · 4 dk (8. dk sonrası)</span><span>₺0,00</span></div>
+        <div><span>Akşam teşviki</span><span>₺10,00</span></div>
+        <div class="tot"><span>Net kazanç</span><span>₺86,40</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="grid d-merchant" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div class="card demo-col">
+      <div class="input"><label for="f-addr">Teslim adresi</label><div class="f" id="f-addr"><svg class="ic" style="color:var(--hz-text-2)"><use href="#i-map-pin"/></svg>Caferağa Mah. Moda Cad. No:10/B</div><span class="hint">Kat, daire ve tarifi bir sonraki alana yazın.</span></div>
+      <div class="input err"><label for="f-tel">Müşteri telefonu</label><div class="f" id="f-tel">0532 123 45</div><span class="hint"><svg class="ic"><use href="#i-warning-circle"/></svg>Telefon numarası 10 haneli olmalı (5XX XXX XX XX).</span></div>
+    </div>
+    <div class="card demo-col">
+      <div class="banner b"><svg class="ic"><use href="#i-info"/></svg><span>Talep penceresi açık. Sıra önemli değil; pencere kapanınca dağıtım yapılır.</span></div>
+      <div class="banner w"><svg class="ic"><use href="#i-speaker-slash"/></svg><span><b>Ses kapalı.</b> Yeni siparişleri duymayabilirsiniz. Ayarlar'dan sesi deneyin.</span></div>
+      <div class="banner w"><svg class="ic"><use href="#i-cloud-slash"/></svg><span><b>Bağlantı yok.</b> Son güncelleme 14 sn önce. Teslimat bilgilerin cihazında.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- KURYE -->
+<section class="sec" id="kurye" aria-labelledby="t-kur">
+  <div class="sec-head">
+    <span class="ov">Yüzey · Flutter</span>
+    <h2 id="t-kur">Kurye uygulaması</h2>
+    <p class="lead">Dört sekme, her zaman aynı sırada: Bugün, Slotlar, Kazanç, Profil. Kazanç her teklifte kabulden önce görünür; geçmek cezasızdır; slot yarışla değil açık kuralla dağıtılır. Tema gündüz açık, gece koyu; harita kuralıyla aynı saatte değişir.</p>
+  </div>
+  <div class="phones">
+
+    <!-- K1 Bugün -->
+    <figure class="phone d-courier">
+      <div class="scr">
+        <div class="sbar"><span>18:47</span><span class="r">5G <i></i></span></div>
+        <div class="ph-head">
+          <div><h3>Bugün</h3><div class="sub">6 Eki Pzt · Kadıköy</div></div>
+          <div class="demo-row" style="gap:8px"><span class="chip s"><svg class="ic"><use href="#i-check-circle-f"/></svg>Müsait</span><span class="icon-btn" aria-label="Destek"><svg class="ic"><use href="#i-lifebuoy"/></svg></span></div>
+        </div>
+        <div class="ph-body">
+          <div class="map" style="height:210px;flex:none">
+            <svg class="base" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><use href="#city"/><path class="m-zone" d="M110,60 L360,40 L392,250 L250,330 L120,300 Z"/></svg>
+            <div class="ov" style="left:58%;top:56%"><span class="cour"><svg class="ic"><use href="#i-navigation-arrow"/></svg></span></div>
+          </div>
+          <div class="sheet" style="flex:1;margin-top:-18px">
+            <div class="grab"></div>
+            <div class="slot" style="padding:14px 16px">
+              <div class="hd"><span class="tm">18:00–22:00</span><span class="chip b"><svg class="ic"><use href="#i-calendar-check"/></svg>Başladı</span></div>
+              <div class="meta"><span>Kadıköy · <b>3 sa 13 dk</b> kaldı</span><span>Garanti <b>₺170/sa</b></span></div>
+              <div class="bar"><i style="width:20%"></i></div>
+            </div>
+            <div>
+              <div class="cap">Bugünkü kazanç</div>
+              <div class="money dxl">₺1.240<small>,50</small></div>
+              <div class="cap num" style="margin-top:4px">14 teslimat · 5 sa 20 dk çevrimiçi · ₺233/sa</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto">
+              <button class="btn btn-s" type="button"><svg class="ic"><use href="#i-coffee"/></svg>Mola ver</button>
+              <button class="btn btn-s" type="button">Çevrimdışı ol</button>
+            </div>
+          </div>
+        </div>
+        <nav class="tabbar"><a class="on"><svg class="ic"><use href="#i-sun-horizon-f"/></svg>Bugün</a><a><svg class="ic"><use href="#i-calendar-check"/></svg>Slotlar</a><a><svg class="ic"><use href="#i-wallet"/></svg>Kazanç</a><a><svg class="ic"><use href="#i-user"/></svg>Profil</a></nav>
+      </div>
+      <figcaption><b>K1 · Bugün.</b> Aktif slot, bugünkü kazanç ve saatlik ortalama tek bakışta. Kazanca dokununca döküm açılır.</figcaption>
+    </figure>
+
+    <!-- K2 Teklif -->
+    <figure class="phone d-courier">
+      <div class="scr">
+        <div class="sbar"><span>18:52</span><span class="r">5G <i></i></span></div>
+        <div class="ph-body" style="position:relative">
+          <div class="map" style="position:absolute;inset:0">
+            <svg class="base" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><use href="#city"/><path class="m-route-case" d="M270,200 L232,200 L222,246 L182,246 L182,296 L150,320"/><path class="m-route" d="M270,200 L232,200 L222,246 L182,246 L182,296 L150,320"/></svg>
+            <div class="ov" style="left:66%;top:22%"><span class="pin a">A</span></div>
+            <div class="ov" style="left:36%;top:36%"><span class="pin bb">B</span></div>
+          </div>
+          <div class="scrim"></div>
+          <div class="sheet" style="position:absolute;left:0;right:0;bottom:0;gap:12px">
+            <div class="grab"></div>
+            <div class="demo-row" style="justify-content:space-between;align-items:flex-start">
+              <div>
+                <div class="ov" style="color:var(--hz-text-2)">Yeni teklif</div>
+                <div class="money dxl" style="margin-top:4px">₺86<small>,40</small></div>
+                <div class="cap">net kazanç · kabul etmeden önce</div>
+              </div>
+              <span class="ring"><svg viewBox="0 0 64 64"><circle class="trk" cx="32" cy="32" r="27"/><circle class="val" cx="32" cy="32" r="27" stroke-dasharray="169.6" stroke-dashoffset="49"/></svg><b>32</b></span>
+            </div>
+            <div class="brk" style="font-size:15px">
+              <div><span>Taban</span><span>₺62,00</span></div>
+              <div><span>Mesafe · 3,4 km</span><span>₺14,40</span></div>
+              <div><span>Akşam teşviki</span><span>₺10,00</span></div>
+            </div>
+            <div>
+              <div class="stop"><span class="pin a">A</span><div><div class="t">Kadıköy Burger</div><div class="s"><span class="plat" style="font-size:12px"><i style="background:var(--pf-ys)"></i>Yemeksepeti</span> · Bahariye Cad.</div></div><span class="d">650 m</span></div>
+              <div class="vline"></div>
+              <div class="stop"><span class="pin bb">B</span><div><div class="t">Caferağa, Moda</div><div class="s">Tam adres kabulden sonra</div></div><span class="d">2,8 km</span></div>
+            </div>
+            <div class="cap num">Toplam 3,4 km · yaklaşık 18 dk</div>
+            <button class="btn btn-p xl block" type="button">Kabul et</button>
+            <button class="btn btn-g block" type="button" style="height:44px">Geç</button>
+            <div class="cap" style="text-align:center;margin-top:-6px">Geçmek puanını etkilemez.</div>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>K2 · Teklif.</b> En büyük rakam net kazanç. "Reddet" yok, "Geç" var. Kabul tek dokunuş, başparmak bölgesinde.</figcaption>
+    </figure>
+
+    <!-- K3 Aktif teslimat -->
+    <figure class="phone d-courier">
+      <div class="scr">
+        <div class="sbar"><span>19:03</span><span class="r">5G <i></i></span></div>
+        <div style="padding:4px var(--gut) 10px;display:grid;gap:8px">
+          <div class="stepper"><i class="done"></i><i class="now"></i><i></i><i></i><i></i></div>
+          <div class="demo-row" style="justify-content:space-between"><span class="chip b"><svg class="ic"><use href="#i-storefront"/></svg>İşletmedesin</span><span class="cap num">Adım 2 / 5</span></div>
+        </div>
+        <div class="ph-body">
+          <div class="map" style="height:170px;flex:none">
+            <svg class="base" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><use href="#city"/><path class="m-route-case" d="M270,200 L232,200 L222,246 L182,246 L182,296 L150,320"/><path class="m-route" d="M270,200 L232,200 L222,246 L182,246 L182,296 L150,320"/></svg>
+            <div class="ov" style="left:67%;top:50%"><span class="pin a">A</span></div>
+            <div class="ov" style="left:37%;top:80%"><span class="pin bb">B</span></div>
+          </div>
+          <div class="sheet" style="flex:1;margin-top:-18px;gap:12px">
+            <div class="grab"></div>
+            <div class="banner b" style="padding:10px 12px"><svg class="ic"><use href="#i-timer"/></svg><span class="num"><b>Bekleme 6:12.</b> 8. dakikadan sonra bekleme ücreti işler.</span></div>
+            <div>
+              <div class="demo-row" style="justify-content:space-between"><h3 style="font-size:21px;font-stretch:100%">Kadıköy Burger</h3><span class="plat"><i style="background:var(--pf-ys)"></i>Yemeksepeti</span></div>
+              <p style="font-size:18px;line-height:1.4;margin-top:2px">Bahariye Cad. No:47, Kadıköy</p>
+              <p class="cap" style="margin-top:4px">Teslim alma: arka kapı, zile basın.</p>
+            </div>
+            <div class="kv"><span class="cap">Sipariş kodu</span><span class="mono" style="font-size:22px;font-weight:700">HZ-7F3K</span></div>
+            <button class="btn btn-p xl block" type="button" style="margin-top:auto"><svg class="ic"><use href="#i-qr-code"/></svg>Teslim aldım</button>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+              <button class="btn btn-s" type="button" style="padding:0 8px"><svg class="ic"><use href="#i-path"/></svg>Yol</button>
+              <button class="btn btn-s" type="button" style="padding:0 8px"><svg class="ic"><use href="#i-phone"/></svg>Ara</button>
+              <button class="btn btn-s" type="button" style="padding:0 8px"><svg class="ic"><use href="#i-warning-circle"/></svg>Sorun</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>K3 · Aktif teslimat.</b> Tek birincil eylem, adıma göre değişir. Bekleme sayacı kuryenin beklediği süreyi ücrete bağlar. 10 km/sa üstünde yalnızca hedef ve büyük buton kalır.</figcaption>
+    </figure>
+
+    <!-- K4 Slotlar -->
+    <figure class="phone d-courier">
+      <div class="scr">
+        <div class="sbar"><span>21:30</span><span class="r">5G <i></i></span></div>
+        <div class="ph-head"><div><h3>Slotlar</h3><div class="sub">13–19 Ekim haftası</div></div><span class="icon-btn" aria-label="Destek"><svg class="ic"><use href="#i-lifebuoy"/></svg></span></div>
+        <div class="segc"><span>Haftam</span><span class="on">Talep et</span><span>Takas</span></div>
+        <div style="padding:12px var(--gut) 0"><div class="banner b" style="font-size:14px;padding:10px 12px"><svg class="ic"><use href="#i-info"/></svg><span><b>Talep penceresi açık · Pzt 12:00'ye kadar.</b> Sıra önemli değil; pencere kapanınca açık kurallarla dağıtılır.</span></div></div>
+        <div class="daystrip" style="margin-top:12px">
+          <div class="has">Pzt<b>13</b></div><div class="on has">Sal<b>14</b></div><div>Çar<b>15</b></div><div class="has">Per<b>16</b></div><div>Cum<b>17</b></div><div>Cmt<b>18</b></div><div>Paz<b>19</b></div>
+        </div>
+        <div class="ph-body" style="padding:12px var(--gut) 0;gap:10px;overflow:hidden">
+          <div class="slot" style="padding:14px 16px">
+            <div class="hd"><span class="tm">11:30–14:30</span><span class="check on"><svg class="ic"><use href="#i-check-circle-f"/></svg></span></div>
+            <div class="meta"><span><b>Kadıköy</b></span><span>Yoğunluk yüksek</span><span>Garanti <b>₺170/sa</b></span></div>
+          </div>
+          <div class="slot" style="padding:14px 16px">
+            <div class="hd"><span class="tm">18:00–22:00</span><span class="check on"><svg class="ic"><use href="#i-check-circle-f"/></svg></span></div>
+            <div class="meta"><span><b>Kadıköy</b></span><span>Yoğunluk yüksek</span><span>Teşvik <b>+₺10</b>/paket</span></div>
+          </div>
+          <div class="slot" style="padding:14px 16px">
+            <div class="hd"><span class="tm">22:00–01:00</span><span class="check"></span></div>
+            <div class="meta"><span><b>Ataşehir</b></span><span>Yoğunluk orta</span><span>Garanti <b>₺160/sa</b></span></div>
+          </div>
+          <a class="cap" style="color:var(--hz-brand-ink);font-weight:700;text-decoration:none;display:flex;gap:6px;align-items:center"><svg class="ic"><use href="#i-question-mark"/></svg>Geçen hafta alamadığın 1 slot var. Neden?</a>
+        </div>
+        <nav class="tabbar"><a><svg class="ic"><use href="#i-sun-horizon"/></svg>Bugün</a><a class="on"><svg class="ic"><use href="#i-calendar-check-f"/></svg>Slotlar</a><a><svg class="ic"><use href="#i-wallet"/></svg>Kazanç</a><a><svg class="ic"><use href="#i-user"/></svg>Profil</a></nav>
+      </div>
+      <figcaption><b>K4 · Slotlar.</b> Yarış yok: pencere boyunca işaretlenen slotlar pencere kapanınca dağıtılır. Alınamayan her slotun gerekçesi yazılı.</figcaption>
+    </figure>
+
+    <!-- K5 Kazanç -->
+    <figure class="phone d-courier">
+      <div class="scr">
+        <div class="sbar"><span>22:14</span><span class="r">5G <i></i></span></div>
+        <div class="ph-head"><div><h3>Kazanç</h3><div class="sub">Hakediş dönemi 6–12 Eki</div></div></div>
+        <div class="segc"><span class="on">Bugün</span><span>Bu hafta</span><span>Hakediş</span></div>
+        <div style="padding:14px var(--gut) 4px">
+          <div class="money dxl">₺1.240<small>,50</small></div>
+          <div class="cap num" style="margin-top:4px">14 teslimat · ₺233/sa · bekleme ücreti ₺36,00</div>
+        </div>
+        <div class="ph-body" style="padding:0 var(--gut);overflow:hidden">
+          <div class="list-row"><span class="tm">21:58</span><div><div class="t">Moda Pizza</div><div class="s">2,1 km · Getir</div></div><span class="money" style="font-size:18px">₺74,20</span></div>
+          <div class="list-row" style="border-bottom:0"><span class="tm">21:12</span><div><div class="t">Kadıköy Burger</div><div class="s">3,4 km · Yemeksepeti</div></div><span class="money" style="font-size:18px">₺98,40</span></div>
+          <div class="brk" style="font-size:14px;background:var(--hz-surface-2);border-radius:12px;padding:10px 12px;margin-bottom:6px">
+            <div><span>Taban</span><span>₺62,00</span></div>
+            <div><span>Mesafe · 3,4 km</span><span>₺14,40</span></div>
+            <div><span>Bekleme · 12 dk</span><span>₺12,00</span></div>
+            <div><span>Akşam teşviki</span><span>₺10,00</span></div>
+          </div>
+          <div class="list-row"><span class="tm">20:41</span><div><div class="t">Bahariye Köfte</div><div class="s">1,6 km · Trendyol Go</div></div><span class="money" style="font-size:18px">₺69,80</span></div>
+          <div class="slot" style="margin-top:12px;padding:12px 14px">
+            <div class="hd"><span style="font-weight:700">Hedef · 60 teslimat</span><span class="money" style="font-size:18px">+₺600</span></div>
+            <div class="bar"><i style="width:70%"></i></div>
+            <div class="meta"><span class="num">42 / 60 · Pazar 23:59'a kadar</span></div>
+          </div>
+        </div>
+        <nav class="tabbar"><a><svg class="ic"><use href="#i-sun-horizon"/></svg>Bugün</a><a><svg class="ic"><use href="#i-calendar-check"/></svg>Slotlar</a><a class="on"><svg class="ic"><use href="#i-wallet-f"/></svg>Kazanç</a><a><svg class="ic"><use href="#i-user"/></svg>Profil</a></nav>
+      </div>
+      <figcaption><b>K5 · Kazanç.</b> Her teslimat kalem kalem açılır; bekleme ve teşvik ayrı satırdır. "Görev" ve nadirlik seviyeleri yerine tutarı yazan hedef.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- İŞLETME -->
+<section class="sec" id="isletme" aria-labelledby="t-isl">
+  <div class="sec-head">
+    <span class="ov">Yüzey · web, tablet</span>
+    <h2 id="t-isl">İşletme paneli</h2>
+    <p class="lead">Mutfak tezgâhında, 50–80 cm'den, yağlı elle. Üç sütun iş akışını soldan sağa okur; kurye ne zaman gelecek sorusunun cevabı her kartın sağında büyük yazar. "Hazır" tek dokunuştur, kaydırma yoktur.</p>
+  </div>
+  <div class="scroller">
+    <div class="device tablet d-merchant">
+      <div class="scr">
+        <nav class="rail" aria-label="İşletme menüsü">
+          <div class="appicon" aria-label="Hızla">ı</div>
+          <a class="on"><svg class="ic"><use href="#i-package"/></svg>Teslimat</a>
+          <a><svg class="ic"><use href="#i-plus-circle"/></svg>Yeni</a>
+          <a><svg class="ic"><use href="#i-chart-bar"/></svg>Raporlar</a>
+          <a><svg class="ic"><use href="#i-receipt"/></svg>Fatura</a>
+          <a><svg class="ic"><use href="#i-gear"/></svg>Ayarlar</a>
+        </nav>
+        <div class="mbody">
+          <div class="mtop">
+            <h3>Teslimatlar</h3>
+            <span class="select"><svg class="ic"><use href="#i-storefront"/></svg>Kadıköy Bahariye<svg class="ic"><use href="#i-caret-down"/></svg></span>
+            <span class="muted num" style="font-size:14px">4 kurye yolda · ortalama varış 11 dk</span>
+            <button class="btn btn-p" type="button" style="margin-left:auto"><svg class="ic"><use href="#i-plus"/></svg>Yeni teslimat</button>
+          </div>
+          <div style="padding:12px 24px 0"><div class="banner w" style="font-size:15px;padding:10px 14px"><svg class="ic"><use href="#i-speaker-slash"/></svg><span><b>Ses kapalı.</b> Yeni siparişleri duymayabilirsiniz. Tabletin sesini açın ya da Ayarlar'dan sesi deneyin.</span></div></div>
+          <div class="kan">
+            <div class="kcol">
+              <header><span>Hazırlanıyor</span><span class="n">3</span></header>
+              <div class="kcard">
+                <div class="r1"><span class="code">HZ-Q8RT</span><span class="plat"><i style="background:var(--pf-ys)"></i>Yemeksepeti</span></div>
+                <div class="cap">Moda · 3 ürün · 14 dk önce geldi</div>
+                <div class="r2"><span class="stepper-n"><span class="b">−5</span><span>6 dk</span><span class="b">+5</span></span><button class="btn btn-p" type="button"><svg class="ic"><use href="#i-check-circle"/></svg>Hazır</button></div>
+              </div>
+              <div class="kcard">
+                <div class="r1"><span class="code">HZ-M2VX</span><span class="plat"><i style="background:var(--pf-getir)"></i>Getir</span></div>
+                <div class="cap">Hasanpaşa · 2 ürün · 6 dk önce</div>
+                <div class="r2"><span class="stepper-n"><span class="b">−5</span><span>12 dk</span><span class="b">+5</span></span><button class="btn btn-p" type="button"><svg class="ic"><use href="#i-check-circle"/></svg>Hazır</button></div>
+              </div>
+              <div class="kcard pickup">
+                <div class="r1"><span class="code">HZ-A7NC</span><span class="plat"><i style="background:var(--as-500)"></i>Gel-al</span></div>
+                <div class="cap">Müşteri gelip alacak · 2 dk önce</div>
+                <div class="r2"><span class="stepper-n"><span class="b">−5</span><span>15 dk</span><span class="b">+5</span></span><button class="btn btn-p" type="button"><svg class="ic"><use href="#i-check-circle"/></svg>Hazır</button></div>
+              </div>
+            </div>
+            <div class="kcol">
+              <header><span>Kurye geliyor / burada</span><span class="n">2</span></header>
+              <div class="kcard">
+                <div class="r1"><span class="code">HZ-7F3K</span><span class="plat"><i style="background:var(--pf-ys)"></i>Yemeksepeti</span></div>
+                <div class="r2"><span class="who"><span class="avatar del">MK</span><span><span class="t">Mert K.</span><br><span class="s">Burada · 11 dk bekliyor</span></span></span><span class="badge w"><svg class="ic"><use href="#i-clock"/></svg>+3 dk</span></div>
+                <div class="cap">Hazır işaretlenmedi. Hazırsa kuryeye teslim edin.</div>
+              </div>
+              <div class="kcard">
+                <div class="r1"><span class="code">HZ-K5PL</span><span class="plat"><i style="background:var(--pf-ty)"></i>Trendyol Go</span></div>
+                <div class="r2"><span class="who"><span class="avatar del">EŞ</span><span><span class="t">Elif Ş.</span><br><span class="s">Yolda · 650 m</span></span></span><span class="eta"><b>3 dk</b><span>19:06</span></span></div>
+              </div>
+            </div>
+            <div class="kcol">
+              <header><span>Yolda</span><span class="n">3</span></header>
+              <div class="kcard">
+                <div class="r1"><span class="code">HZ-2HBW</span><span class="plat"><i style="background:var(--pf-getir)"></i>Getir</span></div>
+                <div class="r2"><span class="who"><span class="avatar del">AY</span><span><span class="t">Ahmet Y.</span><br><span class="s">Caferağa'ya</span></span></span><span class="eta"><b>9 dk</b><span>19:12</span></span></div>
+              </div>
+              <div class="kcard">
+                <div class="r1"><span class="code">HZ-T6DJ</span><span class="plat"><i style="background:var(--pf-ys)"></i>Yemeksepeti</span></div>
+                <div class="r2"><span class="who"><span class="avatar del">ZD</span><span><span class="t">Zeynep D.</span><br><span class="s">Fenerbahçe'ye</span></span></span><span class="eta"><b>14 dk</b><span>19:17</span></span></div>
+              </div>
+              <div class="kcard">
+                <div class="r1"><span class="code">HZ-W9EF</span><span class="plat"><i style="background:var(--pf-ys)"></i>Yemeksepeti</span></div>
+                <div class="r2"><span class="who"><span class="avatar del">CB</span><span><span class="t">Can B.</span><br><span class="s">Moda'ya</span></span></span><span class="eta"><b>4 dk</b><span>19:07</span></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="mfoot num"><span>Bugün teslim edilen <b style="color:var(--hz-text)">23</b> · ortalama teslim 27 dk · kurye bekleme ortalaması 5 dk</span><span>Son güncelleme şimdi</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="frame-cap"><b>İ1 · Teslimatlar.</b> Kartın sol şeridi teslimat tipini söyler (Hızla kuryesi turkuaz, gel-al nötr). Kurye 8 dakikadan uzun beklerse karta uyarı rozeti eklenir; kart yanıp sönmez. Yatay tablet çerçevesi 1024 px; dar ekranda yana kaydırın.</p>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
+    <div class="card demo-col d-merchant">
+      <span class="label-sm">İ5 · Fatura · karşılaştırma kutusu</span>
+      <div class="kv"><span>Ekim · 412 teslimat</span><span class="money" style="font-size:28px">₺43.260</span></div>
+      <div class="brk" style="font-size:15px">
+        <div><span>Hızla · 412 × ₺105,00</span><span>₺43.260,00</span></div>
+        <div><span>Aynı siparişler platform kuryesiyle (sizin girdiğiniz %20 fark)</span><span>₺56.444,00</span></div>
+        <div class="tot"><span>Bu ayki fark</span><span style="color:var(--hz-success)">₺13.184,00 lehinize</span></div>
+      </div>
+      <p class="cap">Platform komisyon farkını işletme kendisi girer; Hızla tahmin etmez. Ortalama sepet bu örnekte 685 TL.</p>
+    </div>
+    <div class="card demo-col d-merchant">
+      <span class="label-sm">İ2 · Yeni teslimat · gönderilmeden önce fiyat</span>
+      <div class="input"><label for="f2">Hazır olma süresi</label><div class="segc" style="margin:0" id="f2"><span>Şimdi</span><span>5</span><span class="on">10</span><span>15</span><span>20 dk</span></div></div>
+      <div class="banner b"><svg class="ic"><use href="#i-receipt"/></svg><span class="num">Bu teslimat <b>₺105,00 + KDV</b>. Sabit paket ücreti, 3,2 km. Sepet tutarından bağımsız.</span></div>
+      <button class="btn btn-p" type="button">Teslimatı oluştur</button>
+    </div>
+  </div>
+</section>
+
+<!-- OPERASYON -->
+<section class="sec" id="operasyon" aria-labelledby="t-ops">
+  <div class="sec-head">
+    <span class="ov">Yüzey · web, masaüstü</span>
+    <h2 id="t-ops">Operasyon paneli</h2>
+    <p class="lead">İstisnayla yönetim: harita ve tablo sakin; doygun renk yalnızca müdahale gerektiren satırlarda. Sağdaki kuyruk yalnızca uyarı ve tehlike rozetli teslimatları, en acili üstte, tek tık eylemle listeler.</p>
+  </div>
+  <div class="scroller">
+    <div class="device desktop d-ops">
+      <div class="scr">
+        <nav class="side" aria-label="Operasyon menüsü">
+          <div class="logo"><span class="appicon" aria-hidden="true">ı</span>hızla<span class="sub">Operasyon</span></div>
+          <a class="on"><svg class="ic"><use href="#i-broadcast"/></svg>Canlı</a>
+          <a><svg class="ic"><use href="#i-package"/></svg>Teslimatlar<span class="cnt">4</span></a>
+          <a><svg class="ic"><use href="#i-users"/></svg>Kuryeler</a>
+          <a><svg class="ic"><use href="#i-calendar-check"/></svg>Slotlar</a>
+          <a><svg class="ic"><use href="#i-storefront"/></svg>İşletmeler</a>
+          <a><svg class="ic"><use href="#i-receipt"/></svg>Finans</a>
+          <a><svg class="ic"><use href="#i-lifebuoy"/></svg>Destek</a>
+          <a><svg class="ic"><use href="#i-map-trifold"/></svg>Bölgeler</a>
+        </nav>
+        <div class="obody">
+          <div class="otop">
+            <span class="select" style="height:36px"><svg class="ic"><use href="#i-map-trifold"/></svg>Kadıköy + Ataşehir<svg class="ic"><use href="#i-caret-down"/></svg></span>
+            <span class="search"><svg class="ic"><use href="#i-magnifying-glass"/></svg>Teslimat kodu, kurye ya da işletme ara<kbd>Ctrl K</kbd></span>
+            <span class="muted num" style="font-size:13px;margin-left:auto">Son güncelleme 2 sn önce</span>
+            <span class="avatar" style="width:32px;height:32px;font-size:12px">SO</span>
+          </div>
+          <div class="kpis">
+            <div class="kpi"><span class="l">Aktif kurye / slot kapasitesi</span><div class="v"><b>23<small> / 26</small></b><svg viewBox="0 0 96 32"><path class="sp-a" d="M0,24 L12,22 L24,20 L36,16 L48,14 L60,12 L72,10 L84,9 L96,8 L96,32 L0,32 Z"/><path class="sp-l" d="M0,24 L12,22 L24,20 L36,16 L48,14 L60,12 L72,10 L84,9 L96,8"/><circle class="sp-d" cx="96" cy="8" r="2.5"/></svg></div><span class="d">son 60 dk</span></div>
+            <div class="kpi"><span class="l">Bekleyen teslimat</span><div class="v"><b>7</b><svg viewBox="0 0 96 32"><path class="sp-a" d="M0,20 L12,18 L24,22 L36,16 L48,20 L60,14 L72,18 L84,16 L96,18 L96,32 L0,32 Z"/><path class="sp-l" d="M0,20 L12,18 L24,22 L36,16 L48,20 L60,14 L72,18 L84,16 L96,18"/><circle class="sp-d" cx="96" cy="18" r="2.5"/></svg></div><span class="d">kurye aranan 2 · teklif edilen 5</span></div>
+            <div class="kpi"><span class="l">Ortalama atama süresi</span><div class="v"><b>48<small> sn</small></b><svg viewBox="0 0 96 32"><path class="sp-a" d="M0,14 L12,16 L24,15 L36,18 L48,17 L60,19 L72,18 L84,20 L96,21 L96,32 L0,32 Z"/><path class="sp-l" d="M0,14 L12,16 L24,15 L36,18 L48,17 L60,19 L72,18 L84,20 L96,21"/><circle class="sp-d" cx="96" cy="21" r="2.5"/></svg></div><span class="d">hedef ≤ 60 sn</span></div>
+            <div class="kpi warn"><span class="l">Gecikme riski taşıyan</span><div class="v"><b>4</b><svg viewBox="0 0 96 32"><path class="sp-a" d="M0,28 L12,28 L24,26 L36,26 L48,24 L60,22 L72,18 L84,14 L96,12 L96,32 L0,32 Z"/><path class="sp-l" d="M0,28 L12,28 L24,26 L36,26 L48,24 L60,22 L72,18 L84,14 L96,12"/><circle class="sp-d" cx="96" cy="12" r="2.5"/></svg></div><span class="d">eşik: 3 · son 20 dk'da arttı</span></div>
+          </div>
+          <div class="omain">
+            <div class="map">
+              <svg class="base" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><use href="#city"/><path class="m-zone" d="M96,30 L300,24 L310,250 L230,330 L110,300 Z"/><path class="m-zone2" d="M300,24 L400,20 L400,300 L310,250 Z"/><path class="m-route-case" d="M270,200 L232,200 L222,246 L182,246 L182,296 L150,320"/><path class="m-route" d="M270,200 L232,200 L222,246 L182,246 L182,296 L150,320"/></svg>
+              <div class="ov" style="left:22%;top:22%"><span class="avatar on" style="width:22px;height:22px;font-size:0"></span></div>
+              <div class="ov" style="left:44%;top:40%"><span class="avatar on" style="width:22px;height:22px;font-size:0"></span></div>
+              <div class="ov" style="left:80%;top:30%"><span class="avatar del" style="width:22px;height:22px;font-size:0"></span></div>
+              <div class="ov" style="left:30%;top:62%"><span class="avatar del" style="width:22px;height:22px;font-size:0"></span></div>
+              <div class="ov" style="left:86%;top:62%"><span class="avatar on" style="width:22px;height:22px;font-size:0"></span></div>
+              <div class="ov" style="left:56%;top:84%"><span class="avatar brk" style="width:22px;height:22px;font-size:0"></span></div>
+              <div class="ov" style="left:64%;top:50%"><span class="pin a w">A</span></div>
+              <div class="ov" style="left:38%;top:80%"><span class="pin bb">B</span></div>
+              <div class="ov" style="left:72%;top:14%"><span class="pin bb dg">B</span></div>
+              <div class="ov" style="left:90%;top:44%"><span class="pin a">A</span></div>
+              <div style="position:absolute;left:12px;bottom:12px;display:flex;gap:8px;flex-wrap:wrap" class="cap">
+                <span class="pill" style="font-size:12px"><span class="avatar on" style="width:12px;height:12px;font-size:0;box-shadow:none;background:var(--hz-success)"></span>Müsait 9</span>
+                <span class="pill" style="font-size:12px"><span class="avatar del" style="width:12px;height:12px;font-size:0;box-shadow:none;background:var(--hz-brand-fill)"></span>Teslimatta 13</span>
+                <span class="pill" style="font-size:12px"><span class="avatar" style="width:12px;height:12px;font-size:0;box-shadow:none;background:var(--hz-text-3)"></span>Molada 1</span>
+              </div>
+            </div>
+            <div class="queue">
+              <header><span>İstisnalar</span><span class="badge w num">4 açık</span></header>
+              <div class="qrow"><span class="t"><span class="code">HZ-9K2M</span><span class="badge d"><svg class="ic"><use href="#i-siren"/></svg>Tehlike</span></span><span class="why">Adreste 6 dk · müşteriye ulaşılamıyor · Ahmet Y.</span><button class="btn btn-p" type="button">Kuryeyle konuş</button></div>
+              <div class="qrow hl"><span class="t"><span class="code">HZ-7F3K</span><span class="badge w"><svg class="ic"><use href="#i-clock"/></svg>Bekleme 11 dk</span></span><span class="why">Kadıköy Burger · hazır işaretlenmedi</span><button class="btn btn-s" type="button">İşletmeyi ara</button></div>
+              <div class="qrow"><span class="t"><span class="code">HZ-3TQA</span><span class="badge w"><svg class="ic"><use href="#i-broadcast"/></svg>Aranıyor 4 dk</span></span><span class="why">Ataşehir · 3 kurye geçti · en yakın 2,4 km</span><button class="btn btn-s" type="button">Elle ata</button></div>
+              <div class="qrow" style="border-bottom:0"><span class="t"><span class="code">HZ-P4WD</span><span class="badge w"><svg class="ic"><use href="#i-clock"/></svg>+6 dk</span></span><span class="why">Tahmini varış sözün üstünde · trafik</span><button class="btn btn-g" type="button">Ayrıntı</button></div>
+            </div>
+          </div>
+          <div class="otable">
+            <table>
+              <thead><tr><th>Kod</th><th>Durum</th><th class="r">Yaş</th><th>İşletme</th><th>Bölge</th><th>Kurye</th><th>Platform</th><th class="r">Tutar</th></tr></thead>
+              <tbody>
+                <tr><td class="code">HZ-9K2M</td><td><span class="chip b"><svg class="ic"><use href="#i-house"/></svg>Adreste</span> <span class="badge d">Ulaşılamıyor</span></td><td class="r">34 dk</td><td>Moda Pizza</td><td>Kadıköy</td><td>Ahmet Y.</td><td><span class="plat"><i style="background:var(--pf-getir)"></i>Getir</span></td><td class="r">₺105,00</td></tr>
+                <tr><td class="code">HZ-7F3K</td><td><span class="chip b"><svg class="ic"><use href="#i-storefront"/></svg>Kurye işletmede</span> <span class="badge w">+3 dk</span></td><td class="r">22 dk</td><td>Kadıköy Burger</td><td>Kadıköy</td><td>Mert K.</td><td><span class="plat"><i style="background:var(--pf-ys)"></i>Yemeksepeti</span></td><td class="r">₺105,00</td></tr>
+                <tr><td class="code">HZ-3TQA</td><td><span class="chip n"><svg class="ic"><use href="#i-broadcast"/></svg>Kurye aranıyor</span> <span class="badge w">4 dk</span></td><td class="r">5 dk</td><td>Ataşehir Et Evi</td><td>Ataşehir</td><td class="muted">—</td><td><span class="plat"><i style="background:var(--pf-ty)"></i>Trendyol Go</span></td><td class="r">₺112,50</td></tr>
+                <tr><td class="code">HZ-K5PL</td><td><span class="chip b"><svg class="ic"><use href="#i-moped"/></svg>Kurye yolda</span></td><td class="r">9 dk</td><td>Kadıköy Burger</td><td>Kadıköy</td><td>Elif Ş.</td><td><span class="plat"><i style="background:var(--pf-ty)"></i>Trendyol Go</span></td><td class="r">₺105,00</td></tr>
+                <tr><td class="code">HZ-2HBW</td><td><span class="chip b"><svg class="ic"><use href="#i-package"/></svg>Teslim alındı</span></td><td class="r">18 dk</td><td>Bahariye Köfte</td><td>Kadıköy</td><td>Ahmet Y.</td><td><span class="plat"><i style="background:var(--pf-getir)"></i>Getir</span></td><td class="r">₺105,00</td></tr>
+                <tr><td class="code">HZ-6RXN</td><td><span class="chip s"><svg class="ic"><use href="#i-check-circle-f"/></svg>Teslim edildi</span></td><td class="r">31 dk</td><td>Moda Pizza</td><td>Kadıköy</td><td>Can B.</td><td><span class="plat"><i style="background:var(--pf-ys)"></i>Yemeksepeti</span></td><td class="r">₺105,00</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="frame-cap"><b>O1 · Canlı.</b> Kuyruktaki satırın üzerine gelince haritadaki işaret vurgulanır (burada HZ-7F3K). KPI kutusu eşiği aşınca tonunu alır. Masaüstü çerçevesi 1116 px; dar ekranda yana kaydırın.</p>
+
+  <div class="card d-ops" style="display:grid;gap:16px">
+    <div class="demo-row" style="justify-content:space-between">
+      <div><span class="label-sm">O4 · Slot planlama</span><h3 style="margin-top:4px">Salı 14 Ekim · onaylanan / kapasite</h3></div>
+      <div class="demo-row"><span class="cap"><span class="dot" style="background:transparent;outline:2px solid var(--hz-warning-fill);outline-offset:-2px"></span>Kapasite tahminin altında</span><button class="btn btn-p" type="button">Haftayı yayınla</button></div>
+    </div>
+    <div class="scroller">
+      <div class="heat">
+        <span></span><span class="h">11</span><span class="h">12</span><span class="h">13</span><span class="h">14</span><span class="h">15</span><span class="h">16</span><span class="h">17</span><span class="h">18</span><span class="h">19</span><span class="h">20</span><span class="h">21</span><span class="h">22</span>
+        <span class="z">Kadıköy</span>
+        <span class="c" style="--p:35%">6/8</span><span class="c hi" style="--p:70%">12/12</span><span class="c hi" style="--p:70%">12/12</span><span class="c" style="--p:40%">7/9</span><span class="c" style="--p:20%">4/6</span><span class="c" style="--p:20%">4/6</span><span class="c" style="--p:45%">8/10</span><span class="c hi short" style="--p:90%">16/16</span><span class="c hi short" style="--p:100%">18/18</span><span class="c hi" style="--p:90%">16/17</span><span class="c" style="--p:55%">10/12</span><span class="c" style="--p:30%">5/8</span>
+        <span class="z">Ataşehir</span>
+        <span class="c" style="--p:20%">3/5</span><span class="c" style="--p:45%">7/8</span><span class="c" style="--p:45%">7/8</span><span class="c" style="--p:20%">3/5</span><span class="c" style="--p:10%">2/4</span><span class="c" style="--p:10%">2/4</span><span class="c" style="--p:30%">5/6</span><span class="c hi" style="--p:65%">10/11</span><span class="c hi" style="--p:70%">11/11</span><span class="c" style="--p:55%">9/10</span><span class="c" style="--p:35%">6/8</span><span class="c" style="--p:20%">3/5</span>
+        <span class="z">Hasanpaşa</span>
+        <span class="c" style="--p:10%">2/3</span><span class="c" style="--p:20%">3/4</span><span class="c" style="--p:20%">3/4</span><span class="c" style="--p:10%">2/3</span><span class="c" style="--p:5%">1/2</span><span class="c" style="--p:5%">1/2</span><span class="c" style="--p:10%">2/3</span><span class="c" style="--p:30%">5/5</span><span class="c short" style="--p:35%">5/5</span><span class="c" style="--p:25%">4/5</span><span class="c" style="--p:15%">3/4</span><span class="c" style="--p:5%">1/3</span>
+      </div>
+    </div>
+    <div>
+      <span class="label-sm">Adalet paneli · geçen hafta</span>
+      <div class="fair" style="margin-top:8px">
+        <div><b>0,17</b><span>Slot saati Gini katsayısı (0 = eşit)</span></div>
+        <div><b>0</b><span>Asgari hakkını alamayan kurye</span></div>
+        <div><b>%82</b><span>Yeni kuryelerin slot alma oranı</span></div>
+        <div><b>%71</b><span>Takas başarı oranı</span></div>
+        <div><b>%3</b><span>Mazeretsiz bırakma</span></div>
+        <div><b>0</b><span>72 saatten az kala silinen slot</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- İLKELER -->
+<section class="sec" id="ilkeler" aria-labelledby="t-ilk">
+  <div class="sec-head">
+    <span class="ov">Kurallar</span>
+    <h2 id="t-ilk">Etik tasarım ilkeleri ve sözlük</h2>
+    <p class="lead">Kurye şikâyetlerinin çoğu ücretin seviyesinden önce kuralların belirsizliğinden ve tek taraflılığından geliyor. Bu ilkeler slogan değil, ürün kuralıdır.</p>
+  </div>
+  <div class="rules">
+    <div class="rule"><b>Kazanç önce</b><p>Her teklifte kabulden önce net kazanç TL olarak görünür.</p></div>
+    <div class="rule"><b>Geçmek cezasız</b><p>Kabul oranı hiçbir ekranda gösterilmez, hiçbir skora girmez.</p></div>
+    <div class="rule"><b>Hız ödüllendirilmez</b><p>Teslimat süresi kuryeye geri sayım olarak gösterilmez; tahmini varış güvenli sürüş tamponuyla hesaplanır.</p></div>
+    <div class="rule"><b>Slotta yarış yok</b><p>Talep penceresi ve açık kurallı dağıtım. Yayınlanmış slot 72 saatten az kala silinmez; silinirse tazminat yazılır.</p></div>
+    <div class="rule"><b>Her karar açıklanır</b><p>Puan değişimi, slot reddi, hesap kısıtlaması: gerekçe yazılı, itiraz butonu yanında, 72 saatte insan incelemesi.</p></div>
+    <div class="rule"><b>Bekleme ve iptal ödenir</b><p>İşletmede bekleme ve yoldayken iptal kurye kazancına ayrı kalem olarak yazılır.</p></div>
+    <div class="rule"><b>Karanlık desen yok</b><p>Yapay aciliyet, gizli ücret, kampanyaya zorlama yok. İşletme faturasında her kalem ayrı.</p></div>
+    <div class="rule"><b>Konum yalnızca çevrimiçiyken</b><p>Çevrimdışında uygulama konum göndermez; başvuruda ve ayarlarda açıkça yazar.</p></div>
+  </div>
+  <div class="scroller">
+    <table class="t">
+      <thead><tr><th>Kullan</th><th>Kullanma</th><th>Not</th></tr></thead>
+      <tbody>
+        <tr><td><b>Kurye</b></td><td class="was">Pilot, Sürücü, Driver</td><td class="muted">Bugün web'de "Sürücü", mobilde "Pilot" geçiyor.</td></tr>
+        <tr><td><b>Teslimat</b></td><td class="was">Mission, Görev</td><td class="muted">Sipariş müşterinin platformdaki siparişidir; teslimat Hızla'nın işidir.</td></tr>
+        <tr><td><b>Teklif · Kabul et / Geç</b></td><td class="was">Gelen sipariş · Reddet</td><td class="muted">Geçmek cezasız.</td></tr>
+        <tr><td><b>Slot · Talep penceresi · Takas</b></td><td class="was">Vardiya, Shift, Devir</td><td class="muted">Kuryelerin kullandığı kelime "slot".</td></tr>
+        <tr><td><b>Kazanç · Hakediş · Hedef</b></td><td class="was">Earnings, Payout, Quest</td><td class="muted">Mobilde İngilizce etiketler kaldırılır.</td></tr>
+        <tr><td><b>İşletme · Şube · Bölge</b></td><td class="was">Restoran, Vendor, Zone</td><td class="muted">Restoran dışı işletmeler de var.</td></tr>
+        <tr><td><b>Çevrimdışı / Bağlantı yok</b></td><td class="was">Çevrimdışı (ağ için)</td><td class="muted">Çevrimdışı kuryenin varlık durumu; ağ kopması "Bağlantı yok".</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer class="end">
+  <span>Kaynak: <code>docs/design/HIZLA-TASARIM-SISTEMI.md</code> · Token'lar: <code>packages/design-tokens/tokens.json</code> (planlanan)</span>
+  <span>İkonlar: Phosphor Icons (MIT) · Yazı tipleri: Archivo, Atkinson Hyperlegible Next ve Mono (SIL OFL)</span>
+</footer>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btns = document.querySelectorAll('.seg button[data-t]');
+  function apply(t) {
+    if (t === 'light' || t === 'dark') root.setAttribute('data-theme', t); else root.removeAttribute('data-theme');
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-t') === t)); });
+  }
+  var saved = 'system';
+  try { saved = localStorage.getItem('hz-theme') || 'system'; } catch (e) {}
+  apply(saved);
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.getAttribute('data-t');
+      apply(t);
+      try { localStorage.setItem('hz-theme', t); } catch (e) {}
+    });
+  });
+  if (!root.getAttribute('lang')) root.setAttribute('lang', 'tr');
+})();
+</script>

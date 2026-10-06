@@ -1,4 +1,9 @@
-docs/
+# Eski yerel dokümanlar (git dışı). docs/ klasörünün geri kalanı izlenir (şablon §22, D-15).
+docs/MONOREPO_STRUCTURE.md
+docs/MONOREPO_STRUCTURE_EN.md
+docs/gateaway-ARCHITECTURE.md
+docs/HIZLA-WEB-APP-PLAN.md
+docs/WEB-APPARCHITECTURE.md
 node_modules/
 dist/
 coverage/
